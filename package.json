@@ -1,0 +1,25 @@
+{
+  "name": "majorproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./Server/server.js",
+    "debug": "nodemon ./Server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sukhraj2454/MajorProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sukhraj2454/MajorProject/issues"
+  },
+  "homepage": "https://github.com/Sukhraj2454/MajorProject#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "expressjs": "^1.0.1"
+  }
+}
