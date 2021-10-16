@@ -58,20 +58,18 @@ module.exports.removeToken = function (token) {
 
 module.exports.signUp = (req, res, next) => {
     var user = new User(req.body);
-    user.save().then((err, obj) => {
-        if (err)
-            throw err;
+    user.save().then((obj) => {
         res.status(200).json({ 'message': "Signed Up Successfully" });
-
+    }, (err) => {
+        if (err)
+            throw err
     }).catch(error => {
-        const err = new Error("Signup Error")
+        var err = new Error("Signup Error")
         if (error.code === 11000) {
             err.statusCode = 409
             err.message = "Email Already Used."
             err.data = error
         }
-        else
-            err = error;
         next(err);
     })
 }

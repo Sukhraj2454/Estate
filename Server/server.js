@@ -8,13 +8,14 @@ const app = express();
 const port = process.env.PORT;
 
 // User Modules
-const { userRouter } = require('./Router/userRouter');
-
+const { userRouter } = require('./router/userRouter');
+const { taskRouter } = require('./router/taskRouter')
 // Controller modules
 const userController = require('./controllers/userController');
 
 app.use(express.json());
 app.use('/user', userRouter);
+app.use('/task', taskRouter);
 
 // Requests
 app.get('/', (req, res) => {
