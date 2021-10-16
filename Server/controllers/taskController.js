@@ -1,5 +1,22 @@
 const { Task } = require('../models/task');
+
 const mongoose = require('mongoose');
+
+// Get Tasks for a certain User
+module.exports.getUserTasks = (req, res, next) => {
+    let id = mongoose.Types.ObjectId(req.params['uId'])
+    User.find({ _id: id }).then((user) => {
+        console.log(user)
+    }, (err) => {
+        let error = new Error("User Not Found")
+        error.message = "Requested User Not Found"
+        error.statusCode = 404
+        error.data = err;
+    }).catch(err => {
+        next(err);
+    })
+    res.send(":DONE")
+}
 
 // Add New Task
 module.exports.addTask = (req, res, next) => {
@@ -39,6 +56,7 @@ module.exports.getAllTasks = (req, res, next) => {
             })
     }
 }
+
 
 // Change Status
 module.exports.updateStatus = (req, res, next) => {
@@ -149,4 +167,39 @@ module.exports.deadline = (req, res, next) => {
                 })
         }
     }
+}
+
+
+// Get Tasks for a certain User
+module.exports.getUserTasks = (req, res, next) => {
+    let id = mongoose.Types.ObjectId(req.params['uId'])
+    Task.find({ "assignee.id": id }).then((tasks) => {
+        res.status(200).json(tasks)
+    }, (err) => {
+        let error = new Error("User Not Found")
+        error.message = "Requested User Not Found"
+        error.statusCode = 404
+        error.data = err;
+    }).catch(err => {
+        next(err);
+    })
+}
+
+// Delete Task
+module.exports.delete = (req, res, next) => {
+    let id = mongoose.Types.ObjectId(req.params['tId'])
+    Task.deleteOne({ _id: id }).then((result) => {
+        if (result.deletedCount === 0) {
+            let error = new Error("Error Not Found")
+            error.message = "Task Not Found"
+            error.statusCode = 404
+            throw error
+        }
+        else {
+            res.status(200).json({ 'message': "Task Removed." })
+        }
+    })
+        .catch(err => {
+            next(err)
+        })
 }

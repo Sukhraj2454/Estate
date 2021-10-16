@@ -1,7 +1,8 @@
-const { User } = require('../Models/user')
+const { User } = require('../models/user');
+const { Task } = require('../models/task');
+
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
-
 
 // To genereate Authentication Token
 module.exports.generateAuthToken = function (user) {
