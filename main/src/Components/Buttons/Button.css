@@ -1,0 +1,11 @@
+button{
+background:rgb(255, 106, 106);
+border: none;
+border-radius: .7vw;
+font-weight: 600;
+padding: .5vw 1vw;
+margin:.5vw 1vw;
+}
+button:hover{
+    cursor: pointer;
+}
