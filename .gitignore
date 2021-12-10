@@ -2,7 +2,7 @@
 **/node_modules/
 **/.pnp
 *.pnp.js
-
+*.env
 #config Files
 **/config/config.json
 **/package-lock.json

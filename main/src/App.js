@@ -1,8 +1,19 @@
-import './App.css';
-import Button from './Components/Buttons/Button';
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './Routes/Home/Home';
+
 function App() {
   return (
-    <Button text='welcome' />
+    <Router>
+
+      <Switch>
+
+        <Route path="/" exact>
+          <Home />
+        </Route>
+      </Switch>
+
+    </Router>
   );
 }
 

@@ -24,6 +24,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minlength: 10
     },
+    contact:{
+      type:String,
+      required: true,
+      minlength:10
+    },
     desig: {
         type: String,
         requried: true
@@ -62,7 +67,7 @@ UserSchema.pre('save', function (next) {
 UserSchema.methods.toJson = function () {
     var user = this;
     var userObject = user.toObject();
-    return _.pick(userObject, ['_id', 'email', 'name', 'desig']);
+    return _.pick(userObject, ['_id', 'email', 'name', 'desig','contact']);
 }
 
 

@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const taskRouter = express.Router();
 
 const { authenticate } = require('../middleware/authenticate');
