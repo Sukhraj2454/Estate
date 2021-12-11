@@ -1,3 +1,4 @@
+import TaskCard from '../Card/TaskCard';
 
 // Material UI Components
 import { ThemeProvider } from '@mui/material/styles';
@@ -9,35 +10,50 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
-export default function TaskBoardsm({ theme }) {
+export default function TaskBoardsm({ theme, useStyles }) {
+
+    const classes = useStyles();
 
     return (
+
         <ThemeProvider theme={theme}>
+
             <Container component='main' maxWidth='lg'>
+                <Typography component='h1' variant='h4' className={classes.root}>
+                    Task Board
+                </Typography>
 
                 <Accordion>
+
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
+
                         <Typography>To Do</Typography>
+
                     </AccordionSummary>
+
                     <AccordionDetails>
-                        <Typography>
-                            Here Todo tasks are to be displayed.
-                        </Typography>
+
+                        <TaskCard />
                     </AccordionDetails>
+
                 </Accordion>
 
                 <Accordion>
+
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
                     >
+
                         <Typography>In Progress</Typography>
+
                     </AccordionSummary>
+
                     <AccordionDetails>
                         <Typography>These Tasks are in progress.
                         </Typography>
@@ -45,6 +61,7 @@ export default function TaskBoardsm({ theme }) {
                 </Accordion>
 
                 <Accordion>
+
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel3a-content"
@@ -52,10 +69,12 @@ export default function TaskBoardsm({ theme }) {
                     >
                         <Typography>Review</Typography>
                     </AccordionSummary>
+
                     <AccordionDetails>
                         <Typography>These Tasks are in Review.
                         </Typography>
                     </AccordionDetails>
+
                 </Accordion>
 
                 <Accordion>
@@ -64,13 +83,14 @@ export default function TaskBoardsm({ theme }) {
                         aria-controls="panel3a-content"
                         id="panel3a-header"
                     >
-
                         <Typography>Completed</Typography>
                     </AccordionSummary>
+
                     <AccordionDetails>
                         <Typography>These Tasks are Comleted within past two weeks.
                         </Typography>
                     </AccordionDetails>
+
                 </Accordion>
 
             </Container>

@@ -15,6 +15,10 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 
+// import alerts
+import SuccessSignup from './Alerts/SuccessSignup';
+import ErrorSignup from './Alerts/ErrorSignup';
+
 // Environment Variables
 const BASE_URL = '';
 
@@ -22,6 +26,9 @@ const BASE_URL = '';
 export default function Signup({ theme, change }) {
 
     const [desig, setDesig] = useState('Worker');
+    const [open, setOpen] = useState(false);
+    const [er, setEr] = useState(false);
+    const [message, setMessage] = useState('');
 
     const handleChange = (event) => {
         setDesig(event.target.value);
@@ -40,17 +47,18 @@ export default function Signup({ theme, change }) {
             desig: desig
 
         }).then((res, err) => {
-            alert(res.data.message);
-            if (err)
-                console.log(err)
+            // alert(res.data.message);
+            setOpen(true)
+
         }).catch(err => {
             console.clear();
             if (err.response && err.response.status === 409) {
-                alert("Email Already in Use.")
+                setMessage("Email Address Already Registered!");
             }
             else {
-                alert("Server Error.")
+                setMessage("Internal Server Error!");
             }
+            setEr(true);
         })
     };
 
@@ -58,6 +66,10 @@ export default function Signup({ theme, change }) {
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth='xs'>
+
+                {/*  Alerts */}
+                <SuccessSignup open={open} setOpen={setOpen} />
+                <ErrorSignup open={er} setOpen={setEr} message={message}/>
 
                 <Box                // Used to define any block element
                     sx={{           // Accepts all CSS or any valid properties
