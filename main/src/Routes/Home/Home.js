@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 import Login from '../../Components/Login';
 import Signup from '../../Components/Signup';
-import { createTheme } from '@mui/material/styles';
+// import TaskBoard from '../../Components/TaskBoard/TaskBoard';
+
 import { Container, Typography } from '@mui/material';
 
-const Home = function () {
+const Home = function ({theme}) {
 
-    const theme = createTheme();
     const [flag, setFlag] = useState(true)
     const LS = () => {
         setFlag(!flag);
@@ -23,15 +23,13 @@ const Home = function () {
                     textAlign: "center",
                     color: "white"
                 }}
-            >
-                NITJ Estate Service Portal
-            </Typography>
+            >NITJ Estate Service Portal </Typography>
 
             {
                 flag ? <Login theme={theme} change={LS} /> :
                     <Signup theme={theme} change={LS} />
             }
-
+            {/* <TaskBoard /> */}
         </Container>
     )
 }
