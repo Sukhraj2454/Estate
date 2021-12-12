@@ -21,14 +21,14 @@ export default function TaskBoardlg({ theme, useStyles }) {
                 </Typography>
 
 
-                <Grid container spacing={3} justifyContent={'center'} sx={{mb:2}}>
+                <Grid container spacing={3} justifyContent={'center'} sx={{ mb: 2 }}>
 
                     <Grid item sm={3} xs={8}>
                         <Paper variant='outlined' sx={{ background: '#eee', minHeight: 600, height: 'maxContent', width: '100%' }}>
                             <Typography component='h3' variant='h6' className={classes.root}>
                                 To Do
                             </Typography>
-                            <TaskCard />
+                            <TaskCard theme={theme} />
                         </Paper>
                     </Grid>
 

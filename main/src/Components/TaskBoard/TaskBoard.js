@@ -22,6 +22,7 @@ function useWidth() {
 }
 
 export default function TaskBoard({ theme }) {
+    
     const useStyles = makeStyles(() =>
         createStyles({
             root: {

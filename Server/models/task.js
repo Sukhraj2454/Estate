@@ -37,6 +37,10 @@ const TaskSchema = new mongoose.Schema({
     deadline: {
         type: Date,
         min: this.createdOn
+    },
+    priority: {
+        type: Number,
+        default: 1
     }
 })
 
