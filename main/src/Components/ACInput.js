@@ -4,12 +4,10 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 const filter = createFilterOptions();
 
-export default function ACInput({ data, label, defValue }) {
-    const [value, setValue] = useState(null);
-
+export default function ACInput({ data, label, defValue, variant }) {
+    const [value, setValue] = useState(defValue || '');
     return (
         <Autocomplete
-            defaultValue={defValue}
             value={value}
             onChange={(event, newValue) => {
                 if (typeof newValue === 'string') {
@@ -37,11 +35,11 @@ export default function ACInput({ data, label, defValue }) {
                 return option.title;
             }}
             renderOption={(props, option) => <li {...props}>{option.title}</li>}
-            sx={{ width: 300, ml: 'auto', mt: 2, mb: 2 }}
+            sx={{ width: 300, ml: 'auto', mr: 'auto', mt: 2, mb: 2 }}
             freeSolo
             renderInput={(params) => (
                 <TextField {...params}
-                    variant="standard"
+                    variant={variant || "standard"}
                     label={label} />
             )}
         />

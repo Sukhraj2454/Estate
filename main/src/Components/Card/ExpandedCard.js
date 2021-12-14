@@ -1,9 +1,21 @@
-
+// other Utils
+import useWidth from '../../Utils/useWidth';
 
 // Components
-import ExpCardlg from "./ExpCardlg"
+import ExpCardlg from "./ExpCardlg";
+import ExpCardsm from './ExpCardsm';
+
 export default function ExpandedCard({ close, theme }) {
+
+    const wd = useWidth();  // get viewport size
+
     return (
-        <ExpCardlg close={close} theme={theme} />
+        <>
+            {
+                (wd !== 'xs' && wd !== 'sm') ?
+                    <ExpCardlg close={close} theme={theme} /> :
+                    <ExpCardsm close={close} theme={theme} />
+            }
+        </>
     )
 };

@@ -1,7 +1,6 @@
 import TaskCard from '../Card/TaskCard';
 
-// Material UI Components
-import { ThemeProvider } from '@mui/material/styles';
+// Material UI Components   
 import Container from '@mui/material/Container';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';

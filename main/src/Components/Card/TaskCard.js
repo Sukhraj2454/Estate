@@ -1,4 +1,4 @@
-// React Utils
+// Utils
 import { useState } from 'react';
 
 // Components

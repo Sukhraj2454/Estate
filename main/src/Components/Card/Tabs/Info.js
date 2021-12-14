@@ -1,125 +1,61 @@
-//Utils
+
+// React  Utils
 import { useState } from 'react'
 
 // Components
-import ACInput from "../ACInput";
-import Comments from "./Tabs/Comments";
+import ACInput from "../../ACInput";
 
 // MUI Components
-import { Container, Grid, Paper, Button } from "@mui/material"
-import { TextField } from "@mui/material";
-import { ThemeProvider } from "@mui/material";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { Container } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-// MUI Icons
-import CloseIcon from '@mui/icons-material/Close';
-
-
-export default function ExpCardlg({ close, theme }) {
-    const [value, setValue] = useState(0);
-    const [status, setStatus] = useState('To Do');
+export default function Info({ theme }) {
     const [priority, setPriority] = useState('Medium');
-    const [disable, setDisable] = useState(true);
-
-    const handleTextChange = () => {
-        setDisable(false);
-    }
-    
+    const [status, setStatus] = useState('To Do');
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
     };
-
     const handlePriorityChange = (event) => {
         setPriority(event.target.value);
-    };
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
+    };   
     return (
-        <ThemeProvider theme={theme}>
-            <Container component='main'>
-                <Paper elevation={24} sx={{ minHeight: 600 }} >
+        <Container component={'main'} maxWidth='sm'>
 
-                    <Button onClick={close}>
-                        <CloseIcon sx={{ p: 1 }} />
-                    </Button>
-
-                    <Tabs value={value} onChange={handleChange}>
-                        <Tab label="Info" />
-                        <Tab label="Comments" />
-                    </Tabs>
-
-                    {(value === 0) ?
-                        (
-                            <Grid container columns={5}>
-
-                                <Grid item xs={3} lg={3}>
-                                    <TextField sx={{ p: 2, width: '95%' }}
-                                        onChange={handleTextChange}
-                                        defaultValue={'Electricity Bulb Needed for CS304.'} />
-                                    <TextField
-                                        onChange={handleTextChange}
-                                        sx={{ p: 1, ml: 1, width: '95%' }}
-                                        label="Description"
-                                        multiline
-                                        rows={12}
-                                    />
-                                </Grid>
-
-                                <Grid item sx={{
-                                    width: "30%"
-                                }}>
-
-                                    <ACInput theme={theme} defValue='' data={top100Films} label={"Assignee"} />
-                                    <ACInput theme={theme} defValue='' data={top100Films} label={"Reporter"} />
-                                    <FormControl fullWidth sx={{ mb: 3, mt: 3 }}>
-                                        <InputLabel id="priority-select-label">Priority</InputLabel>
-                                        <Select
-                                            labelId="priority-select-label"
-                                            id="priority-select"
-                                            value={priority}
-                                            label="Status"
-                                            onChange={handlePriorityChange}
-                                        >
-                                            <MenuItem value={'Medium'}>Medium</MenuItem>
-                                            <MenuItem value={'High'}>High</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    <FormControl fullWidth>
-                                        <InputLabel id="status-select-label">Status</InputLabel>
-                                        <Select
-                                            labelId="status-select-label"
-                                            id="status-select"
-                                            value={status}
-                                            label="Status"
-                                            onChange={handleStatusChange}
-                                        >
-                                            <MenuItem value={'To Do'}>To Do</MenuItem>
-                                            <MenuItem value={'In Progress'}>In Progress</MenuItem>
-                                            <MenuItem value={'Review'}>Review</MenuItem>
-                                            <MenuItem value={'Completed'}>Completed</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-
-                            </Grid>
-
-                        ) :
-                        <Comments />}
-
-                    <Button sx={{ ml: 3, mt: 1 }} color="success" variant="contained" disabled={disable} >Update</Button>
-                    <Button sx={{ ml: 3, mt: 1 }} color="error" variant="contained" disabled={disable}>Discard Changes</Button>
-                </Paper>
-            </Container >
-        </ThemeProvider>
-    )
-};
+            <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Assignee"} />
+            <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Reporter"} />
+           <FormControl fullWidth sx={{ mb: 3,mt:3 }}>
+                <InputLabel id="priority-select-label">Priority</InputLabel>
+                <Select
+                    labelId="priority-select-label"
+                    id="priority-select"
+                    value={priority}
+                    label="Status"
+                    onChange={handlePriorityChange}
+                >
+                    <MenuItem value={'Medium'}>Medium</MenuItem>
+                    <MenuItem value={'High'}>High</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl fullWidth>
+                <InputLabel id="status-select-label">Status</InputLabel>
+                <Select
+                    labelId="status-select-label"
+                    id="status-select"
+                    value={status}
+                    label="Status"
+                    onChange={handleStatusChange}
+                >
+                    <MenuItem value={'To Do'}>To Do</MenuItem>
+                    <MenuItem value={'In Progress'}>In Progress</MenuItem>
+                    <MenuItem value={'Review'}>Review</MenuItem>
+                    <MenuItem value={'Completed'}>Completed</MenuItem>
+                </Select>
+            </FormControl>
+        </Container>)
+}
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
