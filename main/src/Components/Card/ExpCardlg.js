@@ -1,50 +1,82 @@
+// React  Utils
+import { useState } from 'react'
 // Components
-// import Priority from "../Priority";
 import ACInput from "../ACInput";
+import Comments from "../Comments";
 
 // MUI Components
 import { Container, Grid, Paper, Typography, Button } from "@mui/material"
-import { TextField, TextareaAutosize } from "@mui/material";
+import { TextField } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 // MUI Icons
 import CloseIcon from '@mui/icons-material/Close';
 
 
 export default function ExpCardlg({ close, theme }) {
+    const [value, setValue] = useState(0);
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     return (
-        <Container coomponent='main'>
-            <Paper elevation={24} sx={{ height: 600 }} >
+        <ThemeProvider theme={theme}>
+            <Container coomponent='main'>
+                <Paper elevation={24} sx={{ minHeight: 600 }} >
 
-                <Button onClick={close}>
-                    <CloseIcon sx={{ p: 1 }} />
-                </Button>
+                    <Button onClick={close}>
+                        <CloseIcon sx={{ p: 1 }} />
+                    </Button>
 
-                <Typography sx={{ p: 2, userSelect: 'none', color: '#005bb7' }} component='span' variant='h6'>
-                    To Do
-                </Typography>
-                <Grid container columns={5}>
+                    <Tabs value={value} onChange={handleChange}>
+                        <Tab label="Info" />
+                        <Tab label="Comments" />
+                    </Tabs>
 
-                    <Grid item xs={3}>
-                        <TextField sx={{ p: 2, width: '100%' }}
-                            value={'Electricity Bulb Needed for CS304.'} />
-                        <TextareaAutosize
-                            maxRows={20}
-                            aria-label="maximum height"
-                            minRows={3}
-                            placeholder="Description of Task"
-                            sx={{ ml: 50, maxWidth: 500, padding: 4, maxHeight: 200, }} />
-                    </Grid>
-                    <Grid item sx={{ width: "35%", bl: '1' }}>
-                        <ACInput theme={theme} data={top100Films} label={"Assignee"} />
-                        <ACInput theme={theme} data={top100Films} label={"Reporter"} />
-                        <ACInput theme={theme} data={top100Films} label={"movies"} />
-                    </Grid>
+                    {(value === 0) ?
+                        (
+                            <Grid container columns={5}>
 
-                </Grid>
-            </Paper>
-        </Container >
+                                <Grid item xs={3} lg={3}>
+                                    <TextField sx={{ p: 2, width: '95%' }}
+                                        defaultValue={'Electricity Bulb Needed for CS304.'} />
+                                    <TextField
+                                        sx={{ p: 1, ml: 1, width: '95%' }}
+                                        label="Description"
+                                        multiline
+                                        rows={12}
+                                    />
+                                </Grid>
+
+                                <Grid item sx={{
+                                    width: "30%"
+                                }}>
+                                    <Typography
+                                        sx={{
+                                            p: 2,
+                                            userSelect: 'none',
+                                            color: '#005bb7',
+                                            textAlign: 'center'
+                                        }}
+                                        component='h4' variant='h6'>
+                                        To Do
+                                    </Typography>
+                                    <ACInput theme={theme} defValue='' data={top100Films} label={"Assignee"} />
+                                    <ACInput theme={theme} defValue='' data={top100Films} label={"Reporter"} />
+                                    <ACInput theme={theme} defValue='Medium' data={[{ 'title': 'Medium', 'level': 2 }, { 'title': 'High', 'level': 1 }]} label={"Priority"} />
+                                </Grid>
+
+                            </Grid>
+
+                        ) :
+                        <Comments />}
+
+                </Paper>
+            </Container >
+        </ThemeProvider>
     )
 };
 

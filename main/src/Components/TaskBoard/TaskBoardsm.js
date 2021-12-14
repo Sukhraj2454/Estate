@@ -16,84 +16,82 @@ export default function TaskBoardsm({ theme, useStyles }) {
 
     return (
 
-        <ThemeProvider theme={theme}>
 
-            <Container component='main' maxWidth='lg'>
-                <Typography component='h1' variant='h4' className={classes.root}>
-                    Task Board
-                </Typography>
+        <Container component='main' maxWidth='lg'>
+            <Typography component='h1' variant='h4' className={classes.root}>
+                Task Board
+            </Typography>
 
-                <Accordion>
+            <Accordion>
 
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
 
-                        <Typography>To Do</Typography>
+                    <Typography>To Do</Typography>
 
-                    </AccordionSummary>
+                </AccordionSummary>
 
-                    <AccordionDetails>
+                <AccordionDetails>
 
-                        <TaskCard />
-                    </AccordionDetails>
+                    <TaskCard theme={theme}/>
+                </AccordionDetails>
 
-                </Accordion>
+            </Accordion>
 
-                <Accordion>
+            <Accordion>
 
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel2a-content"
-                        id="panel2a-header"
-                    >
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2a-content"
+                    id="panel2a-header"
+                >
 
-                        <Typography>In Progress</Typography>
+                    <Typography>In Progress</Typography>
 
-                    </AccordionSummary>
+                </AccordionSummary>
 
-                    <AccordionDetails>
-                        <Typography>These Tasks are in progress.
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
+                <AccordionDetails>
+                    <Typography>These Tasks are in progress.
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
 
-                <Accordion>
+            <Accordion>
 
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel3a-content"
-                        id="panel3a-header"
-                    >
-                        <Typography>Review</Typography>
-                    </AccordionSummary>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel3a-content"
+                    id="panel3a-header"
+                >
+                    <Typography>Review</Typography>
+                </AccordionSummary>
 
-                    <AccordionDetails>
-                        <Typography>These Tasks are in Review.
-                        </Typography>
-                    </AccordionDetails>
+                <AccordionDetails>
+                    <Typography>These Tasks are in Review.
+                    </Typography>
+                </AccordionDetails>
 
-                </Accordion>
+            </Accordion>
 
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel3a-content"
-                        id="panel3a-header"
-                    >
-                        <Typography>Completed</Typography>
-                    </AccordionSummary>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel3a-content"
+                    id="panel3a-header"
+                >
+                    <Typography>Completed</Typography>
+                </AccordionSummary>
 
-                    <AccordionDetails>
-                        <Typography>These Tasks are Comleted within past two weeks.
-                        </Typography>
-                    </AccordionDetails>
+                <AccordionDetails>
+                    <Typography>These Tasks are Comleted within past two weeks.
+                    </Typography>
+                </AccordionDetails>
 
-                </Accordion>
+            </Accordion>
 
-            </Container>
-        </ThemeProvider>
+        </Container>
     )
 }

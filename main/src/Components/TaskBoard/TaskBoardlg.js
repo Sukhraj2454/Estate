@@ -1,7 +1,6 @@
 import TaskCard from '../Card/TaskCard';
 
 // Material UI Components
-import { ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -12,8 +11,6 @@ export default function TaskBoardlg({ theme, useStyles }) {
     const classes = useStyles();
 
     return (
-        <ThemeProvider theme={theme}>
-
             <Container component='main' maxWidth='xl'>
 
                 <Typography component='h1' variant='h4' className={classes.root}>
@@ -60,7 +57,6 @@ export default function TaskBoardlg({ theme, useStyles }) {
 
             </Container>
 
-        </ThemeProvider>
     )
 
 }
