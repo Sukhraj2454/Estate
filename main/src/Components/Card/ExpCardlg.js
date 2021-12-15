@@ -29,7 +29,7 @@ export default function ExpCardlg({ close, theme }) {
     const handleTextChange = () => {
         setDisable(false);
     }
-    
+
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
     };
@@ -70,6 +70,8 @@ export default function ExpCardlg({ close, theme }) {
                                         multiline
                                         rows={12}
                                     />
+                                    <Button sx={{ ml: 3, mt: 1 }} color="success" variant="contained" disabled={disable} >Update</Button>
+                                    <Button sx={{ ml: 3, mt: 1 }} color="error" variant="contained" disabled={disable}>Discard Changes</Button>
                                 </Grid>
 
                                 <Grid item sx={{
@@ -112,9 +114,6 @@ export default function ExpCardlg({ close, theme }) {
 
                         ) :
                         <Comments />}
-
-                    <Button sx={{ ml: 3, mt: 1 }} color="success" variant="contained" disabled={disable} >Update</Button>
-                    <Button sx={{ ml: 3, mt: 1 }} color="error" variant="contained" disabled={disable}>Discard Changes</Button>
                 </Paper>
             </Container >
         </ThemeProvider>

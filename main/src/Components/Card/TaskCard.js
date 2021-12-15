@@ -64,11 +64,14 @@ export default function TaskCard({ theme }) {
                     </Grid>
                 </CardContent>
             </Card >
+
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={open}
             >
-                <ExpandedCard close={handleToggle} theme={theme} />
+                <Container component='main'>
+                    <ExpandedCard close={handleToggle} theme={theme} />
+                </Container>
             </Backdrop>
         </Container >
     );
