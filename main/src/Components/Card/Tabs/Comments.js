@@ -25,7 +25,7 @@ function Comment() {
 export default function Comments() {
 
     return (
-        <Container sx={{ mt: 2, maxHeight: 490, overflowY: 'scroll' }}>
+        <Container sx={{ mt: 2, maxHeight: 480, overflowY: 'scroll' }}>
             <Stack
                 sx={{ p: 2 }}
                 direction="column"

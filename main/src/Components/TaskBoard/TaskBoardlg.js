@@ -1,61 +1,39 @@
+// Other Components
 import TaskCard from '../Card/TaskCard';
+import ToDo from './StatusColumns/lg/ToDo';
+import InProgress from './StatusColumns/lg/InProgress';
+import Completed from './StatusColumns/lg/Completed';
+import Review from './StatusColumns/lg/Review';
 
 // Material UI Components
 import Container from '@mui/material/Container';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 
 export default function TaskBoardlg({ theme, useStyles }) {
 
+    const toDoCards = [<TaskCard key='1' theme={theme} />];
+    const inProgressCards = [];
+    const reviewCards = [];
+    const completedCards = [];
     const classes = useStyles();
-
+    const mh = 550;
     return (
-            <Container component='main' maxWidth='xl'>
+        <Container component='main' maxWidth='xl'>
 
-                <Typography component='h1' variant='h4' className={classes.root}>
-                    Task Board
-                </Typography>
+            <Typography component='h1' variant='h4' className={classes.root}>
+                Task Board
+            </Typography>
 
 
-                <Grid container spacing={3} justifyContent={'center'} sx={{ mb: 2 }}>
+            <Grid container spacing={3} justifyContent={'center'} sx={{ mb: 2 }}>
+                <ToDo minHeight={mh} cards={toDoCards} classes={classes} />
+                <InProgress minHeight={mh} cards={inProgressCards} classes={classes} />
+                <Review minHeight={mh} cards={reviewCards} classes={classes} />
+                <Completed minHeight={mh} cards={completedCards} classes={classes} />
+            </Grid>
 
-                    <Grid item sm={3} xs={8}>
-                        <Paper variant='outlined' sx={{ background: '#eee', minHeight: 600, height: 'maxContent', width: '100%' }}>
-                            <Typography component='h3' variant='h6' className={classes.root}>
-                                To Do
-                            </Typography>
-                            <TaskCard theme={theme} />
-                        </Paper>
-                    </Grid>
-
-                    <Grid item sm={3} xs={8}>
-                        <Paper variant='outlined' sx={{ background: '#eee', minHeight: 600, height: 'maxContent', width: '100%' }}>
-                            <Typography component='h3' variant='h6' className={classes.root}>
-                                In Progress
-                            </Typography>
-                        </Paper>
-                    </Grid>
-
-                    <Grid item sm={3} xs={8}>
-                        <Paper variant='outlined' sx={{ background: '#eee', minHeight: 600, height: 'maxContent', width: '100%' }} >
-                            <Typography component='h3' variant='h6' className={classes.root}>
-                                In Review
-                            </Typography>
-                        </Paper>
-                    </Grid>
-
-                    <Grid item sm={3} xs={8}>
-                        <Paper variant='outlined' sx={{ background: '#eee', minHeight: 600, height: 'maxContent', width: '100%' }}>
-                            <Typography component='h3' variant='h6' className={classes.root}>
-                                Completed
-                            </Typography>
-                        </Paper>
-                    </Grid>
-
-                </Grid>
-
-            </Container>
+        </Container>
 
     )
 

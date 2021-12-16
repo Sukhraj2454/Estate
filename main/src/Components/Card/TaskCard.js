@@ -22,7 +22,7 @@ const workerHandle = () => {
     console.log("Worker Clicked");
 }
 export default function TaskCard({ theme }) {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const handleToggle = () => {
         setOpen(!open);

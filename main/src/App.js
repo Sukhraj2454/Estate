@@ -1,8 +1,7 @@
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Routes/Home/Home';
-import TaskBoard from './Components/TaskBoard/TaskBoard';
-
+import Dashboard from './Components/Dashboards/DashAdmin';
 import { createTheme } from '@mui/material/styles';
 
 function App() {
@@ -18,7 +17,7 @@ function App() {
         </Route>
 
         <Route path="/" exact>
-          <TaskBoard theme={theme} />
+          <Dashboard theme={theme} />
         </Route>
       </Switch>
 
