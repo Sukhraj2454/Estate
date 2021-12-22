@@ -2,7 +2,8 @@
 import { useState } from 'react';
 
 // Other Components
-import Taskboard from '../TaskBoard/TaskBoard';
+import Taskboard from '../Components/TaskBoard/TaskBoard';
+import Dashboard from '../Components/Dashboard';
 
 // MUI Components
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +17,7 @@ import Tab from '@mui/material/Tab';
 // MUI Icons
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function Dashboard({ theme }) {
+export default function Home({ theme }) {
 
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState(0);
@@ -83,7 +84,7 @@ export default function Dashboard({ theme }) {
 
             </SwipeableDrawer>
             <>
-                {tab === 0 && < Typography > Home</Typography>}
+                {tab === 0 && <Dashboard theme={theme} />}
 
                 {tab === 1 && <Taskboard theme={theme} />}
 

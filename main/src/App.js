@@ -1,7 +1,7 @@
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './Routes/Home/Home';
-import Dashboard from './Components/Dashboards/DashAdmin';
+import Main from './Routes/Main';
+import Home from './Routes/Home';
 import { createTheme } from '@mui/material/styles';
 
 function App() {
@@ -12,12 +12,11 @@ function App() {
       <Switch>
 
         <Route path="/home" exact>
-
-          <Home theme={theme} />
+          <Main theme={theme} />
         </Route>
 
         <Route path="/" exact>
-          <Dashboard theme={theme} />
+          <Home theme={theme} />
         </Route>
       </Switch>
 

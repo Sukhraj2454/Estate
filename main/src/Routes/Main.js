@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import Login from '../../Components/Login';
-import Signup from '../../Components/Signup';
+import Login from '../Components/Login';
+import Signup from '../Components/Signup';
 // import TaskBoard from '../../Components/TaskBoard/TaskBoard';
 
 import { Container, Typography } from '@mui/material';
 
-const Home = function ({theme}) {
+const Main = function ({theme}) {
 
     const [flag, setFlag] = useState(true)
     const LS = () => {
@@ -33,4 +33,4 @@ const Home = function ({theme}) {
         </Container>
     )
 }
-export default Home;
+export default Main;

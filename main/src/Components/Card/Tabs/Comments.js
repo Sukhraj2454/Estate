@@ -1,7 +1,8 @@
 // React Utils.\
 import { useState } from 'react';
-// Other Utils.
 
+// Other Utils.
+import stringAvatar from '../../../Utils/stringAvatar';
 // Mui Components
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
@@ -12,7 +13,7 @@ function Comment() {
     return (
         <Box component='div' sx={{ mb: 1 }}>
             <Tooltip title="Sukhraj Singh">
-                <Avatar sx={{ fontSize: 20, float: 'right', ml: 0.5, cursor: 'pointer' }}>SS</Avatar>
+                <Avatar sx={{ fontSize: 20, float: 'right', ml: 0.5, cursor: 'pointer' }} {...stringAvatar('Sukhraj Singh')} />
             </Tooltip>
             <Typography component='h5' variant='h6'>
                 Hi thereHi thereHi thereHi thereHi thereHi thereHi thereHi thereHi there
@@ -28,7 +29,7 @@ function NewComment() {
         setDisable(false);
     }
     return (
-        <Box component='div' sx={{ mb: 1,mt:2 }}>
+        <Box component='div' sx={{ mb: 1, mt: 2 }}>
             <TextField
                 onChange={handleTextChange}
                 sx={{ p: 1, width: '100%' }}
