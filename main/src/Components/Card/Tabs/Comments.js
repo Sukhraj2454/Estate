@@ -1,10 +1,11 @@
-// React Utils.
+// React Utils.\
+import { useState } from 'react';
 // Other Utils.
 
 // Mui Components
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
-import { Container, Typography, Box, Tooltip } from '@mui/material';
+import { Container, Typography, Box, Tooltip, TextField, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
 function Comment() {
@@ -21,11 +22,30 @@ function Comment() {
         </Box>
     )
 }
+function NewComment() {
+    const [disable, setDisable] = useState(true);
+    const handleTextChange = () => {
+        setDisable(false);
+    }
+    return (
+        <Box component='div' sx={{ mb: 1,mt:2 }}>
+            <TextField
+                onChange={handleTextChange}
+                sx={{ p: 1, width: '100%' }}
+                label="Comment"
+                multiline
+                rows={4}
+            />
 
+            <Button sx={{ ml: 1, mt: 1 }} color="success" variant="contained" disabled={disable} >Publish Comment</Button>
+        </Box>
+    )
+}
 export default function Comments() {
 
     return (
         <Container sx={{ mt: 2, maxHeight: 480, overflowY: 'scroll' }}>
+            <NewComment />
             <Stack
                 sx={{ p: 2 }}
                 direction="column"

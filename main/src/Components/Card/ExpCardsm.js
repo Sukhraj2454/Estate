@@ -17,10 +17,10 @@ import Tab from '@mui/material/Tab';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function ExpCardlg({ close, theme }) {
-    const [value, setValue] = useState(0);
+    const [tab, setTab] = useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleTabChange = (event, newValue) => {
+        setTab(newValue);
     };
     return (
         <ThemeProvider theme={theme}>
@@ -32,20 +32,20 @@ export default function ExpCardlg({ close, theme }) {
                     </Button>
 
                     <Tabs centered
-                        value={value} 
-                        onChange={handleChange}>
+                        value={tab}
+                        onChange={handleTabChange}>
                         <Tab label="Description" />
                         <Tab label="Info" />
                         <Tab label="Comments" />
                     </Tabs>
 
-                    <div hidden={value !== 0}>
+                    <div hidden={tab !== 0}>
                         <Desc />
                     </div>
-                    <div hidden={value !== 1}>
+                    <div hidden={tab !== 1}>
                         <Info theme={theme} />
                     </div>
-                    <div hidden={value !== 2}>
+                    <div hidden={tab !== 2}>
                         <Comments />
                     </div>
 

@@ -20,13 +20,13 @@ export default function Info({ theme }) {
     };
     const handlePriorityChange = (event) => {
         setPriority(event.target.value);
-    };   
+    };
     return (
         <Container component={'main'} maxWidth='sm'>
 
             <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Assignee"} />
             <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Reporter"} />
-           <FormControl fullWidth sx={{ mb: 3,mt:3 }}>
+            <FormControl fullWidth sx={{ mb: 3, mt: 3 }}>
                 <InputLabel id="priority-select-label">Priority</InputLabel>
                 <Select
                     labelId="priority-select-label"

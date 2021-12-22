@@ -17,8 +17,10 @@ import Tab from '@mui/material/Tab';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Dashboard({ theme }) {
+
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(0);
+    const [tab, setTab] = useState(0);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -26,9 +28,11 @@ export default function Dashboard({ theme }) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
     const handleTabChange = (event, newValue) => {
-        setValue(newValue);
+        setTab(newValue);
     }
+
     return (
         <Container maxWidth='xl' component='main'>
             <AppBar position="static">
@@ -52,6 +56,7 @@ export default function Dashboard({ theme }) {
 
                 </Toolbar>
             </AppBar>
+
             <SwipeableDrawer
                 anchor='left'
                 open={open}
@@ -59,13 +64,15 @@ export default function Dashboard({ theme }) {
                 onOpen={handleDrawerOpen}
                 sx={{ width: '50%' }}
             >
+
                 <Typography component='h5' variant='h4' padding={2} textAlign={'center'} color='primary'
                     borderBottom={1}>
                     Menu
                 </Typography>
+
                 <Tabs
                     orientation="vertical"
-                    value={value}
+                    value={tab}
                     onChange={handleTabChange}
                     sx={{ borderRight: 1, borderColor: 'divider', width: 250 }}
                 >
@@ -73,8 +80,15 @@ export default function Dashboard({ theme }) {
                     <Tab label="Task Board" />
                     <Tab label="Tasks Assigned" />
                 </Tabs>
+
             </SwipeableDrawer>
-            <Taskboard theme={theme} />
-        </Container>
+            <>
+                {tab === 0 && < Typography > Home</Typography>}
+
+                {tab === 1 && <Taskboard theme={theme} />}
+
+                {tab === 2 && < Typography > My Tasks</Typography>}
+            </>
+        </Container >
     )
 }
