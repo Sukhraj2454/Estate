@@ -16,7 +16,7 @@ import Link from '@mui/material/Link';
 import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 
 // import alerts
-import Alert from './Alerts/Alerts';
+import Alert from '../Alerts/Alerts';
 
 // Environment Variables
 const BASE_URL = '';

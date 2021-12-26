@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // Components
 import ExpandedCard from './ExpandedCard';
-import Priority from '../Priority';
+import Priority from '../Others/Priority';
 
 // Material UI Components
 import Card from '@mui/material/Card';

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import Login from '../Components/Login';
-import Signup from '../Components/Signup';
+import Login from '../Components/Others/Login';
+import Signup from '../Components/Others/Signup';
 // import TaskBoard from '../../Components/TaskBoard/TaskBoard';
 
 import { Container, Typography } from '@mui/material';
 
-const Main = function ({theme}) {
+const Main = function ({ theme }) {
 
     const [flag, setFlag] = useState(true)
     const LS = () => {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
-import Dashboard from '../Components/Dashboard';
+import Dashboard from '../Components/Dashboard/Dashboard';
 
 // MUI Components
 import Toolbar from '@mui/material/Toolbar';
@@ -64,6 +64,7 @@ export default function Home({ theme }) {
                 onClose={handleDrawerClose}
                 onOpen={handleDrawerOpen}
                 sx={{ width: '50%' }}
+                transitionDuration={{ enter: 100, exit: 100 }}
             >
 
                 <Typography component='h5' variant='h4' padding={2} textAlign={'center'} color='primary'
@@ -79,7 +80,7 @@ export default function Home({ theme }) {
                 >
                     <Tab label="Home" />
                     <Tab label="Task Board" />
-                    <Tab label="Tasks Assigned" />
+                    <Tab label="Request a Service" />
                 </Tabs>
 
             </SwipeableDrawer>
