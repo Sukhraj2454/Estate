@@ -33,6 +33,8 @@ export default function ExpCardlg({ close, theme }) {
 
                     <Tabs centered
                         value={tab}
+                        variant="scrollable"
+                        scrollButtons
                         onChange={handleTabChange}>
                         <Tab label="Description" />
                         <Tab label="Info" />

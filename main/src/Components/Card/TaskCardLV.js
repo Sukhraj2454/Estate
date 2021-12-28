@@ -20,7 +20,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 const workerHandle = () => {
     console.log("Worker Clicked");
 }
-export default function TaskCardLV({ theme, clr }) {
+export default function TaskCardLV({ theme, clr, sz }) {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const handleToggle = () => {
@@ -28,7 +28,7 @@ export default function TaskCardLV({ theme, clr }) {
     };
     useEffect(() => {
         setTimeout(() => {
-            setLoading(false)
+            setLoading(false);
         }, 0);
     }, []);
 
@@ -49,13 +49,14 @@ export default function TaskCardLV({ theme, clr }) {
                     <Grid item lg={1} sm={1} xs={1} sx={{ pt: 1, pl: 3 }}>
                         <Priority lvl={1} />
                     </Grid >
-                    <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
-                        <Button size="small"
-                            onClick={workerHandle}>
-                            Worker Assigned
-                        </Button>
-                    </Grid>
-                    <Grid item lg={1} sm={1} xs={1} justifyContent={'right'} >
+                    {(sz !== 'sm' && sz !== 'xs') ?
+                        <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
+                            <Button size="small"
+                                onClick={workerHandle}>
+                                Worker Assigned
+                            </Button>
+                        </Grid> : <></>}
+                    <Grid item lg={1} sm={1} xs={1} justifyContent={'right'} sx={{ m: 'auto' }}>
                         <Button size="small"
                             onClick={handleToggle}>
                             <MoreVertIcon />
