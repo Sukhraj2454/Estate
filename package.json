@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Sukhraj2454/MajorProject#readme",
   "dependencies": {
+    "@mui/x-data-grid": "^5.5.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "expressjs": "^1.0.1",
