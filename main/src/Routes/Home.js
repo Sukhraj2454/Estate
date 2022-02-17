@@ -4,6 +4,7 @@ import { useState } from 'react';
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
 import Dashboard from '../Components/Dashboard/Dashboard';
+import WorkersTable from '../Components/Workers/WorkersTable';
 import CreateRequest from '../Components/CreateRequest/CreateRequest';
 
 // MUI Components
@@ -81,6 +82,7 @@ export default function Home({ theme }) {
                 >
                     <Tab label="Home" />
                     <Tab label="Task Board" />
+                    <Tab label="Workers" />
                     <Tab label="Request a Service" />
                 </Tabs>
 
@@ -89,8 +91,9 @@ export default function Home({ theme }) {
                 {tab === 0 && <Dashboard theme={theme} />}
 
                 {tab === 1 && <Taskboard theme={theme} />}
+                {tab === 2 && <WorkersTable />}
 
-                {tab === 2 && <CreateRequest theme={theme} />}
+                {tab === 3 && <CreateRequest theme={theme} />}
             </>
         </Container >
     )
