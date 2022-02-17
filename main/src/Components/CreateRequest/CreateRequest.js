@@ -1,108 +1,106 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
+// React Utils
+import { useState } from 'react';
+
+// MUI Components
+import { Container, Grid } from '@mui/material';
+import { ThemeProvider } from "@mui/material";
 import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
-import SendIcon from '@material-ui/icons/Send';
-import { TextareaAutosize, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import MultipleSelect from './MultipleSelect';
-import BasicDateTimePicker from './BasicDateTimePicker';
-import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
+
+// Other Components
 import ACInput from '../Others/ACInput';
-import Autofillele from './Autofillele';
+import BasicDateTimePicker from './BasicDateTimePicker';
+
+// MUI Icons
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
+import SendIcon from '@material-ui/icons/Send';
+
+const Divbox = function ({ comp }) {
+  return (
+    <Box
+      sx={{
+        width: 500,
+        minWidth: 300,
+        maxWidth: '100%',
+        m: 2
+      }}
+    > {comp}
+    </Box>
+
+  )
+}
+
 export default function CreateRequest({ theme }) {
-  const [Title, setTitle] = React.useState('');
-  const [TypeOfWork, setTypeOfWork] = React.useState('');
-  const [Description, setDecription] = React.useState('');
-  const [Assignee, setAssignee] = React.useState('');
-  const [Reporter, setReporter] = React.useState('');
-  return (<Stack
-    color={"primary"}
-    direction="column" spacing={2} margin={3} alignItems="center">
-    <Typography numberoflines={1} fontSize={"125%"} color={"primary"}> <AddCircleRoundedIcon fontSize='20' color='#1976D2' ></AddCircleRoundedIcon>  Create a Request </Typography>
-    <Box
-      sx={{
-        width: 500,
-        minWidth: 300,
-        maxWidth: '100%',
-      }}
-    > <TextField
-        onChange={(e) => setTitle(e.target.value)}
-        fullWidth label="Title" id="title" />
-    </Box>
-    <Box
-      sx={{
-        width: 500,
-        minWidth: 300,
-        maxWidth: '100%',
-      }}
-    > <TextField
-        onChange={(e) => setTypeOfWork(e.target.value)}
-        fullWidth label="Type of Work" id="fullWidth" />
-    </Box>
-    <Box
-      sx={{
-        width: 500,
-        minWidth: 300,
-        maxWidth: '100%',
-      }}
-    >
-      <BasicDateTimePicker name="Deadline" />
+  const [Title, setTitle] = useState('');
+  const [TypeOfWork, setTypeOfWork] = useState('');
+  const [Description, setDecription] = useState('');
+  const [Assignee, setAssignee] = useState('');
+  const [Reporter, setReporter] = useState('');
+  return (
 
-    </Box>
-    <Box
-      sx={{
-        width: 500,
-        minWidth: 300,
-        maxWidth: '100%',
-      }}
-    >
-      <MultipleSelect />
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth='sm' sx={{ p: 2 }}>
 
-    <Box
+        <Typography
+          sx={{
+            textAlign: 'center',
+            userSelect: 'none'
+          }}
+          component='h1'
+          variant='h4'
+          color={"primary"}>
+          <AddCircleRoundedIcon
+            color='#1976D2' />
+          Create a Request
+        </Typography>
 
-      sx={{
-        width: 500,
-        minWidth: 300,
-        maxWidth: '100%',
-      }}
-    > <TextField multiline
-      onChange={(e) => setDecription(e.target.value)}
-      rows={5}
-      fullWidth label="Description" id="fullWidth" />
-    </Box>
-
-    <Box
-      sx={{
-        width: 500,
-        minWidth: 300,
-        maxWidth: '100%',
-      }}
-    >
-      <Grid container spacing={2} columns={6}>
-        <Grid container item sx="2" >
-          <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Assignee"}/>
-          {/* <Autofillele
+        <Divbox
+          comp={<TextField
             onChange={(e) => setTitle(e.target.value)}
-            title="Assignee" /> */}
+            fullWidth label="Title" id="title" />
+          } />
+        {/* <Divbox comp={<TextField
+          onChange={(e) => setTypeOfWork(e.target.value)}
+          fullWidth label="Type of Work" id="fullWidth" /> } /> */}
+
+        <Grid container columns={8}>
+          <Grid item lg={4} xs={5} sm={4}>
+            <Divbox comp={<BasicDateTimePicker name="Deadline" />} />
+          </Grid>
+          <Grid item lg={4} xs={4} xs={4}>
+            <Divbox comp={<MultipleSelect />} />
+          </Grid>
         </Grid>
-        <Grid container item sx="3">
-          {/* <Autofillele
-            onChange={(e) => setTitle(e.target.value)}
-            title="Reporter" /> */}
+        <Divbox comp={<TextField multiline
+          onChange={(e) => setDecription(e.target.value)}
+          rows={8}
+          fullWidth label="Description" id="fullWidth" />} />
 
-          <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Reporter"} />
-        </Grid>
-      </Grid>
-    </Box>
+        <Divbox comp={
+          <Grid container spacing={2} columns={8}>
 
-    <Button variant="contained" startIcon={<SendIcon />}>
-      Send Request
-    </Button>
+            <Grid container item lg={4} sm={4} xs={5} >
+              <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Assignee"} />
+            </Grid>
 
-  </Stack>)
+            <Grid container item lg={4} sm={4} xs={5}>
+              <ACInput theme={theme} variant='outlined' defValue='' data={top100Films} label={"Reporter"} />
+            </Grid>
+
+          </Grid>} />
+
+
+        <Button variant="contained"
+          sx={{ml:'35%'}}
+          startIcon={<SendIcon />}>
+          Send Request
+        </Button>
+
+      </Container>
+    </ThemeProvider>)
 }
 
 
