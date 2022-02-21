@@ -33,7 +33,7 @@ export default function ExpCardlg({ close, theme }) {
                         <CloseIcon sx={{ p: 1 }} />
                     </Button>
 
-                    <Tabs value={tab} onChange={handleTabChange}>
+                    <Tabs value={tab} onChange={handleTabChange} variant='standard'>
                         <Tab label="Info" />
                         <Tab label="Comments" />
                     </Tabs>

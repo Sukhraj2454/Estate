@@ -52,10 +52,10 @@ export default function Signup({ theme, change }) {
         }).catch(err => {
             console.clear();
             if (err.response && err.response.status === 409) {
-                setMessage("Email Address Already Registered!");
+                setMessage("Error: Email Address Already Registered!");
             }
             else {
-                setMessage("Internal Server Error!");
+                setMessage("Error: Cannot Connect to Server!");
             }
             setSeverity("error");
             setOpen(true);

@@ -1,7 +1,7 @@
+
 // React Libraries and other Utils
 import axios from 'axios';
-
-
+import { useState } from 'react';
 
 // Material UI Components
 import Button from '@mui/material/Button';
@@ -13,10 +13,16 @@ import { ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 
+// Other Components
+import Alert from '../Alerts/Alerts';
 
-const BASE_URL = '';
+const BASE_URL = process.env.URL || '';
 
 const Login = function ({ theme, change }) {
+
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('');
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -28,16 +34,28 @@ const Login = function ({ theme, change }) {
             .then((res) => {
                 const header = res.headers['x-auth']
                 sessionStorage.setItem('x-auth', header);
+                setMessage("Login Successful.");
+                setSeverity("success");
+                setOpen(true);
+                window.location.href = "/home"; // Successful Login
             })
             .catch(err => {
                 console.clear();
-                if (err.response)
-                    alert(err.response.data.message)
+                if (err.response) {
+
+                    setMessage(err.response.data.message);
+                    setSeverity("error");
+                    setOpen(true);
+                }
             })
     };
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth='xs'>
+                {/*  Alerts */}
+                <Alert open={open} severity={severity} setOpen={setOpen} message={message} />
+
+
                 <Box                // Used to define any block element
                     sx={{           // Accepts all CSS or any valid properties
                         marginTop: 8,

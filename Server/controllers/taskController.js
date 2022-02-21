@@ -35,26 +35,19 @@ module.exports.addTask = (req, res, next) => {
 
 // Get All Tasks
 module.exports.getAllTasks = (req, res, next) => {
-    if (req.user.desig != 'Admin') {
-        let error = new Error("Admin Required")
-        error.message = "Not Enough Access Rights. This Incident shall be Reported.";
-        error.statusCode = 403
-        next(error)
-    }
-    else {
-        Task.find().then((obj) => {
-            if (obj.length === 0) {
-                let error = new Error("No Tasks")
-                error.message = "No Tasks Found";
-                error.statusCode = 404
-                throw error;
-            }
-            res.status(200).json(obj);
-        })
-            .catch(err => {
-                next(err)
-            })
-    }
+
+    Task.find().then((obj) => {
+        if (obj.length === 0) {
+            let error = new Error("No Tasks")
+            error.message = "No Tasks Found";
+            error.statusCode = 404
+            throw error;
+        }
+        res.status(200).json(obj);
+    })
+      .catch(err => {
+          next(err)
+      })
 }
 
 

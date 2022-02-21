@@ -1,5 +1,6 @@
 // React Utils.
 import { useState } from 'react';
+import axios from 'axios';
 
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
@@ -19,6 +20,10 @@ import Tab from '@mui/material/Tab';
 // MUI Icons
 import MenuIcon from '@mui/icons-material/Menu';
 
+
+const BASE_URL = process.env.URL || '';
+
+
 export default function Home({ theme }) {
 
     const [open, setOpen] = useState(false);
@@ -35,7 +40,23 @@ export default function Home({ theme }) {
     const handleTabChange = (event, newValue) => {
         setTab(newValue);
     }
-
+    const handleLogout = () => {
+        axios.delete(`${BASE_URL}/user/logout`, {
+            headers: {
+                'x-auth': sessionStorage.getItem('x-auth')
+            }
+        })
+            .then((res) => {
+                console.log(res);
+                sessionStorage.clear();
+                window.location.href = '/';
+            })
+            .catch(err => {
+                console.log(err);
+                // sessionStorage.clear();
+                // window.location.href = '/';
+            })
+    }
     return (
         <Container maxWidth='xl' component='main'>
             <AppBar position="static">
@@ -55,7 +76,7 @@ export default function Home({ theme }) {
                         Service Desk NITJ
                     </Typography>
 
-                    <Button color="inherit">Logout</Button>
+                    <Button color="inherit" onClick={handleLogout}>Logout</Button>
 
                 </Toolbar>
             </AppBar>

@@ -9,14 +9,14 @@ export default function BasicDateTimePicker(props) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-    <DatePicker
-      label={props.name}
-      value={value}
-      onChange={(newValue) => {
-        setValue(newValue);
-      }}
-      renderInput={(params) => <TextField {...params} />}
-    />
-  </LocalizationProvider>
+      <DatePicker
+        label={props.name}
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
   );
 }

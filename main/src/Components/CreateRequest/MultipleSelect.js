@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -33,8 +32,7 @@ function getStyles(priority, Priority, theme) {
   };
 }
 
-export default function MultipleSelect() {
-  const theme = useTheme();
+export default function MultipleSelect({theme}) {
   const [priority, setPriority] = React.useState([]);
 
   const handleChange = (event) => {

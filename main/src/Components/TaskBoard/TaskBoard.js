@@ -24,7 +24,7 @@ export default function TaskBoard({ theme }) {
             },
         }),
     );
-
+    
     const wd = useWidth();
 
     return (

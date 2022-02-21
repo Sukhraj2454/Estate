@@ -11,11 +11,11 @@ function App() {
 
       <Switch>
 
-        <Route path="/home" exact>
+        <Route path="/" exact>
           <Main theme={theme} />
         </Route>
 
-        <Route path="/" exact>
+        <Route path="/home" exact>
           <Home theme={theme} />
         </Route>
       </Switch>

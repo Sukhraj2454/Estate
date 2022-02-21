@@ -97,7 +97,6 @@ module.exports.getUser = (req, res, next) => {
     res.send(req.user.toJson());
 }
 
-
 module.exports.logout = (req, res, next) => {
     var token = req.token;
     this.findByToken(token).then((obj) => {

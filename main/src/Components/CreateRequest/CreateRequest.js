@@ -15,8 +15,8 @@ import ACInput from '../Others/ACInput';
 import BasicDateTimePicker from './BasicDateTimePicker';
 
 // MUI Icons
-import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
-import SendIcon from '@material-ui/icons/Send';
+// import AddCircleIcon from '@mui/icons-material/AddCircle';
+// import SendIcon from '@material-ui/icons/Send';
 
 const Divbox = function ({ comp }) {
   return (
@@ -34,10 +34,15 @@ const Divbox = function ({ comp }) {
 }
 
 export default function CreateRequest({ theme }) {
+  // eslint-disable-next-line
   const [Title, setTitle] = useState('');
+  // eslint-disable-next-line
   const [TypeOfWork, setTypeOfWork] = useState('');
+  // eslint-disable-next-line
   const [Description, setDecription] = useState('');
+  // eslint-disable-next-line
   const [Assignee, setAssignee] = useState('');
+  // eslint-disable-next-line
   const [Reporter, setReporter] = useState('');
   return (
 
@@ -52,8 +57,8 @@ export default function CreateRequest({ theme }) {
           component='h1'
           variant='h4'
           color={"primary"}>
-          <AddCircleRoundedIcon
-            color='#1976D2' />
+          {/* <AddCircleRoundedIcon
+            color='#1976D2' /> */}
           Create a Request
         </Typography>
 
@@ -71,7 +76,7 @@ export default function CreateRequest({ theme }) {
             <Divbox comp={<BasicDateTimePicker name="Deadline" />} />
           </Grid>
           <Grid item lg={4} xs={4} xs={4}>
-            <Divbox comp={<MultipleSelect />} />
+            <Divbox comp={<MultipleSelect theme={theme} />} />
           </Grid>
         </Grid>
         <Divbox comp={<TextField multiline
@@ -94,8 +99,9 @@ export default function CreateRequest({ theme }) {
 
 
         <Button variant="contained"
-          sx={{ml:'35%'}}
-          startIcon={<SendIcon />}>
+          sx={{ ml: '35%' }}
+        // startIcon={<SendIcon />}
+        >
           Send Request
         </Button>
 

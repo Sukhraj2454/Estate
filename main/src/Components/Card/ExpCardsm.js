@@ -31,7 +31,7 @@ export default function ExpCardlg({ close, theme }) {
                         <CloseIcon sx={{ p: 1 }} />
                     </Button>
 
-                    <Tabs centered
+                    <Tabs
                         value={tab}
                         variant="scrollable"
                         scrollButtons
