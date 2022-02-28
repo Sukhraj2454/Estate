@@ -15,12 +15,21 @@ import Tab from '@mui/material/Tab';
 // MUI Icons
 import CloseIcon from '@mui/icons-material/Close';
 
+const TabPanel = ({ comp, value, index }) => {
+    return (
+        <div
+            hidden={value !== index}
+        >{comp}</div>
 
-export default function ExpCardlg({ close, theme }) {
-    const [tab, setTab] = useState(0);
+    )
+}
+
+export default function ExpCardlg({ close, theme, workers }) {
+    const [tab, setTab] = useState(10);
 
 
     const handleTabChange = (event, newValue) => {
+        event.preventDefault();
         setTab(newValue);
     };
 
@@ -34,12 +43,12 @@ export default function ExpCardlg({ close, theme }) {
                     </Button>
 
                     <Tabs value={tab} onChange={handleTabChange} variant='standard'>
-                        <Tab label="Info" />
-                        <Tab label="Comments" />
+                        <Tab label="Info" value={10} />
+                        <Tab label="Comments" value={11} />
                     </Tabs>
 
-                    {(tab === 0) ?
-                        (
+                    <TabPanel value={tab} index={10}
+                        comp={
                             <Grid container columns={5}>
 
                                 <Grid item xs={3} lg={3}>
@@ -49,13 +58,14 @@ export default function ExpCardlg({ close, theme }) {
                                 <Grid item sx={{
                                     width: "35%"
                                 }}>
-                                    <Info />
+                                    <Info workers={workers} />
                                 </Grid>
 
                             </Grid>
 
-                        ) :
-                        <Comments />}
+                        }
+                    />
+                    <TabPanel value={tab} index={11} comp={<Comments />} />
                 </Paper>
             </Container >
         </ThemeProvider>

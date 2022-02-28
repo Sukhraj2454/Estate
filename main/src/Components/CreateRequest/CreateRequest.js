@@ -75,7 +75,7 @@ export default function CreateRequest({ theme }) {
           <Grid item lg={4} xs={5} sm={4}>
             <Divbox comp={<BasicDateTimePicker name="Deadline" />} />
           </Grid>
-          <Grid item lg={4} xs={4} xs={4}>
+          <Grid item lg={4} xs={4} sm={4}>
             <Divbox comp={<MultipleSelect theme={theme} />} />
           </Grid>
         </Grid>

@@ -10,10 +10,10 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 
-export default function TaskBoardsm({ theme, useStyles }) {
+export default function TaskBoardsm({ theme, useStyles, workers, cards }) {
 
     const classes = useStyles();
-    const toDoCards = [<TaskCard key='1' theme={theme} />];
+    const toDoCards = [<TaskCard workers={workers} key='1' theme={theme} />];
     const inProgressCards = [];
     const reviewCards = [];
     const completedCards = [];

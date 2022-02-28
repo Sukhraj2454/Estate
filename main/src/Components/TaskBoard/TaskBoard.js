@@ -10,7 +10,7 @@ import { createStyles, makeStyles } from '@mui/styles';
 
 
 
-export default function TaskBoard({ theme }) {
+export default function TaskBoard({ theme, workers, cards }) {
 
     const useStyles = makeStyles(() =>
         createStyles({
@@ -24,12 +24,22 @@ export default function TaskBoard({ theme }) {
             },
         }),
     );
-    
+
     const wd = useWidth();
 
     return (
         (wd !== 'xs' && wd !== 'sm') ?
-            <TaskBoardlg theme={theme} useStyles={useStyles} />
-            : <TaskBoardsm theme={theme} useStyles={useStyles} />
+            <TaskBoardlg
+                theme={theme}
+                useStyles={useStyles}
+                workers={workers}
+                cards={cards}
+            />
+            : <TaskBoardsm
+                theme={theme}
+                useStyles={useStyles}
+                workers={workers}
+                cards={cards}
+            />
     )
 }

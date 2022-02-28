@@ -20,7 +20,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 const workerHandle = () => {
     console.log("Worker Clicked");
 }
-export default function TaskCardLV({ theme, clr, sz }) {
+export default function TaskCardLV({ theme, clr, sz, workers }) {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const handleToggle = () => {
@@ -69,7 +69,7 @@ export default function TaskCardLV({ theme, clr, sz }) {
                     open={open}
                 >
                     <Container component='main'>
-                        <ExpandedCard close={handleToggle} theme={theme} />
+                        <ExpandedCard workers={workers} close={handleToggle} theme={theme} />
                     </Container>
                 </Backdrop>
             </Container >

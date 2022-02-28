@@ -10,9 +10,9 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 
-export default function TaskBoardlg({ theme, useStyles }) {
+export default function TaskBoardlg({ theme, workers, cards, useStyles }) {
 
-    const toDoCards = [<TaskCard key='1' theme={theme} />];
+    const toDoCards = [<TaskCard workers={workers} key='1' theme={theme} />];
     const inProgressCards = [];
     const reviewCards = [];
     const completedCards = [];

@@ -22,7 +22,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 const workerHandle = () => {
     console.log("Worker Clicked");
 }
-export default function TaskCard({ theme }) {
+export default function TaskCard({ theme, workers }) {
     const [open, setOpen] = useState(false);
 
     const handleToggle = () => {
@@ -71,7 +71,7 @@ export default function TaskCard({ theme }) {
                 open={open}
             >
                 <Container component='main'>
-                    <ExpandedCard close={handleToggle} theme={theme} />
+                    <ExpandedCard close={handleToggle} workers={workers} theme={theme} />
                 </Container>
             </Backdrop>
         </Container >

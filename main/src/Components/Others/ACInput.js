@@ -34,9 +34,9 @@ export default function ACInput({ data, label, defValue, variant }) {
                 // Regular option
                 return option.title;
             }}
-            renderOption={(props, option) => <li {...props}>{option.title}</li>}
-            sx={{ width: 300, ml: 'auto', mr: 'auto', mt: 2, mb: 2 }}
             freeSolo
+            renderOption={(props, option) => <li  {...props} key={option.id || option.title || option}>{option.title}</li>}
+            sx={{ width: 300, ml: 'auto', mr: 'auto', mt: 2, mb: 2 }}
             renderInput={(params) => (
                 <TextField {...params}
                     variant={variant || "standard"}

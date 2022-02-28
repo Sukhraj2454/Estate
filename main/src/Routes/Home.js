@@ -1,6 +1,8 @@
 // React Utils.
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+// Other Utils
+import { getUsers, getCards } from '../Utils/controller';
 
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
@@ -28,7 +30,14 @@ export default function Home({ theme }) {
 
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState(0);
+    const [workers, setWorkers] = useState([{ 'title': 'No Worker Data Found.' }]);
+    const [cards, setCards] = useState([]);
+    // This data object is basis for app we will store most of data from backend here and then pass it down to Components
 
+    useEffect(() => {
+        getCards(setCards);
+        getUsers(setWorkers);
+    }, []);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -47,14 +56,10 @@ export default function Home({ theme }) {
             }
         })
             .then((res) => {
-                console.log(res);
                 sessionStorage.clear();
                 window.location.href = '/';
             })
             .catch(err => {
-                console.log(err);
-                // sessionStorage.clear();
-                // window.location.href = '/';
             })
     }
     return (
@@ -101,20 +106,34 @@ export default function Home({ theme }) {
                     onChange={handleTabChange}
                     sx={{ borderRight: 1, borderColor: 'divider', width: 250 }}
                 >
-                    <Tab label="Home" />
-                    <Tab label="Task Board" />
-                    <Tab label="Workers" />
-                    <Tab label="Request a Service" />
+                    <Tab label="Home" value={0} />
+                    <Tab label="Task Board" value={1} />
+                    <Tab label="Workers" value={2} />
+                    <Tab label="Request a Service" value={3} />
                 </Tabs>
 
             </SwipeableDrawer>
             <>
-                {tab === 0 && <Dashboard theme={theme} />}
-
-                {tab === 1 && <Taskboard theme={theme} />}
-                {tab === 2 && <WorkersTable />}
-
-                {tab === 3 && <CreateRequest theme={theme} />}
+                <div hidden={tab !== 0}>
+                    <Dashboard
+                        theme={theme}
+                        workers={workers}
+                        cards={cards}
+                    />
+                </div>
+                <div hidden={tab !== 1}>
+                    <Taskboard
+                        theme={theme}
+                        workers={workers}
+                        cards={cards}
+                    />
+                </div>
+                <div hidden={tab !== 2}>
+                    {/* <WorkersTable /> */}
+                </div>
+                <div hidden={tab !== 3}>
+                    {/* <CreateRequest theme={theme} /> */}
+                </div>
             </>
         </Container >
     )

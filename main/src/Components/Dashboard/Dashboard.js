@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 // Mui Icons
 
-export default function Dashboard({ theme }) {
+export default function Dashboard({ theme, workers, cards }) {
     const sz = useWidth();
     const len = (sz !== 'sm' && sz !== 'xs') ? 10 : 12
 
@@ -40,8 +40,8 @@ export default function Dashboard({ theme }) {
                         />
 
                         <Box component='div' sx={{ height: 450, overflowY: 'scroll' }}>
-                            <TaskCardLV key='1' theme={theme} clr='#EEEEEE' sz={sz} />
-                            <TaskCardLV theme={theme} sz={sz} />
+                            <TaskCardLV key='1' workers={workers} theme={theme} clr='#EEEEEE' sz={sz} />
+                            <TaskCardLV workers={workers} theme={theme} sz={sz} />
                             {/* <TaskCardLV theme={theme} clr='#EEEEEE' />
                             <TaskCardLV theme={theme} />
                             <TaskCardLV theme={theme} clr='#EEEEEE' />

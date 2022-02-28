@@ -16,11 +16,11 @@ import Tab from '@mui/material/Tab';
 // MUI Icons
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function ExpCardlg({ close, theme }) {
-    const [tab, setTab] = useState(0);
+export default function ExpCardsm({ close, theme, workers }) {
+    const [tabesm, setTabEsm] = useState(20);
 
     const handleTabChange = (event, newValue) => {
-        setTab(newValue);
+        setTabEsm(newValue);
     };
     return (
         <ThemeProvider theme={theme}>
@@ -32,22 +32,22 @@ export default function ExpCardlg({ close, theme }) {
                     </Button>
 
                     <Tabs
-                        value={tab}
+                        value={tabesm}
                         variant="scrollable"
                         scrollButtons
                         onChange={handleTabChange}>
-                        <Tab label="Description" />
-                        <Tab label="Info" />
-                        <Tab label="Comments" />
+                        <Tab label="Description" value={20} />
+                        <Tab label="Info" value={21} />
+                        <Tab label="Comments" value={22} />
                     </Tabs>
 
-                    <div hidden={tab !== 0}>
+                    <div hidden={tabesm !== 20}>
                         <Desc />
                     </div>
-                    <div hidden={tab !== 1}>
-                        <Info theme={theme} />
+                    <div hidden={tabesm !== 21}>
+                        <Info theme={theme} workers={workers} />
                     </div>
-                    <div hidden={tab !== 2}>
+                    <div hidden={tabesm !== 22}>
                         <Comments />
                     </div>
 
