@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function Info({ theme, workers }) {
+export default function Info({ theme, workers, data }) {
     const [priority, setPriority] = useState('Medium');
     const [status, setStatus] = useState('To Do');
     const handleStatusChange = (event) => {
@@ -21,7 +21,7 @@ export default function Info({ theme, workers }) {
     const handlePriorityChange = (event) => {
         setPriority(event.target.value);
     };
-    // console.log(workers)
+    
     return (
         <Container component={'main'} maxWidth='sm'>
 

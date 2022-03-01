@@ -9,14 +9,14 @@ import ExpCardlg from "./ExpCardlg";
 import ExpCardsm from './ExpCardsm';
 
 
-export default function ExpandedCard({ close, theme, workers }) {
+export default function ExpandedCard({ close, theme, workers, data }) {
     const wd = useWidth();  // get viewport size
     return (
         <>
             {
                 (wd !== 'xs' && wd !== 'sm') ?
-                    <ExpCardlg close={close} workers={workers} theme={theme} /> :
-                    <ExpCardsm close={close} workers={workers} theme={theme} />
+                    <ExpCardlg close={close} data={data} workers={workers} theme={theme} /> :
+                    <ExpCardsm close={close} data={data} workers={workers} theme={theme} />
             }
         </>
     )

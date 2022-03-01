@@ -1,6 +1,8 @@
+// React Utils
+import { useState, useEffect } from 'react';
 // Utils
 import useWidth from '../../Utils/useWidth';
-
+import { getCards } from '../../Utils/controller';
 // Components
 import TaskBoardlg from './TaskBoardlg';
 import TaskBoardsm from './TaskBoardsm';
@@ -10,7 +12,11 @@ import { createStyles, makeStyles } from '@mui/styles';
 
 
 
-export default function TaskBoard({ theme, workers, cards }) {
+export default function TaskBoard({ theme, workers }) {
+    const [cards, setCards] = useState([]);
+    useEffect(() => {
+        getCards(setCards);
+    }, []);
 
     const useStyles = makeStyles(() =>
         createStyles({

@@ -22,13 +22,16 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 const workerHandle = () => {
     console.log("Worker Clicked");
 }
-export default function TaskCard({ theme, workers }) {
+export default function TaskCard({ theme, workers, data }) {
     const [open, setOpen] = useState(false);
-
     const handleToggle = () => {
         setOpen(!open);
     };
-    return (
+    if (!data) {
+        return (<div></div>)
+    }
+
+    return data ? (
         <Container component={'main'}>
             <Card sx={{ maxWidth: 340, margin: 'auto', mb: 1 }}>
                 <CardContent>
@@ -36,7 +39,7 @@ export default function TaskCard({ theme, workers }) {
 
                         <Grid item lg={5} sm={5} xs={5}>
                             <Typography gutterBottom variant="h6" component="h2">
-                                Electricity Bulb Needed for CS304.
+                                {data.title}
                             </Typography>
                         </Grid >
 
@@ -51,14 +54,14 @@ export default function TaskCard({ theme, workers }) {
                         </Grid >
 
                         <Grid item lg={1} sm={1} xs={1} sx={{ pt: 1 }}>
-                            <Priority lvl={1} />
+                            <Priority lvl={data.priority} />
                         </Grid >
 
                         <Grid item>
                             <CardActions>
                                 <Button size="small"
                                     onClick={workerHandle}>
-                                    Worker Assigned
+                                    {data.assignee ? data.assignee.name : "Assign Worker"}
                                 </Button>
                             </CardActions>
                         </Grid>
@@ -71,9 +74,9 @@ export default function TaskCard({ theme, workers }) {
                 open={open}
             >
                 <Container component='main'>
-                    <ExpandedCard close={handleToggle} workers={workers} theme={theme} />
+                    <ExpandedCard data={data} close={handleToggle} workers={workers} theme={theme} />
                 </Container>
             </Backdrop>
         </Container >
-    );
+    ) : (<div></div>)
 }

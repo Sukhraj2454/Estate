@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 // Other Utils
-import { getUsers, getCards } from '../Utils/controller';
+import { getUsers } from '../Utils/controller';
 
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
@@ -31,11 +31,10 @@ export default function Home({ theme }) {
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState(0);
     const [workers, setWorkers] = useState([{ 'title': 'No Worker Data Found.' }]);
-    const [cards, setCards] = useState([]);
+
     // This data object is basis for app we will store most of data from backend here and then pass it down to Components
 
     useEffect(() => {
-        getCards(setCards);
         getUsers(setWorkers);
     }, []);
     const handleDrawerOpen = () => {
@@ -118,14 +117,12 @@ export default function Home({ theme }) {
                     <Dashboard
                         theme={theme}
                         workers={workers}
-                        cards={cards}
                     />
                 </div>
                 <div hidden={tab !== 1}>
                     <Taskboard
                         theme={theme}
                         workers={workers}
-                        cards={cards}
                     />
                 </div>
                 <div hidden={tab !== 2}>
