@@ -4,20 +4,24 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 const filter = createFilterOptions();
 
-export default function ACInput({ data, label, defValue, variant }) {
+export default function ACInput({ data, label, defValue, variant, setTitle }) {
     const [value, setValue] = useState(defValue || '');
     return (
         <Autocomplete
             value={value}
-            onChange={(event, newValue) => {
-                if (typeof newValue === 'string') {
-                    setValue({
-                        title: newValue,
-                    });
-                } else {
-                    setValue(newValue);
+            onChange={
+                (event, newValue) => {
+                    if (typeof newValue === 'string') {
+                        setValue({
+                            title: newValue,
+                        });
+                        setTitle(newValue);
+                    } else {
+                        setValue(newValue);
+                        setTitle(newValue.title);
+                    }
                 }
-            }}
+            }
             filterOptions={(options, params) => {
                 const filtered = filter(options, params);
                 return filtered;
@@ -44,4 +48,7 @@ export default function ACInput({ data, label, defValue, variant }) {
             )}
         />
     );
+}
+ACInput.defaultProps = {
+    setTitle: () => { }
 }

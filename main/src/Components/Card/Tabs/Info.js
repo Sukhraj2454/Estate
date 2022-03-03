@@ -12,21 +12,38 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function Info({ theme, workers, data }) {
-    const [priority, setPriority] = useState('Medium');
-    const [status, setStatus] = useState('To Do');
+function Info({ theme, workers, data, set }) {
+    const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
+    const [status, setStatus] = useState(data ? data.status : '');
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
     };
     const handlePriorityChange = (event) => {
         setPriority(event.target.value);
+        set[1](event.target.value === 'Medium' ? 1 : 2);
     };
-    
     return (
         <Container component={'main'} maxWidth='sm'>
 
-            <ACInput theme={theme} variant='outlined' defValue='' data={workers} label={"Assignee"} />
-            <ACInput theme={theme} variant='outlined' defValue='' data={workers} label={"Reporter"} />
+            <ACInput theme={theme} variant='outlined'
+                setTitle={set[2]}
+                defValue={
+                    {
+                        title: data.assignee.name,
+                        id: data.assignee.id
+                    }}
+                data={workers}
+                label={"Assignee"} />
+
+            <ACInput theme={theme} variant='outlined'
+                defValue={{
+                    title: data.reporter.name,
+                    id: data.reporter.id
+                }}
+                data={workers}
+                label={"Reporter"} />
+
+
             <FormControl fullWidth sx={{ mb: 3, mt: 3 }}>
                 <InputLabel id="priority-select-label">Priority</InputLabel>
                 <Select
@@ -56,3 +73,5 @@ export default function Info({ theme, workers, data }) {
             </FormControl>
         </Container>)
 }
+
+export default Info;

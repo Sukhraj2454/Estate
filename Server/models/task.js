@@ -13,18 +13,22 @@ const TaskSchema = new mongoose.Schema({
     },
     reporter: {
         name: {
-            type: String
+            type: String,
+            default:''
         },
         id: {
-            type: String
+            type: String,
+            defaukt:''
         }
     },
     assignee: {
         name: {
-            type: String
+            type: String,
+            default:''
         },
         id: {
-            type: String
+            type: String,
+            default:''
         }
     },
     status: {

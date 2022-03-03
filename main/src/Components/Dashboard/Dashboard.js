@@ -42,20 +42,6 @@ export default function Dashboard({ theme, workers, cards }) {
                         <Box component='div' sx={{ height: 450, overflowY: 'scroll' }}>
                             <TaskCardLV key='1' workers={workers} theme={theme} clr='#EEEEEE' sz={sz} />
                             <TaskCardLV workers={workers} theme={theme} sz={sz} />
-                            {/* <TaskCardLV theme={theme} clr='#EEEEEE' />
-                            <TaskCardLV theme={theme} />
-                            <TaskCardLV theme={theme} clr='#EEEEEE' />
-                            <TaskCardLV theme={theme} />
-                            <TaskCardLV theme={theme} clr='#EEEEEE' />
-                            <TaskCardLV theme={theme} />
-                            <TaskCardLV theme={theme} clr='#EEEEEE' />
-                            <TaskCardLV theme={theme} />
-                            <TaskCardLV theme={theme} clr='#EEEEEE' />
-                            <TaskCardLV theme={theme} />
-                            <TaskCardLV theme={theme} clr='#EEEEEE' />
-                            <TaskCardLV theme={theme} />
-                            <TaskCardLV theme={theme} clr='#EEEEEE' /> */}
-
                         </Box>
                     </Grid>
                 </Grid>

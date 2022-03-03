@@ -27,11 +27,10 @@ export default function TaskCard({ theme, workers, data }) {
     const handleToggle = () => {
         setOpen(!open);
     };
-    if (!data) {
-        return (<div></div>)
-    }
-
-    return data ? (
+    const [title, setTitle] = useState(data.title);
+    const [priority, setPriority] = useState(data.priority);
+    const [worker, setWorker] = useState(data.assignee.name);
+    return (
         <Container component={'main'}>
             <Card sx={{ maxWidth: 340, margin: 'auto', mb: 1 }}>
                 <CardContent>
@@ -39,7 +38,7 @@ export default function TaskCard({ theme, workers, data }) {
 
                         <Grid item lg={5} sm={5} xs={5}>
                             <Typography gutterBottom variant="h6" component="h2">
-                                {data.title}
+                                {title}
                             </Typography>
                         </Grid >
 
@@ -54,14 +53,14 @@ export default function TaskCard({ theme, workers, data }) {
                         </Grid >
 
                         <Grid item lg={1} sm={1} xs={1} sx={{ pt: 1 }}>
-                            <Priority lvl={data.priority} />
+                            <Priority lvl={priority} />
                         </Grid >
 
                         <Grid item>
                             <CardActions>
                                 <Button size="small"
                                     onClick={workerHandle}>
-                                    {data.assignee ? data.assignee.name : "Assign Worker"}
+                                    {worker}
                                 </Button>
                             </CardActions>
                         </Grid>
@@ -74,9 +73,22 @@ export default function TaskCard({ theme, workers, data }) {
                 open={open}
             >
                 <Container component='main'>
-                    <ExpandedCard data={data} close={handleToggle} workers={workers} theme={theme} />
+                    <ExpandedCard data={data} set={[setTitle, setPriority, setWorker]} close={handleToggle} workers={workers} theme={theme} />
                 </Container>
             </Backdrop>
-        </Container >
-    ) : (<div></div>)
+        </Container >)
+}
+TaskCard.defaultProps = {
+    data: {
+        assignee: {
+            name: '',
+            id: ''
+        },
+        reporter: {
+            name: '',
+            id: ''
+        },
+        status: 'To Do',
+        priority: 'Medium'
+    }
 }

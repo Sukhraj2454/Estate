@@ -16,7 +16,7 @@ import Tab from '@mui/material/Tab';
 // MUI Icons
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function ExpCardsm({ close, theme, workers, data }) {
+export default function ExpCardsm({ close, theme, workers, data, set }) {
     const [tabesm, setTabEsm] = useState(20);
 
     const handleTabChange = (event, newValue) => {
@@ -42,10 +42,10 @@ export default function ExpCardsm({ close, theme, workers, data }) {
                     </Tabs>
 
                     <div hidden={tabesm !== 20}>
-                        <Desc data={data} />
+                        <Desc set={set} data={data} />
                     </div>
                     <div hidden={tabesm !== 21}>
-                        <Info theme={theme} workers={workers} data={data} />
+                        <Info set={set} theme={theme} workers={workers} data={data} />
                     </div>
                     <div hidden={tabesm !== 22}>
                         <Comments />

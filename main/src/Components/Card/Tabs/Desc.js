@@ -3,22 +3,23 @@ import { useState } from "react";
 // MUI Components
 import { TextField, Button } from "@mui/material";
 
-export default function Desc({ data }) {
-    const [description, setDescription] = useState(data ? data.description : "");
-    const [title, setTitle] = useState(data ? data.title : "");
-    const [titleText, setTText] = useState(data ? data.title : "");
-    const [descText, setDText] = useState(data ? data.description : "");
+export default function Desc({ data, set }) {
+    const [description, setDescription] = useState(data.description);
+    const [title, setTitle] = useState(data.title);
+    const [titleText, setTText] = useState(data.title);
+    const [descText, setDText] = useState(data.description);
     const handleTitleChange = (event) => {
         setTText(event.target.value);
     }
     const handleDescChange = (event) => {
         setDText(event.target.value);
     }
-    const updateChange = ()=>{
+    const updateChange = () => {
         setTitle(titleText);
+        set[0](titleText);
         setDescription(descText);
     }
-    const discardChange = ()=>{
+    const discardChange = () => {
         setTText(title);
         setDText(description);
     }
@@ -34,8 +35,8 @@ export default function Desc({ data }) {
             multiline
             rows={12}
         />
-        <Button sx={{ ml: 3, mt: 1 }} onClick = {updateChange} color="success" variant="contained" disabled={descText === description && titleText === title} >Update</Button>
-        <Button sx={{ ml: 3, mt: 1 }} onClick = {discardChange} color="error" variant="contained" disabled={descText === description && titleText === title}>Discard Changes</Button>
+        <Button sx={{ ml: 3, mt: 1 }} onClick={updateChange} color="success" variant="contained" disabled={descText === description && titleText === title} >Update</Button>
+        <Button sx={{ ml: 3, mt: 1 }} onClick={discardChange} color="error" variant="contained" disabled={descText === description && titleText === title}>Discard Changes</Button>
 
     </>)
 }

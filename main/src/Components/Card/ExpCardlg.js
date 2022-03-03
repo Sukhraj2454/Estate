@@ -24,7 +24,7 @@ const TabPanel = ({ comp, value, index }) => {
     )
 }
 
-export default function ExpCardlg({ close, theme, workers, data }) {
+export default function ExpCardlg({ close, theme, workers, data, set }) {
     const [tab, setTab] = useState(10);
 
 
@@ -52,13 +52,13 @@ export default function ExpCardlg({ close, theme, workers, data }) {
                             <Grid container columns={5}>
 
                                 <Grid item xs={3} lg={3}>
-                                    <Desc data={data} />
+                                    <Desc set={set} data={data} />
                                 </Grid>
 
                                 <Grid item sx={{
                                     width: "35%"
                                 }}>
-                                    <Info workers={workers} data={data} />
+                                    <Info set={set} workers={workers} data={data} />
                                 </Grid>
 
                             </Grid>
