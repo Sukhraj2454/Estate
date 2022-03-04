@@ -1,12 +1,12 @@
 // React Utils
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // Other Components
 import TaskCard from '../Card/TaskCard';
 import ToDo from './StatusColumns/lg/ToDo';
 import InProgress from './StatusColumns/lg/InProgress';
-import Completed from './StatusColumns/lg/Completed';
 import Review from './StatusColumns/lg/Review';
+import Completed from './StatusColumns/lg/Completed';
 
 // Material UI Components
 import Container from '@mui/material/Container';
@@ -14,28 +14,43 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 
 export default function TaskBoardlg({ theme, workers, cards, useStyles }) {
-
+    
+    const firstRender = useRef(true);
     const [toDoCards, setTDC] = useState([<TaskCard workers={workers} key='1' theme={theme} />]);
     const [inProgressCards, setIPC] = useState([]);
     const [reviewCards, setRC] = useState([]);
     const [completedCards, setCC] = useState([]);
+    const [cardsArr, setCards] = useState(cards);
+
     useEffect(() => {
+        if (cardsArr.length > 0) {
+            firstRender.current = false;
+        }
+        if (firstRender.current) {
+            if (cards.length > 0) {
+                firstRender.current = false;
+                setCards(cards);
+                return;
+            }
+            setCards([])
+            return;
+        }
         let tdc = [], ipc = [], rc = [], cc = [];
-        cards.forEach(card => {
+        cardsArr.forEach(card => {
             if (card.status === 'To Do')
-                tdc.push(<TaskCard workers={workers} data={card} key={card._id} theme={theme} />)
+                tdc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
             else if (card.status === 'In Progress')
-                ipc.push(<TaskCard workers={workers} data={card} key={card._id} theme={theme} />)
+                ipc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
             else if (card.status === 'Review')
-                rc.push(<TaskCard workers={workers} data={card} key={card._id} theme={theme} />)
-            else cc.push(<TaskCard workers={workers} data={card} key={card._id} theme={theme} />)
+                rc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
+            else cc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
 
         })
         setTDC(tdc)
         setIPC(ipc)
         setRC(rc)
         setCC(cc)
-    }, [cards, workers, theme])
+    }, [cards, cardsArr, workers, theme])
     const classes = useStyles();
     const mh = 550;
     return (

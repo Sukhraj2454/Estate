@@ -102,10 +102,10 @@ export default function Home({ theme }) {
             </SwipeableDrawer>
             <>
                 <div hidden={tab !== 0}>
-                    <Dashboard
+                    {/* <Dashboard
                         theme={theme}
                         workers={workers}
-                    />
+                    /> */}
                 </div>
                 <div hidden={tab !== 1}>
                     <Taskboard

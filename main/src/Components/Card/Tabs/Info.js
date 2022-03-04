@@ -14,14 +14,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-function Info({ theme, workers, data, set }) {
+function Info({ theme, workers, data, set}) {
     const firstStatusRender = useRef(true);
     const firstPriorityRender = useRef(true);
-    const firstAssigneeRender = useRef(true);
-    const firstReporterRender = useRef(true);
     const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
     const [status, setStatus] = useState(data ? data.status : 'To Do');
-    
+
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
     };
@@ -29,7 +27,7 @@ function Info({ theme, workers, data, set }) {
         setPriority(event.target.value);
         set[1](event.target.value === 'Medium' ? 1 : 2);
     };
-  
+
     useEffect(() => {
         if (firstStatusRender.current) {
             firstStatusRender.current = false;

@@ -105,7 +105,7 @@ export default function TaskCard({ theme, workers, data }) {
                 open={open}
             >
                 <Container component='main'>
-                    <ExpandedCard data={dt} set={[setTitle, setPriority, setAssignee, setReporter]} close={handleToggle} workers={workers} theme={theme} />
+                    <ExpandedCard data={dt}set={[setTitle, setPriority, setAssignee, setReporter]} close={handleToggle} workers={workers} theme={theme} />
                 </Container>
             </Backdrop>
         </Container >)

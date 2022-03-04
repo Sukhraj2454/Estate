@@ -28,8 +28,8 @@ export default function ExpandedCard({ close, theme, workers, data, set }) {
         <>
             {
                 (wd !== 'xs' && wd !== 'sm') ?
-                    <ExpCardlg close={close} data={data || dt} set={set} workers={workers} theme={theme} /> :
-                    <ExpCardsm close={close} data={data || dt} set={set} workers={workers} theme={theme} />
+                    <ExpCardlg close={close}  data={data || dt} set={set} workers={workers} theme={theme} /> :
+                    <ExpCardsm close={close}  data={data || dt} set={set} workers={workers} theme={theme} />
             }
         </>
     )

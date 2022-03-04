@@ -22,7 +22,7 @@ module.exports.addTask = (req, res, next) => {
 // Assign or Update Worker to Task
 module.exports.assignWorker = (req, res, next) => {
     const assignee = req.body.assignee;
-    const taskId = mongoose.Types.ObjectId(req.body.id);
+    const taskId = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
     if (!assignee || !taskId) {
         let er = new Error("No Data Found.")
         er.message = 'Not a Valid Request.'

@@ -58,7 +58,7 @@ export default function ExpCardlg({ close, theme, workers, data, set }) {
                                 <Grid item sx={{
                                     width: "35%"
                                 }}>
-                                    <Info set={set} workers={workers} data={data} />
+                                    <Info  set={set} workers={workers} data={data} />
                                 </Grid>
 
                             </Grid>
