@@ -28,7 +28,7 @@ export default function TaskBoardsm({ theme, useStyles, workers, cards }) {
                 tdc.push(<TaskCard workers={workers} data={card} key={card._id} theme={theme} />)
             else if (card.status === 'In Progress')
                 ipc.push(<TaskCard workers={workers} data={card} key={card._id} theme={theme} />)
-            else if (card.status === 'In Review')
+            else if (card.status === 'Review')
                 rc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
             else cc.push(<TaskCard workers={workers} data={card} key={card._id} theme={theme} />)
 

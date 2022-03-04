@@ -12,11 +12,11 @@ const dt = {
     desciption: '',
     assignee: {
         name: '',
-        id: ''
+        id: '12'
     },
     reporter: {
         name: '',
-        id: ''
+        id: '13'
     },
     status: 'To Do',
     priority: 'Medium'

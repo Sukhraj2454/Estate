@@ -1,8 +1,7 @@
 
 // React Libraries and other Utils
-import axios from 'axios';
 import { useState } from 'react';
-
+import { handleLogin } from '../../Utils/controller';
 // Material UI Components
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -16,7 +15,6 @@ import Link from '@mui/material/Link';
 // Other Components
 import Alert from '../Alerts/Alerts';
 
-const BASE_URL = process.env.URL || '';
 
 const Login = function ({ theme, change }) {
 
@@ -26,28 +24,7 @@ const Login = function ({ theme, change }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        axios.post(`${BASE_URL}/user/login`,
-            {
-                email: data.get('email'),
-                password: data.get('password'),
-            })
-            .then((res) => {
-                const header = res.headers['x-auth']
-                sessionStorage.setItem('x-auth', header);
-                setMessage("Login Successful.");
-                setSeverity("success");
-                setOpen(true);
-                window.location.href = "/home"; // Successful Login
-            })
-            .catch(err => {
-                console.clear();
-                if (err.response) {
-
-                    setMessage(err.response.data.message);
-                    setSeverity("error");
-                    setOpen(true);
-                }
-            })
+        handleLogin(data, setMessage, setSeverity, setOpen)
     };
     return (
         <ThemeProvider theme={theme}>

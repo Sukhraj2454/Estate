@@ -11,14 +11,24 @@ export default function ACInput({ data, label, defValue, variant, setTitle }) {
             value={value}
             onChange={
                 (event, newValue) => {
-                    if (typeof newValue === 'string') {
+                    if(newValue === null)
+                    {
+                        setValue(newValue)
+                        setTitle({
+                            name:'',id:''
+                        })
+                    }
+                    else if (typeof newValue === 'string') {
                         setValue({
                             title: newValue,
                         });
-                        setTitle(newValue);
+                        setTitle({
+                            name: newValue,
+                            id: ''
+                        });
                     } else {
                         setValue(newValue);
-                        setTitle(newValue.title);
+                        setTitle({ name: newValue.title, id: newValue.id });
                     }
                 }
             }

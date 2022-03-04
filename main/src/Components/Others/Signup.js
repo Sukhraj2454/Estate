@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // Other Utils
-import axios from 'axios';
+import {handleSignup} from '../../Utils/controller';
 
 // Material UI Components
 import Button from '@mui/material/Button';
@@ -18,8 +18,6 @@ import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 // import alerts
 import Alert from '../Alerts/Alerts';
 
-// Environment Variables
-const BASE_URL = '';
 
 
 export default function Signup({ theme, change }) {
@@ -36,30 +34,7 @@ export default function Signup({ theme, change }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-
-        axios.post(`${BASE_URL}/user/signup`, {
-
-            name: data.get('name'),
-            email: data.get('email'),
-            password: data.get('password'),
-            contact: data.get('phone'),
-            desig: desig
-
-        }).then((res, err) => {
-            setSeverity("success");
-            setMessage(res.data.message);
-            setOpen(true);
-        }).catch(err => {
-            console.clear();
-            if (err.response && err.response.status === 409) {
-                setMessage("Error: Email Address Already Registered!");
-            }
-            else {
-                setMessage("Error: Cannot Connect to Server!");
-            }
-            setSeverity("error");
-            setOpen(true);
-        })
+        handleSignup(data, desig, setMessage, setSeverity, setOpen)
     };
 
 

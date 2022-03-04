@@ -26,7 +26,7 @@ const TabPanel = ({ comp, value, index }) => {
 
 export default function ExpCardlg({ close, theme, workers, data, set }) {
     const [tab, setTab] = useState(10);
-
+   
 
     const handleTabChange = (event, newValue) => {
         event.preventDefault();

@@ -16,16 +16,23 @@ import Backdrop from '@mui/material/Backdrop';
 // material Icons
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-
-const workerHandle = () => {
-    console.log("Worker Clicked");
-}
 export default function TaskCardLV({ theme, clr, sz, workers, data }) {
+    const [dt, setData] = useState(data);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState(data.title);
     const [priority, setPriority] = useState(data.priority);
-    const [worker, setWorker] = useState(data.assignee.name);
+    const [assignee, setAssignee] = useState(data.assignee);
+    const [reporter, setReporter] = useState(data.reporter);
+    useEffect(() => {
+        let temp = dt;
+        temp.title = title;
+        temp.assignee = { name: assignee.name, id: assignee.id };
+        temp.reporter = { name: reporter.name, id: reporter.id };
+        temp.priority = priority;
+        setData(temp);
+        // eslint-disable-next-line
+    }, [title, priority, assignee, reporter]);
     const handleToggle = () => {
         setOpen(!open);
     };
@@ -34,7 +41,10 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
             setLoading(false);
         }, 0);
     }, []);
-
+    const workerHandle = () => {
+        console.log("Worker Clicked");
+        console.log(assignee)
+    }
     return (
 
         loading ?
@@ -56,7 +66,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
                         <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
                             <Button size="small"
                                 onClick={workerHandle}>
-                                {worker}
+                                {assignee.name}
                             </Button>
                         </Grid> : <></>}
                     <Grid item lg={1} sm={1} xs={1} justifyContent={'right'} sx={{ m: 'auto' }}>
@@ -72,7 +82,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
                     open={open}
                 >
                     <Container component='main'>
-                        <ExpandedCard workers={workers} set={[setTitle, setPriority, setWorker]} data={data} close={handleToggle} theme={theme} />
+                        <ExpandedCard workers={workers} set={[setTitle, setPriority, setAssignee, setReporter]} data={dt} close={handleToggle} theme={theme} />
                     </Container>
                 </Backdrop>
             </Container >
@@ -81,16 +91,16 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
 
 TaskCardLV.defaultProps = {
     data: {
-        title: 'title',
-        description: '',
         assignee: {
             name: '',
-            id: ''
+            id: 'xyz'
         },
         reporter: {
             name: '',
-            id: ''
+            id: 'pqr'
         },
+        title: 'titles',
+        description: '',
         status: 'To Do',
         priority: 1
     }

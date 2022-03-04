@@ -1,6 +1,6 @@
 // React Utils.
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { logout } from '../Utils/controller';
 // Other Utils
 import { getUsers } from '../Utils/controller';
 
@@ -22,8 +22,6 @@ import Tab from '@mui/material/Tab';
 // MUI Icons
 import MenuIcon from '@mui/icons-material/Menu';
 
-
-const BASE_URL = process.env.URL || '';
 
 
 export default function Home({ theme }) {
@@ -49,17 +47,7 @@ export default function Home({ theme }) {
         setTab(newValue);
     }
     const handleLogout = () => {
-        axios.delete(`${BASE_URL}/user/logout`, {
-            headers: {
-                'x-auth': sessionStorage.getItem('x-auth')
-            }
-        })
-            .then((res) => {
-                sessionStorage.clear();
-                window.location.href = '/';
-            })
-            .catch(err => {
-            })
+        logout();
     }
     return (
         <Container maxWidth='xl' component='main'>

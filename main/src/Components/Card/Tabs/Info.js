@@ -1,6 +1,8 @@
-
 // React  Utils
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+// Other Utils
+import { updateStatus, updatePriority } from '../../../Utils/controller';
 
 // Components
 import ACInput from "../../Others/ACInput";
@@ -13,8 +15,13 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 function Info({ theme, workers, data, set }) {
+    const firstStatusRender = useRef(true);
+    const firstPriorityRender = useRef(true);
+    const firstAssigneeRender = useRef(true);
+    const firstReporterRender = useRef(true);
     const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
-    const [status, setStatus] = useState(data ? data.status : '');
+    const [status, setStatus] = useState(data ? data.status : 'To Do');
+    
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
     };
@@ -22,20 +29,37 @@ function Info({ theme, workers, data, set }) {
         setPriority(event.target.value);
         set[1](event.target.value === 'Medium' ? 1 : 2);
     };
+  
+    useEffect(() => {
+        if (firstStatusRender.current) {
+            firstStatusRender.current = false;
+            return;
+        }
+        updateStatus(status, data._id);
+    }, [status, data._id]);
+
+    useEffect(() => {
+        if (firstPriorityRender.current) {
+            firstPriorityRender.current = false;
+            return;
+        }
+        updatePriority(priority, data._id);
+    }, [priority, data._id]);
+
     return (
         <Container component={'main'} maxWidth='sm'>
 
             <ACInput theme={theme} variant='outlined'
                 setTitle={set[2]}
-                defValue={
-                    {
-                        title: data.assignee.name,
-                        id: data.assignee.id
-                    }}
+                defValue={{
+                    title: data.assignee.name,
+                    id: data.assignee.id
+                }}
                 data={workers}
                 label={"Assignee"} />
 
             <ACInput theme={theme} variant='outlined'
+                setTitle={set[3]}
                 defValue={{
                     title: data.reporter.name,
                     id: data.reporter.id

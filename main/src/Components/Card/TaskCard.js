@@ -1,5 +1,6 @@
 // Utils
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { updateAssignee, updateReporter } from '../../Utils/controller';
 
 // Components
 import ExpandedCard from './ExpandedCard';
@@ -19,17 +20,48 @@ import Backdrop from '@mui/material/Backdrop';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 
-const workerHandle = () => {
-    console.log("Worker Clicked");
-}
 export default function TaskCard({ theme, workers, data }) {
     const [open, setOpen] = useState(false);
     const handleToggle = () => {
         setOpen(!open);
     };
+    const firstAssigneeRender = useRef(true);
+    const firstReporterRender = useRef(true);
+    const [dt, setData] = useState(data);
     const [title, setTitle] = useState(data.title);
     const [priority, setPriority] = useState(data.priority);
-    const [worker, setWorker] = useState(data.assignee.name);
+    const [assignee, setAssignee] = useState(data.assignee);
+    const [reporter, setReporter] = useState(data.reporter);
+    useEffect(() => {
+        let temp = dt;
+        temp.title = title;
+        temp.assignee = { name: assignee.name, id: assignee.id };
+        temp.reporter = { name: reporter.name, id: reporter.id };
+        temp.priority = priority;
+        setData(temp);
+        // eslint-disable-next-line
+    }, [title, priority, assignee, reporter]);
+
+    useEffect(() => {
+        if (firstAssigneeRender.current) {
+            firstAssigneeRender.current = false;
+            return;
+        }
+        updateAssignee(assignee, data._id);
+    }, [assignee, data._id]);
+
+    useEffect(() => {
+        if (firstReporterRender.current) {
+            firstReporterRender.current = false;
+            return;
+        }
+        updateReporter(reporter, data._id);
+    }, [reporter, data._id]);
+
+    const workerHandle = () => {
+        console.log("Worker Clicked");
+        console.log(assignee);
+    }
     return (
         <Container component={'main'}>
             <Card sx={{ maxWidth: 340, margin: 'auto', mb: 1 }}>
@@ -60,7 +92,7 @@ export default function TaskCard({ theme, workers, data }) {
                             <CardActions>
                                 <Button size="small"
                                     onClick={workerHandle}>
-                                    {worker}
+                                    {assignee.name}
                                 </Button>
                             </CardActions>
                         </Grid>
@@ -73,7 +105,7 @@ export default function TaskCard({ theme, workers, data }) {
                 open={open}
             >
                 <Container component='main'>
-                    <ExpandedCard data={data} set={[setTitle, setPriority, setWorker]} close={handleToggle} workers={workers} theme={theme} />
+                    <ExpandedCard data={dt} set={[setTitle, setPriority, setAssignee, setReporter]} close={handleToggle} workers={workers} theme={theme} />
                 </Container>
             </Backdrop>
         </Container >)
