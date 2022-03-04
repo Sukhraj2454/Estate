@@ -10,9 +10,11 @@ const BASE_URL = process.env.URL || '';
 // handleSignup
 // logout
 // updateAssignee
+// updateDescTitle
 // updatePriority
 // updateReporter
 // updateStatus
+
 
 // Taskboard.js
 export const getCards = function (setCards) {
@@ -119,6 +121,24 @@ export const updateAssignee = function (assignee, id) {
     axios.patch(`${BASE_URL}/task/assignworker`,
         {
             assignee: assignee,
+            id: id
+        },
+        {
+            headers: {
+                'x-auth': sessionStorage.getItem('x-auth')
+            }
+        }
+    ).then((res) => {
+    })
+        .catch(err => {
+        })
+}
+// Desc.js
+export const updateDescTitle = function (title, description, id) {
+    axios.patch(`${BASE_URL}/task/updatedesctitle`,
+        {
+            title: title,
+            description: description,
             id: id
         },
         {

@@ -1,6 +1,7 @@
 // Task Card List View
 // Utils
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { updateAssignee, updateReporter } from '../../Utils/controller';
 
 // Components
 import ExpandedCard from './ExpandedCard';
@@ -17,6 +18,9 @@ import Backdrop from '@mui/material/Backdrop';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export default function TaskCardLV({ theme, clr, sz, workers, data }) {
+
+    const firstAssigneeRender = useRef(true);
+    const firstReporterRender = useRef(true);
     const [dt, setData] = useState(data);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -24,6 +28,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);
+
     useEffect(() => {
         let temp = dt;
         temp.title = title;
@@ -33,18 +38,38 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
         setData(temp);
         // eslint-disable-next-line
     }, [title, priority, assignee, reporter]);
-    const handleToggle = () => {
-        setOpen(!open);
-    };
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
         }, 0);
     }, []);
+
+    useEffect(() => {
+        if (firstAssigneeRender.current) {
+            firstAssigneeRender.current = false;
+            return;
+        }
+        updateAssignee(assignee, data._id);
+    }, [assignee, data._id]);
+
+    useEffect(() => {
+        if (firstReporterRender.current) {
+            firstReporterRender.current = false;
+            return;
+        }
+        updateReporter(reporter, data._id);
+    }, [reporter, data._id]);
+    
+    const handleToggle = () => {
+        setOpen(!open);
+    };
+
     const workerHandle = () => {
         console.log("Worker Clicked");
         console.log(assignee)
     }
+
     return (
 
         loading ?

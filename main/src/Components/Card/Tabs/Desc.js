@@ -1,9 +1,13 @@
 // React Utils.
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+
+// Other Utils
+import { updateDescTitle } from "../../../Utils/controller";
 // MUI Components
 import { TextField, Button } from "@mui/material";
 
 export default function Desc({ data, set }) {
+    const firstDTRender = useRef(true);
     const [description, setDescription] = useState(data.description);
     const [title, setTitle] = useState(data.title);
     const [titleText, setTText] = useState(data.title);
@@ -16,13 +20,20 @@ export default function Desc({ data, set }) {
     }
     const updateChange = () => {
         setTitle(titleText);
-        set[0](titleText);
         setDescription(descText);
+        set[0](titleText);
     }
     const discardChange = () => {
         setTText(title);
         setDText(description);
     }
+    useEffect(() => {
+        if (firstDTRender.current) {
+            firstDTRender.current = false;
+            return;
+        }
+        updateDescTitle(title, description, data._id);
+    }, [title, description, data._id])
     return (<>
         <TextField sx={{ p: 2, width: '90%' }}
             onChange={handleTitleChange}

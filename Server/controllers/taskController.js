@@ -32,11 +32,17 @@ module.exports.assignWorker = (req, res, next) => {
     else {
         Task.updateOne({ _id: taskId },
             {
-                assignee:assignee
+                assignee: assignee
             })
-            .then(() => {
-                res.status(200)
-                    .json({ "message": "Assignee Added." })
+            .then((ret) => {
+                if (ret.modifiedCount === 0) {
+                    let err = Error("No Modification Done")
+                    err.statusCode = 200
+                    throw (err)
+                }
+                else
+                    res.status(200)
+                        .json({ "message": "Assignee Added." })
             }, (err) => {
                 let er = new Error("Could Not Add Assignee");
                 er.data = err;
@@ -142,10 +148,43 @@ module.exports.getUserTasks = (req, res, next) => {
     })
     res.send(":DONE")
 }
-
+// Change Description and Title
+module.exports.updateDescTitle = (req, res, next) => {
+    const id = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
+    const description = req.body.description;
+    const title = req.body.title;
+    if (!id || !description || !title) {
+        let er = new Error("No ID Found.")
+        er.message = 'Not a Valid Request.'
+        er.statusCode = 404
+        next(er)
+    }
+    else {
+        Task.updateOne({ _id: id }, {
+            title: title,
+            description: description
+        })
+            .then((ret) => {
+                if (ret.modifiedCount === 0) {
+                    let err = Error("No Modification Done")
+                    err.statusCode = 200
+                    throw (err)
+                }
+                else
+                    res.json({ 'message': 'Task Description and Title Information Updated' });
+            }, (err) => {
+                let er = new Error("Could Not Update Priority.");
+                er.data = err;
+                throw (er)
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+}
 // Change Priority
 module.exports.updatePriority = (req, res, next) => {
-    const id = mongoose.Types.ObjectId(req.body.id)
+    const id = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
     const priority = (req.body.priority) === 'High' ? 2 : 1;
     if (!id || !priority) {
         let er = new Error("No ID Found.")
@@ -179,7 +218,7 @@ module.exports.updatePriority = (req, res, next) => {
 
 // Assign or Update Reporter
 module.exports.updateReporter = (req, res, next) => {
-    const id = mongoose.Types.ObjectId(req.body.id)
+    const id = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
     const reporter = req.body.reporter
     if (!id || !reporter) {
         let er = new Error("No ID Found.")
