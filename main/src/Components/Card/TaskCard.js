@@ -20,7 +20,7 @@ import Backdrop from '@mui/material/Backdrop';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 
-export default function TaskCard({ theme, workers, data }) {
+export default function TaskCard({ theme, workers, data, cards, setCards }) {
     const [open, setOpen] = useState(false);
     const handleToggle = () => {
         setOpen(!open);
@@ -105,7 +105,7 @@ export default function TaskCard({ theme, workers, data }) {
                 open={open}
             >
                 <Container component='main'>
-                    <ExpandedCard data={dt}set={[setTitle, setPriority, setAssignee, setReporter]} close={handleToggle} workers={workers} theme={theme} />
+                    <ExpandedCard cards={cards} setCards={setCards} data={dt} set={[setTitle, setPriority, setAssignee, setReporter]} close={handleToggle} workers={workers} theme={theme} />
                 </Container>
             </Backdrop>
         </Container >)

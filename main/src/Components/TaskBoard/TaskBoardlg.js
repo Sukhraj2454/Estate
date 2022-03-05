@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 
 export default function TaskBoardlg({ theme, workers, cards, useStyles }) {
-    
+
     const firstRender = useRef(true);
     const [toDoCards, setTDC] = useState([<TaskCard workers={workers} key='1' theme={theme} />]);
     const [inProgressCards, setIPC] = useState([]);
@@ -38,12 +38,12 @@ export default function TaskBoardlg({ theme, workers, cards, useStyles }) {
         let tdc = [], ipc = [], rc = [], cc = [];
         cardsArr.forEach(card => {
             if (card.status === 'To Do')
-                tdc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
+                tdc.push(<TaskCard workers={workers} cards={cardsArr} setCards={setCards} data={card} key={card._id} theme={theme} />)
             else if (card.status === 'In Progress')
-                ipc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
+                ipc.push(<TaskCard workers={workers} cards={cardsArr} setCards={setCards} data={card} key={card._id} theme={theme} />)
             else if (card.status === 'Review')
-                rc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
-            else cc.push(<TaskCard workers={workers}  data={card} key={card._id} theme={theme} />)
+                rc.push(<TaskCard workers={workers} cards={cardsArr} setCards={setCards} data={card} key={card._id} theme={theme} />)
+            else cc.push(<TaskCard workers={workers} cards={cardsArr} setCards={setCards} data={card} key={card._id} theme={theme} />)
 
         })
         setTDC(tdc)

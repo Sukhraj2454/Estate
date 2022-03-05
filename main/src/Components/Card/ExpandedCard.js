@@ -22,14 +22,14 @@ const dt = {
     priority: 'Medium'
 };
 
-export default function ExpandedCard({ close, theme, workers, data, set }) {
+export default function ExpandedCard({ close, theme, workers, data, set, cards, setCards }) {
     const wd = useWidth();  // get viewport size
     return (
         <>
             {
                 (wd !== 'xs' && wd !== 'sm') ?
-                    <ExpCardlg close={close}  data={data || dt} set={set} workers={workers} theme={theme} /> :
-                    <ExpCardsm close={close}  data={data || dt} set={set} workers={workers} theme={theme} />
+                    <ExpCardlg close={close} cards={cards} setCards={setCards} data={data || dt} set={set} workers={workers} theme={theme} /> :
+                    <ExpCardsm close={close} cards={cards} setCards={setCards} data={data || dt} set={set} workers={workers} theme={theme} />
             }
         </>
     )
