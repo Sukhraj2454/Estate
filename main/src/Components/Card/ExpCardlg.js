@@ -1,5 +1,5 @@
 //Utils
-import { useState } from 'react'
+import { useState } from 'react';
 
 // Components
 import Info from './Tabs/Info';
@@ -17,10 +17,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const TabPanel = ({ comp, value, index }) => {
     return (
-        <div
-            hidden={value !== index}
-        >{comp}</div>
-
+        <div hidden={value !== index}>
+            {comp}
+        </div>
     )
 }
 
@@ -32,7 +31,6 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, set
         event.preventDefault();
         setTab(newValue);
     };
-
     return (
         <ThemeProvider theme={theme}>
             <Container component='main'>
@@ -52,7 +50,7 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, set
                             <Grid container columns={5}>
 
                                 <Grid item xs={3} lg={3}>
-                                    <Desc set={set} data={data} />
+                                    <Desc set={set} data={data} cards={cards} setCards={setCards} />
                                 </Grid>
 
                                 <Grid item sx={{

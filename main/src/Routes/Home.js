@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { logout } from '../Utils/controller';
 // Other Utils
 import { getUsers } from '../Utils/controller';
+import { getUserTasks } from "../Utils/controller";
 
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
 import Dashboard from '../Components/Dashboard/Dashboard';
-import WorkersTable from '../Components/Workers/WorkersTable';
-import CreateRequest from '../Components/CreateRequest/CreateRequest';
+// import WorkersTable from '../Components/Workers/WorkersTable';
+// import CreateRequest from '../Components/CreateRequest/CreateRequest';
 
 // MUI Components
 import Toolbar from '@mui/material/Toolbar';
@@ -23,18 +24,23 @@ import Tab from '@mui/material/Tab';
 import MenuIcon from '@mui/icons-material/Menu';
 
 
+// This data object is basis for app we will store most of data from backend here and then pass it down to Components
 
 export default function Home({ theme }) {
 
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState(0);
     const [workers, setWorkers] = useState([{ 'title': 'No Worker Data Found.' }]);
+    const [cards, setCards] = useState([]);
 
-    // This data object is basis for app we will store most of data from backend here and then pass it down to Components
-
+    useEffect(() => {
+        getUserTasks(setCards);
+    }, [])
+    
     useEffect(() => {
         getUsers(setWorkers);
     }, []);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -102,23 +108,27 @@ export default function Home({ theme }) {
             </SwipeableDrawer>
             <>
                 <div hidden={tab !== 0}>
-                    {/* <Dashboard
+                    <Dashboard
                         theme={theme}
                         workers={workers}
-                    /> */}
+                        cards={cards}
+                        setCards={setCards}
+                    />
                 </div>
                 <div hidden={tab !== 1}>
                     <Taskboard
                         theme={theme}
                         workers={workers}
+                        cards={cards}
+                        setCards={setCards}
                     />
                 </div>
-                <div hidden={tab !== 2}>
-                    {/* <WorkersTable /> */}
+                {/* <div hidden={tab !== 2}>
+                    <WorkersTable />
                 </div>
                 <div hidden={tab !== 3}>
-                    {/* <CreateRequest theme={theme} /> */}
-                </div>
+                    <CreateRequest theme={theme} />
+                </div> */}
             </>
         </Container >
     )

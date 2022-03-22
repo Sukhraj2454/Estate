@@ -17,10 +17,11 @@ import Backdrop from '@mui/material/Backdrop';
 // material Icons
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-export default function TaskCardLV({ theme, clr, sz, workers, data }) {
+export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, cards }) {
 
     const firstAssigneeRender = useRef(true);
     const firstReporterRender = useRef(true);
+    const firstCardsRender = useRef(true);
     const [dt, setData] = useState(data);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -30,14 +31,14 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
     const [reporter, setReporter] = useState(data.reporter);
 
     useEffect(() => {
-        let temp = dt;
+        let temp = data;
         temp.title = title;
         temp.assignee = { name: assignee.name, id: assignee.id };
         temp.reporter = { name: reporter.name, id: reporter.id };
         temp.priority = priority;
         setData(temp);
         // eslint-disable-next-line
-    }, [title, priority, assignee, reporter]);
+    }, [title, priority, assignee, reporter, data]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -51,6 +52,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
             return;
         }
         updateAssignee(assignee, data._id);
+
     }, [assignee, data._id]);
 
     useEffect(() => {
@@ -59,8 +61,9 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
             return;
         }
         updateReporter(reporter, data._id);
+
     }, [reporter, data._id]);
-    
+
     const handleToggle = () => {
         setOpen(!open);
     };
@@ -75,7 +78,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
         loading ?
             <TaskCardLVSkel />
             :
-            <Container component={'main'} sx={{ bgcolor: clr }}>
+            (<Container component={'main'} sx={{ bgcolor: clr }}>
                 <Grid container columns={12} >
 
                     <Grid item lg={6} sm={6} xs={6} >
@@ -107,10 +110,10 @@ export default function TaskCardLV({ theme, clr, sz, workers, data }) {
                     open={open}
                 >
                     <Container component='main'>
-                        <ExpandedCard workers={workers} set={[setTitle, setPriority, setAssignee, setReporter]} data={dt} close={handleToggle} theme={theme} />
+                        <ExpandedCard workers={workers} cards={cards} set={[setTitle, setPriority, setAssignee, setReporter]} setCards={setCards} data={dt} close={handleToggle} theme={theme} />
                     </Container>
                 </Backdrop>
-            </Container >
+            </Container >)
     );
 }
 

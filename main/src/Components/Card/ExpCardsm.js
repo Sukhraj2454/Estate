@@ -42,7 +42,7 @@ export default function ExpCardsm({ close, theme, workers, data, set, cards, set
                     </Tabs>
 
                     <div hidden={tabesm !== 20}>
-                        <Desc set={set} data={data} />
+                        <Desc set={set} data={data} cards={cards} setCards={setCards} />
                     </div>
                     <div hidden={tabesm !== 21}>
                         <Info cards={cards} setCards={setCards} set={set} theme={theme} workers={workers} data={data} />
