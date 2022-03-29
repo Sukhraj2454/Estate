@@ -23,7 +23,7 @@ export default function TaskBoardsm({ theme, useStyles, workers, cards, setCards
     const [reviewCards, setRC] = useState([]);
     const [completedCards, setCC] = useState([]);
     useEffect(() => {
-        // if (cardsArr.length > 0) {
+        // if (cards.length > 0) {
         //     firstRender.current = false;
         // }
         // if (firstRender.current) {

@@ -11,12 +11,11 @@ import TaskBoardsm from './TaskBoardsm';
 import { createStyles, makeStyles } from '@mui/styles';
 
 
-
-export default function TaskBoard({ theme, workers, cards, setCards }) {
-    // const [cards, setCards] = useState([]);
-    // useEffect(() => {
-    //     getCards(setCards);
-    // }, []);
+export default function TaskBoard({ theme, workers }) {
+    const [cards, setCards] = useState([]);
+    useEffect(() => {
+        getCards(setCards);
+    }, []);
 
     const useStyles = makeStyles(() =>
         createStyles({
@@ -47,6 +46,7 @@ export default function TaskBoard({ theme, workers, cards, setCards }) {
                 useStyles={useStyles}
                 workers={workers}
                 cards={cards}
+                setCards={setCards}
             />
     )
 }
