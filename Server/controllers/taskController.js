@@ -136,7 +136,7 @@ module.exports.getAllTasks = (req, res, next) => {
 }
 // Get Tasks created by a certain User
 module.exports.getUserTasks = (req, res, next) => {
-    Task.find({ '$or': [{ id: req.user._id }, { 'assignee.id': req.user._id }] }).then((tasks) => {
+    Task.find({ '$or': [{ 'assignee.id': req.user._id }, { 'reporter.id': req.user._id }] }).then((tasks) => {
         res.send(tasks)
     }, (err) => {
         console.log(err)

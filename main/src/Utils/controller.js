@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+const headers = {
+    // 'Cache-Control': 'private',
+    // 'Pragma': 'no-cache',
+    // 'Expires': '0',
+    'x-auth': sessionStorage.getItem('x-auth')
+}
 // Variables
 const BASE_URL = process.env.URL || '';
 
@@ -18,25 +24,26 @@ const BASE_URL = process.env.URL || '';
 
 
 // Taskboard.js
-export const getCards = function (setCards) {
+export const getCards = function (setCards, setLoading) {
+    if (!setLoading) {
+        setLoading = () => { }
+    }
     axios.get(`${BASE_URL}/task/all`, {
-        headers: {
-            'x-auth': sessionStorage.getItem('x-auth')
-        }
+        headers: headers
     })
         .then((res) => {
             setCards(res.data);
+            setLoading(false);
         })
         .catch(err => {
             console.log(err);
+            setLoading(false);
         })
 }
 // Home.js
 export const getUsers = function (setWorkers) {
     axios.get(`${BASE_URL}/user/getUsers`, {
-        headers: {
-            'x-auth': sessionStorage.getItem('x-auth')
-        }
+        headers: headers
     })
         .then(res => {
             setWorkers(res.data.map(worker => {
@@ -51,15 +58,15 @@ export const getUsers = function (setWorkers) {
         })
 }
 
-export const getUserTasks = function (setCards) {
+export const getUserTasks = function (setCards, setLoading) {
     axios.get(`${BASE_URL}/task/usertasks`, {
-        headers: {
-            'x-auth': sessionStorage.getItem('x-auth')
-        }
+        headers: headers
     }).then(res => {
         setCards(res.data);
+        setLoading(false);
     })
         .catch(err => {
+            setLoading(false);
             console.log(err.message);
         })
 }
@@ -118,9 +125,7 @@ export const handleSignup = function (data, desig, setMessage, setSeverity, setO
 // home.js
 export const logout = function () {
     axios.delete(`${BASE_URL}/user/logout`, {
-        headers: {
-            'x-auth': sessionStorage.getItem('x-auth')
-        }
+        headers: headers
     })
         .then((res) => {
             sessionStorage.clear();

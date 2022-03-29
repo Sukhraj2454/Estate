@@ -8,14 +8,15 @@ import { Box } from '@mui/material';
 import TaskCardLV from "../Card/TaskCardLV";
 
 export default function MyTasks({ cards, workers, theme, sz, setCards }) {
+    // console.log(cards);
     const [data, setData] = useState([]);
     useEffect(() => {
         let col = false;
         let dat = cards.map(card => {
             col = !col;
             if (col)
-                return <TaskCardLV key={card._id} cards={cards} data={card} setCards={setCards} workers={workers} theme={theme} clr='#EEEEEE' sz={sz} />
-            else return <TaskCardLV key={card._id} cards={cards} data={card} setCards={setCards} workers={workers} theme={theme} sz={sz} />
+                return <TaskCardLV key={card._id}  data={card}  workers={workers} theme={theme} clr='#EEEEEE' sz={sz} />
+            else return <TaskCardLV key={card._id}  data={card}  workers={workers} theme={theme} sz={sz} />
         });
         setData(dat);
     }, [cards, workers, sz, theme, setCards])

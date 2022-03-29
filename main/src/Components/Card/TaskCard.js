@@ -27,20 +27,20 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
     };
     const firstAssigneeRender = useRef(true);
     const firstReporterRender = useRef(true);
-    const [dt, setData] = useState(data);
+    // const [dt, setData] = useState(data);
     const [title, setTitle] = useState(data.title);
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);
-    useEffect(() => {
-        let temp = dt;
-        temp.title = title;
-        temp.assignee = { name: assignee.name, id: assignee.id };
-        temp.reporter = { name: reporter.name, id: reporter.id };
-        temp.priority = priority;
-        setData(temp);
-        // eslint-disable-next-line
-    }, [title, priority, assignee, reporter]);
+    // useEffect(() => {
+    //     let temp = dt;
+    //     temp.title = title;
+    //     temp.assignee = { name: assignee.name, id: assignee.id };
+    //     temp.reporter = { name: reporter.name, id: reporter.id };
+    //     temp.priority = priority;
+    //     setData(temp);
+    //     // eslint-disable-next-line
+    // }, [title, priority, assignee, reporter]);
 
     useEffect(() => {
         if (firstAssigneeRender.current) {
@@ -105,7 +105,7 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
                 open={open}
             >
                 <Container component='main'>
-                    <ExpandedCard cards={cards} setCards={setCards} data={dt} set={[setTitle, setPriority, setAssignee, setReporter]} close={handleToggle} workers={workers} theme={theme} />
+                    <ExpandedCard cards={cards} setCards={setCards} data={data} set={[setTitle, setPriority, setAssignee, setReporter]} close={handleToggle} workers={workers} theme={theme} />
                 </Container>
             </Backdrop>
         </Container >)

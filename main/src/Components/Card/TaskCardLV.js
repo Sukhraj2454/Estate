@@ -21,8 +21,8 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
 
     const firstAssigneeRender = useRef(true);
     const firstReporterRender = useRef(true);
-    const firstCardsRender = useRef(true);
-    const [dt, setData] = useState(data);
+    // const firstCardsRender = useRef(true);
+    // const [dt, setData] = useState(data);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState(data.title);
@@ -30,15 +30,15 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);
 
-    useEffect(() => {
-        let temp = data;
-        temp.title = title;
-        temp.assignee = { name: assignee.name, id: assignee.id };
-        temp.reporter = { name: reporter.name, id: reporter.id };
-        temp.priority = priority;
-        setData(temp);
-        // eslint-disable-next-line
-    }, [title, priority, assignee, reporter, data]);
+    // useEffect(() => {
+    //     let temp = data;
+    //     temp.title = title;
+    //     temp.assignee = { name: assignee.name, id: assignee.id };
+    //     temp.reporter = { name: reporter.name, id: reporter.id };
+    //     temp.priority = priority;
+    //     setData(temp);
+    //     // eslint-disable-next-line
+    // }, [title, priority, assignee, reporter, data]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -70,8 +70,10 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
 
     const workerHandle = () => {
         console.log("Worker Clicked");
-        console.log(assignee)
     }
+    useEffect(() => {
+        setPriority(data.priority);
+    }, [data]);
 
     return (
 
@@ -107,10 +109,10 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
 
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                    open={open}
-                >
+                    open={open}>
+
                     <Container component='main'>
-                        <ExpandedCard workers={workers} cards={cards} set={[setTitle, setPriority, setAssignee, setReporter]} setCards={setCards} data={dt} close={handleToggle} theme={theme} />
+                        <ExpandedCard workers={workers} cards={cards} set={[setTitle, setPriority, setAssignee, setReporter]} setCards={setCards} data={data} close={handleToggle} theme={theme} />
                     </Container>
                 </Backdrop>
             </Container >)

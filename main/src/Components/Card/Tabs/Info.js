@@ -19,19 +19,15 @@ function Info({ theme, workers, data, set, cards, setCards }) {
     const firstPriorityRender = useRef(true);
     const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
     const [status, setStatus] = useState(data ? data.status : 'To Do');
+    // useEffect(() => {
 
+    //     firstStatusRender.current = true;
+    //     firstPriorityRender.current = true;
+    // }, [])
     const handleStatusChange = (event) => {
 
-        if (cards.length > 0) {
-            let dat = cards;
-            setStatus(event.target.value);
-            let ind = dat.findIndex(x => x._id === data._id);
-            let temp = dat[ind];
-            dat = dat.filter(x => x._id !== data._id);
-            temp.status = event.target.value;
-            dat.push(temp);
-            setCards(dat);
-        }
+        setStatus(event.target.value);
+
     };
 
     useEffect(() => {
@@ -43,17 +39,10 @@ function Info({ theme, workers, data, set, cards, setCards }) {
 
 
     const handlePriorityChange = (event) => {
-        if (cards.length > 0) {
-            let dat = cards;
-            let ind = dat.findIndex(x => x._id === data._id);
-            let temp = dat[ind];
-            dat = dat.filter(x => x._id !== data._id);
-            temp.priority = (event.target.value === 'Medium' ? 1 : 2);
-            dat.push(temp);
-            setCards(dat);
-            setPriority(event.target.value);
-            set[1](event.target.value === 'Medium' ? 1 : 2);
-        }
+
+        setPriority(event.target.value);
+        set[1](event.target.value === 'Medium' ? 1 : 2);
+
     };
 
     useEffect(() => {

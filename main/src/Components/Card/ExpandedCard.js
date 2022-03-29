@@ -34,3 +34,7 @@ export default function ExpandedCard({ close, theme, workers, data, set, cards, 
         </>
     )
 };
+ExpandedCard.defaultProps = {
+    cards:[],
+    setCards:()=>{}
+}

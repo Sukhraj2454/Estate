@@ -3,23 +3,34 @@ import { useEffect, useState } from "react";
 
 // Other Utils
 // import ACInput from "../Others/ACInput";
-import { getCards } from '../../Utils/controller';
+import { getUserTasks } from '../../Utils/controller';
 import useWidth from "../../Utils/useWidth";
 import MyTasks from './MyTasks';
 
 // MUI Compoenents
 import { Box, Grid, Typography } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
+import LoadingButton from '@mui/lab/LoadingButton';
+
+// MUI Icons
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function Dashboard({ theme, workers }) {
+    const [loading, setLoading] = useState(false);
+
     const sz = useWidth();
     const len = (sz !== 'sm' && sz !== 'xs') ? 10 : 12;
     const [cards, setCards] = useState([]);
+    const [refresh, setRefresh] = useState(1);
     useEffect(() => {
-        getCards(setCards);
-    }, []);
+        getUserTasks(setCards, setLoading);
+    }, [refresh]);
 
-
+    const handleRefresh = () => {
+        setLoading(true);
+        let x = refresh;
+        setRefresh(!x);
+    }
     return (
         <ThemeProvider theme={theme}>
             <Box component='div' sx={{ mt: 1 }} >
@@ -30,7 +41,18 @@ export default function Dashboard({ theme, workers }) {
                             <Typography textAlign={'center'} component='h1' variant='h4'>Welcome,{<br />} Sukhraj Singh</Typography>
                         </Grid>) : <></>}
                     <Grid item xs={len} sx={{ border: '2px solid gray', borderBottomRightRadius: 15, borderTopRightRadius: 15 }}>
-                        <Typography textAlign={'center'} sx={{ mb: 5 }} component='h1' variant='h4'>My Tasks</Typography>
+                        <Typography textAlign={'center'} sx={{ mb: 5 }} component='h1' variant='h4'>
+                            My Tasks
+                            <LoadingButton
+                                size="medium"
+                                onClick={handleRefresh}
+                                loading={loading}
+                                loadingPosition="start"
+                                startIcon={<RefreshIcon />}
+                            >
+                                REFRESH
+                            </LoadingButton>
+                        </Typography>
 
 
                         {/* <ACInput
