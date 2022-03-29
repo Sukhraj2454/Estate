@@ -31,6 +31,7 @@ export default function Home({ theme }) {
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState(0);
     const [workers, setWorkers] = useState([{ 'title': 'No Worker Data Found.' }]);
+    const [cards, setCards] = useState([]);
 
     useEffect(() => {
         getUsers(setWorkers);
