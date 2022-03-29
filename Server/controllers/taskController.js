@@ -113,40 +113,41 @@ module.exports.delete = (req, res, next) => {
 // Get All Tasks
 module.exports.getAllTasks = (req, res, next) => {
 
-    if (req.user.desig !== 'Admin') {
-        let error = new Error("Admin Required")
-        error.message = "Not Enough Access Rights. This Incident shall be Reported.";
-        error.statusCode = 403
-        next(error)
-    }
-    else {
-        Task.find().then((obj) => {
-            if (obj.length === 0) {
-                let error = new Error("No Tasks")
-                error.message = "No Tasks Found";
-                error.statusCode = 404
-                throw error;
-            }
-            res.status(200).json(obj);
+    // if (req.user.desig !== 'Admin') {
+    //     let error = new Error("Admin Required")
+    //     error.message = "Not Enough Access Rights. This Incident shall be Reported.";
+    //     error.statusCode = 403
+    //     next(error)
+    // }
+    // else {
+    Task.find().then((obj) => {
+        if (obj.length === 0) {
+            let error = new Error("No Tasks")
+            error.message = "No Tasks Found";
+            error.statusCode = 404
+            throw error;
+        }
+        res.status(200).json(obj);
+    })
+        .catch(err => {
+            next(err)
         })
-            .catch(err => {
-                next(err)
-            })
-    }
+    // }
 }
-// Get Tasks for a certain User
+// Get Tasks created by a certain User
 module.exports.getUserTasks = (req, res, next) => {
-    User.find({ _id: req.user._id }).then((user) => {
-        console.log(user)
+    Task.find({ '$or': [{ id: req.user._id }, { 'assignee.id': req.user._id }] }).then((tasks) => {
+        res.send(tasks)
     }, (err) => {
+        console.log(err)
         let error = new Error("User Not Found")
         error.message = "Requested User Not Found"
         error.statusCode = 404
         error.data = err;
+        throw error;
     }).catch(err => {
         next(err);
     })
-    res.send(":DONE")
 }
 // Change Description and Title
 module.exports.updateDescTitle = (req, res, next) => {
@@ -281,22 +282,3 @@ module.exports.updateStatus = (req, res, next) => {
     }
 }
 
-
-
-
-
-
-// Get Tasks for a certain User
-module.exports.getUserTasks = (req, res, next) => {
-    let id = mongoose.Types.ObjectId(req.params['uId'])
-    Task.find({ "assignee.id": id }).then((tasks) => {
-        res.status(200).json(tasks)
-    }, (err) => {
-        let error = new Error("User Not Found")
-        error.message = "Requested User Not Found"
-        error.statusCode = 404
-        error.data = err;
-    }).catch(err => {
-        next(err);
-    })
-}

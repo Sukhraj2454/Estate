@@ -21,24 +21,46 @@ function Info({ theme, workers, data, set, cards, setCards }) {
     const [status, setStatus] = useState(data ? data.status : 'To Do');
 
     const handleStatusChange = (event) => {
-        setStatus(event.target.value);
-        let ind = cards.findIndex(x => x._id === data._id);
-        let temp = cards[ind];
-        cards = cards.filter(x => x._id !== data._id);
-        temp.status = event.target.value;
-        cards.push(temp);
-        setCards(cards);
+
+        if (cards.length > 0) {
+            let dat = cards;
+            setStatus(event.target.value);
+            let ind = dat.findIndex(x => x._id === data._id);
+            let temp = dat[ind];
+            dat = dat.filter(x => x._id !== data._id);
+            temp.status = event.target.value;
+            dat.push(temp);
+            setCards(dat);
+        }
     };
+
+    useEffect(() => {
+        setPriority(data.priority === 2 ? 'High' : 'Medium');
+        setStatus(data.status);
+        set[2](data.assignee);
+        set[3](data.reporter);
+    }, [cards]);
+
+
     const handlePriorityChange = (event) => {
-        setPriority(event.target.value);
-        set[1](event.target.value === 'Medium' ? 1 : 2);
+        if (cards.length > 0) {
+            let dat = cards;
+            let ind = dat.findIndex(x => x._id === data._id);
+            let temp = dat[ind];
+            dat = dat.filter(x => x._id !== data._id);
+            temp.priority = (event.target.value === 'Medium' ? 1 : 2);
+            dat.push(temp);
+            setCards(dat);
+            setPriority(event.target.value);
+            set[1](event.target.value === 'Medium' ? 1 : 2);
+        }
     };
 
     useEffect(() => {
         if (firstStatusRender.current) {
             firstStatusRender.current = false;
             return;
-        }
+        }       // referece for not calling function if loading component for first time.
         updateStatus(status, data._id);
     }, [status, data._id]);
 
@@ -46,7 +68,7 @@ function Info({ theme, workers, data, set, cards, setCards }) {
         if (firstPriorityRender.current) {
             firstPriorityRender.current = false;
             return;
-        }
+        }   // referece for not calling function if loading component for first time.
         updatePriority(priority, data._id);
     }, [priority, data._id]);
 
@@ -70,7 +92,6 @@ function Info({ theme, workers, data, set, cards, setCards }) {
                 }}
                 data={workers}
                 label={"Reporter"} />
-
 
             <FormControl fullWidth sx={{ mb: 3, mt: 3 }}>
                 <InputLabel id="priority-select-label">Priority</InputLabel>
@@ -101,5 +122,8 @@ function Info({ theme, workers, data, set, cards, setCards }) {
             </FormControl>
         </Container>)
 }
-
+Info.defaultProps = {
+    setCards: () => { },
+    cards: []
+}
 export default Info;

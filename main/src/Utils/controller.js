@@ -6,6 +6,7 @@ const BASE_URL = process.env.URL || '';
 // <--------Functions------->
 // getCards
 // getUsers
+// getUserTasks
 // handleLogin
 // handleSignup
 // logout
@@ -47,6 +48,19 @@ export const getUsers = function (setWorkers) {
         })
         .catch(err => {
             console.log(err);
+        })
+}
+
+export const getUserTasks = function (setCards) {
+    axios.get(`${BASE_URL}/task/usertasks`, {
+        headers: {
+            'x-auth': sessionStorage.getItem('x-auth')
+        }
+    }).then(res => {
+        setCards(res.data);
+    })
+        .catch(err => {
+            console.log(err.message);
         })
 }
 // Login.js

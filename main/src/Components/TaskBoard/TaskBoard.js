@@ -40,6 +40,7 @@ export default function TaskBoard({ theme, workers }) {
                 useStyles={useStyles}
                 workers={workers}
                 cards={cards}
+                setCards={setCards}
             />
             : <TaskBoardsm
                 theme={theme}

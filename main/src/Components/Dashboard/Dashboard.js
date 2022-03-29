@@ -1,19 +1,24 @@
 // React Utils
+import { useEffect, useState } from "react";
 
 // Other Utils
-import TaskCardLV from "../Card/TaskCardLV";
-import ACInput from "../Others/ACInput";
+// import ACInput from "../Others/ACInput";
+import { getCards } from '../../Utils/controller';
 import useWidth from "../../Utils/useWidth";
+import MyTasks from './MyTasks';
 
 // MUI Compoenents
 import { Box, Grid, Typography } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 
-// Mui Icons
-
-export default function Dashboard({ theme, workers, cards }) {
+export default function Dashboard({ theme, workers }) {
     const sz = useWidth();
-    const len = (sz !== 'sm' && sz !== 'xs') ? 10 : 12
+    const len = (sz !== 'sm' && sz !== 'xs') ? 10 : 12;
+    const [cards, setCards] = useState([]);
+    useEffect(() => {
+        getCards(setCards);
+    }, []);
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -28,8 +33,7 @@ export default function Dashboard({ theme, workers, cards }) {
                         <Typography textAlign={'center'} sx={{ mb: 5 }} component='h1' variant='h4'>My Tasks</Typography>
 
 
-                        <ACInput
-
+                        {/* <ACInput
                             label='Status'
                             defValue='To Do'
                             variant='outlined'
@@ -37,12 +41,8 @@ export default function Dashboard({ theme, workers, cards }) {
                             { title: 'In Progress' },
                             { title: 'Review' },
                             { title: 'Completed' }]}
-                        />
-
-                        <Box component='div' sx={{ height: 450, overflowY: 'scroll' }}>
-                            <TaskCardLV key='1' workers={workers} theme={theme} clr='#EEEEEE' sz={sz} />
-                            <TaskCardLV workers={workers} theme={theme} sz={sz} />
-                        </Box>
+                        /> */}
+                        <MyTasks cards={cards} setCards={setCards} workers={workers} theme={theme} sz={sz} />
                     </Grid>
                 </Grid>
             </Box>

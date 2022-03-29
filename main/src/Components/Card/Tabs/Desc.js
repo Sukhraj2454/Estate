@@ -6,7 +6,7 @@ import { updateDescTitle } from "../../../Utils/controller";
 // MUI Components
 import { TextField, Button } from "@mui/material";
 
-export default function Desc({ data, set }) {
+export default function Desc({ data, set, cards, setCards }) {
     const firstDTRender = useRef(true);
     const [description, setDescription] = useState(data.description);
     const [title, setTitle] = useState(data.title);
@@ -22,6 +22,17 @@ export default function Desc({ data, set }) {
         setTitle(titleText);
         setDescription(descText);
         set[0](titleText);
+        if (cards.length > 0) {
+            let dat = cards;
+            let ind = dat.findIndex(x => x._id === data._id);
+            let temp = dat[ind];
+            dat = dat.filter(x => x._id !== data._id);
+            temp.description = descText;
+            temp.title = titleText;
+            dat.push(temp);
+            setCards(dat);
+
+        }
     }
     const discardChange = () => {
         setTText(title);
