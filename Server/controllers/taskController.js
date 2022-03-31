@@ -18,6 +18,30 @@ module.exports.addTask = (req, res, next) => {
     })
 }
 
+// Add Comment
+module.exports.addComment = (req, res, next) => {
+    var comment = {
+        taskId: mongoose.Types.ObjectId(req.body.tId),
+        userId: req.user._id,
+        message: req.body.messafe
+    }
+    Task.find({ _id: req.body.tId }).then(task => {
+
+        task.comments.push(comment);
+
+        task.save().then(() => {
+            res.json({ 'message': 'Comment Added Successfully.' });
+        }, () => {
+            let er = new Error("No Data Found.")
+            er.message = 'Not a Valid Request.'
+            er.statusCode = 404
+            throw (er);
+        });
+    }).catch(err => {
+        next(err);
+    });
+}
+
 
 // Assign or Update Worker to Task
 module.exports.assignWorker = (req, res, next) => {

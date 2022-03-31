@@ -15,7 +15,7 @@ const Main = function ({ theme }) {
 
     return (
         <Container component="main" maxWidth="xl" sx={{ userSelect: "none" }}>
-
+            
             <Typography component='h1' variant="h4"
                 sx={{
                     background: "#1565C0",

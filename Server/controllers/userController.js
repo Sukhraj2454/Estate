@@ -97,6 +97,18 @@ module.exports.getUser = (req, res, next) => {
     res.send(req.user.toJson());
 }
 
+module.exports.getCategories = (req, res, next) => {
+
+    User.find({ desig: 'Admin' }).then((users) => {
+
+        let cats = users.map(user => user.category);
+        res.send(cats);
+    })
+        .catch((err) => {
+            next(err);
+        })
+}
+
 module.exports.logout = (req, res, next) => {
     var token = req.token;
     this.findByToken(token).then((obj) => {

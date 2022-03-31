@@ -27,7 +27,14 @@ function Info({ theme, workers, data, set, cards, setCards }) {
     const handleStatusChange = (event) => {
 
         setStatus(event.target.value);
-
+        if (cards.length > 0) {
+            let ind = cards.findIndex(x => x._id === data._id);
+            let temp = cards[ind];
+            cards = cards.filter(x => x._id !== data._id);
+            temp.status = event.target.value;
+            cards.push(temp);
+            setCards(cards);
+        }
     };
 
     useEffect(() => {

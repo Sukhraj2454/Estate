@@ -11,24 +11,31 @@ const TaskSchema = new mongoose.Schema({
         maxlength: 350,
         default: ""
     },
+    category: {
+        type: String,
+        required: true
+    },
+    location: {
+        type: String
+    },
     reporter: {
         name: {
             type: String,
-            default:''
+            default: ''
         },
         id: {
             type: String,
-            defaukt:''
+            defaukt: ''
         }
     },
     assignee: {
         name: {
             type: String,
-            default:''
+            default: ''
         },
         id: {
             type: String,
-            default:''
+            default: ''
         }
     },
     status: {
@@ -42,11 +49,25 @@ const TaskSchema = new mongoose.Schema({
         type: Date,
         min: this.createdOn
     },
-    priority: {
-        type: Number,
-        default: 1
-    }
-})
+    comments: [{
+        taskId: {
+            type: String,
+            required: true
+        },
+        userId: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: Date,
+            required: true
+        },
+        message: {
+            type: String,
+        },
+
+    }]
+});
 
 var Task = mongoose.model('Task', TaskSchema);
 

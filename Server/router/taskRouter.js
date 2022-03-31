@@ -5,6 +5,7 @@ const { authenticate } = require('../middleware/authenticate');
 const taskController = require('../controllers/taskController');
 
 taskRouter.post('/add', authenticate, taskController.addTask);
+taskRouter.post('/addComment', authenticate, taskController.addComment);
 taskRouter.get('/all', authenticate, taskController.getAllTasks);
 taskRouter.patch('/assignworker', authenticate, taskController.assignWorker);
 taskRouter.patch('/deadline', authenticate, taskController.deadline);

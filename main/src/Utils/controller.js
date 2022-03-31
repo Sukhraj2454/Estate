@@ -11,6 +11,7 @@ const BASE_URL = process.env.URL || '';
 
 // <--------Functions------->
 // getCards
+// getCategories
 // getUsers
 // getUserTasks
 // handleLogin
@@ -38,6 +39,19 @@ export const getCards = function (setCards, setLoading) {
         .catch(err => {
             console.log(err);
             setLoading(false);
+        })
+}
+// Signup.js
+export const getCategories = function (setCategories) {
+    axios.get(`${BASE_URL}/user/getCategories`, {
+        headers: headers,
+    })
+        .then(res => {
+            console.log(res)
+            setCategories(res.data);
+        })
+        .catch(err => {
+            console.log(err);
         })
 }
 // Home.js
@@ -96,14 +110,15 @@ export const handleLogin = function (data, setMessage, setSeverity, setOpen) {
         })
 }
 //Signup.js
-export const handleSignup = function (data, desig, setMessage, setSeverity, setOpen) {
+export const handleSignup = function (data, desig, category, setMessage, setSeverity, setOpen) {
     axios.post(`${BASE_URL}/user/signup`, {
 
         name: data.get('name'),
         email: data.get('email'),
         password: data.get('password'),
         contact: data.get('phone'),
-        desig: desig
+        desig: desig,
+        category: (data.get('category') || category || '')
 
     }).then((res, err) => {
         setSeverity("success");

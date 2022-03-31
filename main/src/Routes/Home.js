@@ -3,13 +3,12 @@ import { useState, useEffect } from 'react';
 import { logout } from '../Utils/controller';
 // Other Utils
 import { getUsers } from '../Utils/controller';
-import { getUserTasks } from "../Utils/controller";
 
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
 import Dashboard from '../Components/Dashboard/Dashboard';
-// import WorkersTable from '../Components/Workers/WorkersTable';
-// import CreateRequest from '../Components/CreateRequest/CreateRequest';
+import WorkersTable from '../Components/Workers/WorkersTable';
+import CreateRequest from '../Components/CreateRequest/CreateRequest';
 
 // MUI Components
 import Toolbar from '@mui/material/Toolbar';
@@ -31,7 +30,6 @@ export default function Home({ theme }) {
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState(0);
     const [workers, setWorkers] = useState([{ 'title': 'No Worker Data Found.' }]);
-    const [cards, setCards] = useState([]);
 
     useEffect(() => {
         getUsers(setWorkers);
@@ -115,12 +113,12 @@ export default function Home({ theme }) {
                         workers={workers}
                     />
                 </div>
-                {/* <div hidden={tab !== 2}>
+                <div hidden={tab !== 2}>
                     <WorkersTable />
                 </div>
                 <div hidden={tab !== 3}>
                     <CreateRequest theme={theme} />
-                </div> */}
+                </div>
             </>
         </Container >
     )

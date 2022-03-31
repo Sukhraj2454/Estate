@@ -1,8 +1,8 @@
 // React Library Functions
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Other Utils
-import {handleSignup} from '../../Utils/controller';
+import { handleSignup, getCategories } from '../../Utils/controller';
 
 // Material UI Components
 import Button from '@mui/material/Button';
@@ -18,25 +18,39 @@ import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 // import alerts
 import Alert from '../Alerts/Alerts';
 
-
-
 export default function Signup({ theme, change }) {
 
-    const [desig, setDesig] = useState('Worker');
+    const [category, setCat] = useState('');
+    const [menu, setMenu] = useState([]);
+    const [categories, setCats] = useState([]);
+    const [desig, setDesig] = useState('Faculty');
+
+    // Snackbar states
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [severity, setSeverity] = useState('');
 
-    const handleChange = (event) => {
+    useEffect(() => {
+        getCategories(setCats);
+    }, []);
+
+    useEffect(() => {
+        let cats = categories;
+        let menu = cats.map((cat) => <MenuItem value={cat}>{cat}</MenuItem>);
+        setMenu(menu);
+    }, [categories]);
+
+    function handleCatChange(event) {
+        setCat(event.target.value);
+    }
+    function handleChange(event) {
         setDesig(event.target.value);
     }
-
-    const handleSubmit = (event) => {
+    function handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        handleSignup(data, desig, setMessage, setSeverity, setOpen)
-    };
-
+        handleSignup(data, desig, category, setMessage, setSeverity, setOpen);
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -97,18 +111,44 @@ export default function Signup({ theme, change }) {
                             id="phone"
                         />
                         <FormControl fullWidth sx={{ mt: 2 }}>
-                            <InputLabel id="desig-label">Desig</InputLabel>
+                            <InputLabel id="desig-label">Desig.</InputLabel>
                             <Select
                                 labelId="desig-label"
                                 id="desig-select"
                                 value={desig}
-                                label="Desig"
+                                label="Category"
                                 onChange={handleChange}
                             >
-                                <MenuItem value={'User'}>User</MenuItem>
+                                <MenuItem value={'Faculty'}>Faculty</MenuItem>
                                 <MenuItem value={'Worker'}>Worker</MenuItem>
+                                <MenuItem value={'Admin'}>Admin</MenuItem>
                             </Select>
                         </FormControl>
+                        {desig === 'Admin' &&
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="category"
+                                label="Category"
+                                type="text"
+                                id="category"
+                            />}
+                        {
+                            desig === 'Worker' &&
+                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                <InputLabel id="category-label">Category</InputLabel>
+                                <Select
+                                    labelId="category-label"
+                                    id="category-select"
+                                    value={category}
+                                    label="Category"
+                                    onChange={handleCatChange}
+                                >
+                                    {menu}
+                                </Select>
+                            </FormControl>
+                        }
                         <Button
                             type="submit"
                             fullWidth
