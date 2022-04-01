@@ -9,7 +9,9 @@ const headers = {
 // Variables
 const BASE_URL = process.env.URL || '';
 
+
 // <--------Functions------->
+//Create Request
 // getCards
 // getCategories
 // getUsers
@@ -23,7 +25,20 @@ const BASE_URL = process.env.URL || '';
 // updateReporter
 // updateStatus
 
-
+//CreateRequest.js
+export const  createRequest=function(title,description,location,category) {
+    axios.post(`${BASE_URL}/task/add`,{
+       title: title,
+       description:description,
+       location:location,
+       category:category
+    },
+    {headers:headers})
+    .then(res=>{
+        console.log(res);
+    })
+    
+}
 // Taskboard.js
 export const getCards = function (setCards, setLoading) {
     if (!setLoading) {
@@ -37,7 +52,7 @@ export const getCards = function (setCards, setLoading) {
             setLoading(false);
         })
         .catch(err => {
-            console.log(err);
+            console.clear();
             setLoading(false);
         })
 }

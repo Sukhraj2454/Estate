@@ -94,8 +94,9 @@ export default function Home({ theme }) {
                 >
                     <Tab label="Home" value={0} />
                     <Tab label="Task Board" value={1} />
-                    {/* <Tab label="Workers" value={2} /> */}
                     <Tab label="Request a Service" value={2} />
+                    
+                    {/* <Tab label="Workers" value={3} /> */}
                 </Tabs>
 
             </SwipeableDrawer>
@@ -112,12 +113,13 @@ export default function Home({ theme }) {
                         workers={workers}
                     />
                 </div>
-                {/* <div hidden={tab !== 2}>
-                    <WorkersTable />
-                </div> */}
-                <div hidden={tab !== 3}>
+                <div hidden={tab !== 2}>
                     <CreateRequest theme={theme} />
                 </div>
+                
+                {/* <div hidden={tab !== 3}>
+                    <WorkersTable />
+                </div> */}
             </>
         </Container >
     )
