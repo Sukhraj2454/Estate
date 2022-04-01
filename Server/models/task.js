@@ -50,10 +50,6 @@ const TaskSchema = new mongoose.Schema({
         min: this.createdOn
     },
     comments: [{
-        taskId: {
-            type: String,
-            required: true
-        },
         userId: {
             type: String,
             required: true

@@ -7,7 +7,7 @@ import Desc from './Tabs/Desc';
 import Comments from "./Tabs/Comments";
 
 // MUI Components
-import { Container, Grid, Paper, Button } from "@mui/material";
+import { Container, Grid, Paper, Button, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -25,21 +25,23 @@ const TabPanel = ({ comp, value, index }) => {
 
 export default function ExpCardlg({ close, theme, workers, data, set, cards, setCards }) {
     const [tab, setTab] = useState(10);
-
+    console.log(data);
 
     const handleTabChange = (event, newValue) => {
         event.preventDefault();
         setTab(newValue);
     };
+    const d = new Date(data.createdOn);
     return (
         <ThemeProvider theme={theme}>
             <Container component='main'>
                 <Paper elevation={24} sx={{ minHeight: 600 }} >
-
                     <Button onClick={close}>
                         <CloseIcon sx={{ p: 1 }} />
                     </Button>
-
+                    <Typography sx={{ p: 3, float: 'right' }} variant='h6'>
+                        Created On: {d.toDateString()}
+                    </Typography>
                     <Tabs value={tab} onChange={handleTabChange} variant='standard'>
                         <Tab label="Info" value={10} />
                         <Tab label="Comments" value={11} />

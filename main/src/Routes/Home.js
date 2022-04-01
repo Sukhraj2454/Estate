@@ -1,13 +1,14 @@
 // React Utils.
 import { useState, useEffect } from 'react';
 import { logout } from '../Utils/controller';
+
 // Other Utils
 import { getUsers } from '../Utils/controller';
 
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
 import Dashboard from '../Components/Dashboard/Dashboard';
-import WorkersTable from '../Components/Workers/WorkersTable';
+// import WorkersTable from '../Components/Workers/WorkersTable';
 import CreateRequest from '../Components/CreateRequest/CreateRequest';
 
 // MUI Components
@@ -22,9 +23,7 @@ import Tab from '@mui/material/Tab';
 // MUI Icons
 import MenuIcon from '@mui/icons-material/Menu';
 
-
 // This data object is basis for app we will store most of data from backend here and then pass it down to Components
-
 export default function Home({ theme }) {
 
     const [open, setOpen] = useState(false);
@@ -95,8 +94,8 @@ export default function Home({ theme }) {
                 >
                     <Tab label="Home" value={0} />
                     <Tab label="Task Board" value={1} />
-                    <Tab label="Workers" value={2} />
-                    <Tab label="Request a Service" value={3} />
+                    {/* <Tab label="Workers" value={2} /> */}
+                    <Tab label="Request a Service" value={2} />
                 </Tabs>
 
             </SwipeableDrawer>
@@ -113,9 +112,9 @@ export default function Home({ theme }) {
                         workers={workers}
                     />
                 </div>
-                <div hidden={tab !== 2}>
+                {/* <div hidden={tab !== 2}>
                     <WorkersTable />
-                </div>
+                </div> */}
                 <div hidden={tab !== 3}>
                     <CreateRequest theme={theme} />
                 </div>

@@ -168,11 +168,12 @@ export const updateAssignee = function (assignee, id) {
         })
 }
 // Desc.js
-export const updateDescTitle = function (title, description, id) {
+export const updateDescTitle = function (title, description, location, id) {
     axios.patch(`${BASE_URL}/task/updatedesctitle`,
         {
             title: title,
             description: description,
+            location: location,
             id: id
         },
         {

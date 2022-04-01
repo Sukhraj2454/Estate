@@ -2,7 +2,6 @@ const { Task } = require('../models/task');
 
 const mongoose = require('mongoose');
 
-
 // Add New Task
 module.exports.addTask = (req, res, next) => {
     var task = req.body;
@@ -13,7 +12,7 @@ module.exports.addTask = (req, res, next) => {
     }
     task.createdOn = new Date();
     var obj = new Task(task)
-    obj.save().then((ob) => {
+    obj.save().then(() => {
         res.status(200).json({ 'message': "Task Added Successfully." })
     })
 }
@@ -173,12 +172,13 @@ module.exports.getUserTasks = (req, res, next) => {
         next(err);
     })
 }
-// Change Description and Title
+// Change Description, Title, Location 
 module.exports.updateDescTitle = (req, res, next) => {
     const id = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
     const description = req.body.description;
+    const location = req.body.location;
     const title = req.body.title;
-    if (!id || !description || !title) {
+    if (!id || !description || !title || !location) {
         let er = new Error("No ID Found.")
         er.message = 'Not a Valid Request.'
         er.statusCode = 404
@@ -187,16 +187,17 @@ module.exports.updateDescTitle = (req, res, next) => {
     else {
         Task.updateOne({ _id: id }, {
             title: title,
-            description: description
+            description: description,
+            location: location
         })
             .then((ret) => {
                 if (ret.modifiedCount === 0) {
-                    let err = Error("No Modification Done")
+                    let err = Error("No Modification Done.")
                     err.statusCode = 200
                     throw (err)
                 }
                 else
-                    res.json({ 'message': 'Task Description and Title Information Updated' });
+                    res.json({ 'message': 'Task Description, Title and Location Information Updated' });
             }, (err) => {
                 let er = new Error("Could Not Update Priority.");
                 er.data = err;
