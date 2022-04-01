@@ -60,13 +60,13 @@ function Info({ theme, workers, data, set, cards, setCards }) {
         updateStatus(status, data._id);
     }, [status, data._id]);
 
-    useEffect(() => {
-        if (firstPriorityRender.current) {
-            firstPriorityRender.current = false;
-            return;
-        }   // referece for not calling function if loading component for first time.
-        updatePriority(priority, data._id);
-    }, [priority, data._id]);
+    // useEffect(() => {
+    //     if (firstPriorityRender.current) {
+    //         firstPriorityRender.current = false;
+    //         return;
+    //     }   // referece for not calling function if loading component for first time.
+    //     updatePriority(priority, data._id);
+    // }, [priority, data._id]);
 
     return (
         <Container component={'main'} maxWidth='sm'>
@@ -89,7 +89,7 @@ function Info({ theme, workers, data, set, cards, setCards }) {
                 data={workers}
                 label={"Reporter"} />
 
-            <FormControl fullWidth sx={{ mb: 3, mt: 3 }}>
+            {/* <FormControl fullWidth sx={{ mb: 3, mt: 3 }}>
                 <InputLabel id="priority-select-label">Priority</InputLabel>
                 <Select
                     labelId="priority-select-label"
@@ -101,7 +101,7 @@ function Info({ theme, workers, data, set, cards, setCards }) {
                     <MenuItem value={'Medium'}>Medium</MenuItem>
                     <MenuItem value={'High'}>High</MenuItem>
                 </Select>
-            </FormControl>
+            </FormControl> */}
             <FormControl fullWidth>
                 <InputLabel id="status-select-label">Status</InputLabel>
                 <Select

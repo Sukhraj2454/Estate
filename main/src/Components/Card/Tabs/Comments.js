@@ -1,32 +1,37 @@
-// React Utils.\
-import { useState } from 'react';
+// React Utils.
+import { useState, useEffect } from 'react';
 
 // Other Utils.
 import stringAvatar from '../../../Utils/stringAvatar';
+import { publishComment } from '../../../Utils/controller';
+
 // Mui Components
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import { Container, Typography, Box, Tooltip, TextField, Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
-function Comment() {
+function Comment({ data }) {
     return (
         <Box component='div' sx={{ mb: 1 }}>
-            <Tooltip title="Sukhraj Singh">
-                <Avatar sx={{ fontSize: 20, float: 'right', ml: 0.5, cursor: 'pointer' }} {...stringAvatar('Sukhraj Singh')} />
+            <Tooltip title={data.userName}>
+                <Avatar sx={{ fontSize: 20, float: 'right', ml: 0.5, cursor: 'pointer' }} {...stringAvatar(data.userName)} />
             </Tooltip>
             <Typography component='h5' variant='h6'>
-                Hi thereHi thereHi thereHi thereHi thereHi thereHi thereHi thereHi there
-                Hi thereHi thereHi thereHi thereHi thereHi there
+                {data.message}
             </Typography>
-            <Typography component='span' sx={{ color: 'gray' }}>12/15/2021 09:11 am</Typography>
+            <Typography component='span' sx={{ color: 'gray' }}>{data.date}</Typography>
         </Box>
     )
 }
 function NewComment() {
-    const [disable, setDisable] = useState(true);
-    const handleTextChange = () => {
-        setDisable(false);
+    const [message, setMessage] = useState('');
+    const handleTextChange = (event) => {
+        setMessage(event.target.value);
+    }
+    function handleSubmit(e) {
+        e.preventDefault();
+        publishComment(message);
     }
     return (
         <Box component='div' sx={{ mb: 1, mt: 2 }}>
@@ -38,11 +43,23 @@ function NewComment() {
                 rows={4}
             />
 
-            <Button sx={{ ml: 1, mt: 1 }} color="success" variant="contained" disabled={disable} >Publish Comment</Button>
+            <Button sx={{ ml: 1, mt: 1 }} color="success"
+                variant="contained"
+                disabled={message === ''}
+                onSubmit={handleSubmit}
+            >
+                Publish Comment
+            </Button>
         </Box>
     )
 }
-export default function Comments() {
+export default function Comments({ data }) {
+
+    const [comments, setComments] = useState([]);
+    useEffect(() => {
+        let dt = data.map(comment => <Comment data={comment} />);
+        setComments(dt);
+    }, data, setComments);
 
     return (
         <Container sx={{ mt: 2, maxHeight: 480, overflowY: 'scroll' }}>
@@ -53,15 +70,12 @@ export default function Comments() {
                 divider={<Divider orientation="horizontal" flexItem />}
                 spacing={2}
             >
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
-                <Comment />
+                {comments}
             </Stack>
         </Container >
     )
+}
+
+Comments.defaultProps = {
+    data: []
 }

@@ -19,7 +19,6 @@ const dt = {
         id: '13'
     },
     status: 'To Do',
-    priority: 'Medium'
 };
 
 export default function ExpandedCard({ close, theme, workers, data, set, cards, setCards }) {

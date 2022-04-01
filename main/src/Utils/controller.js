@@ -9,7 +9,7 @@ const headers = {
 // Variables
 const BASE_URL = process.env.URL || '';
 
-// <--------Functions------->
+// <--------Functions-------->
 // getCards
 // getCategories
 // getUsers
@@ -17,6 +17,7 @@ const BASE_URL = process.env.URL || '';
 // handleLogin
 // handleSignup
 // logout
+// publishComment
 // updateAssignee
 // updateDescTitle
 // updatePriority
@@ -149,7 +150,22 @@ export const logout = function () {
         .catch(err => {
         })
 }
-
+// Comment.js
+export const publishComment = function (message) {
+    axios.post(`${BASE_URL}/task/addComment`,
+        {
+            message: message
+        },
+        {
+            headers: headers
+        })
+        .then((res) => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
 // TaskCard.js, TaskCardLV.js
 export const updateAssignee = function (assignee, id) {
     axios.patch(`${BASE_URL}/task/assignworker`,

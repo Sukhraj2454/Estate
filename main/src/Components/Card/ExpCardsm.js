@@ -48,7 +48,7 @@ export default function ExpCardsm({ close, theme, workers, data, set, cards, set
                         <Info cards={cards} setCards={setCards} set={set} theme={theme} workers={workers} data={data} />
                     </div>
                     <div hidden={tabesm !== 22}>
-                        <Comments />
+                        <Comments data={data.comments} />
                     </div>
 
                 </Paper>

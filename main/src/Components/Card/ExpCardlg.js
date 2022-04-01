@@ -25,7 +25,6 @@ const TabPanel = ({ comp, value, index }) => {
 
 export default function ExpCardlg({ close, theme, workers, data, set, cards, setCards }) {
     const [tab, setTab] = useState(10);
-    console.log(data);
 
     const handleTabChange = (event, newValue) => {
         event.preventDefault();
@@ -65,7 +64,7 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, set
 
                         }
                     />
-                    <TabPanel value={tab} index={11} comp={<Comments />} />
+                    <TabPanel value={tab} index={11} comp={<Comments data={data.comments} />} />
                 </Paper>
             </Container >
         </ThemeProvider>

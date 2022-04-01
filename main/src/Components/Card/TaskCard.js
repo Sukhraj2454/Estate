@@ -84,9 +84,9 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
                             </CardActions>
                         </Grid >
 
-                        <Grid item lg={1} sm={1} xs={1} sx={{ pt: 1 }}>
+                        {/* <Grid item lg={1} sm={1} xs={1} sx={{ pt: 1 }}>
                             <Priority lvl={priority} />
-                        </Grid >
+                        </Grid > */}
 
                         <Grid item>
                             <CardActions>

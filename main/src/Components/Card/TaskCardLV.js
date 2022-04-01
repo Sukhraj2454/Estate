@@ -89,16 +89,16 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
                         </Typography>
                     </Grid >
 
-                    <Grid item lg={1} sm={1} xs={1} sx={{ pt: 1, pl: 3 }}>
+                    {/*<Grid item lg={1} sm={1} xs={1} sx={{ pt: 1, pl: 3 }}>
                         <Priority lvl={priority} />
-                    </Grid >
-                    {(sz !== 'sm' && sz !== 'xs') ?
-                        <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
-                            <Button size="small"
-                                onClick={workerHandle}>
-                                {assignee.name}
-                            </Button>
-                        </Grid> : <></>}
+                    </Grid >*/}
+
+                    <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
+                        <Button size="small"
+                            onClick={workerHandle}>
+                            {assignee.name}
+                        </Button>
+                    </Grid>
                     <Grid item lg={1} sm={1} xs={1} justifyContent={'right'} sx={{ m: 'auto' }}>
                         <Button size="small"
                             onClick={handleToggle}>
