@@ -35,8 +35,9 @@ export default function Signup({ theme, change }) {
     }, []);
 
     useEffect(() => {
+        let ind=0;
         let cats = categories;
-        let menu = cats.map((cat) => <MenuItem value={cat}>{cat}</MenuItem>);
+        let menu = cats.map((cat) => <MenuItem key={ind++} value={cat}>{cat}</MenuItem>);
         setMenu(menu);
     }, [categories]);
 

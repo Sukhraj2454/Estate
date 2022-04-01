@@ -64,7 +64,7 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, set
 
                         }
                     />
-                    <TabPanel value={tab} index={11} comp={<Comments data={data.comments} />} />
+                    <TabPanel value={tab} index={11} comp={<Comments data={data.comments} id={data._id} />} />
                 </Paper>
             </Container >
         </ThemeProvider>

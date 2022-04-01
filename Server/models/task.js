@@ -65,7 +65,6 @@ const TaskSchema = new mongoose.Schema({
         message: {
             type: String,
         },
-
     }]
 });
 

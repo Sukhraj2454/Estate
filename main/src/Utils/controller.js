@@ -9,7 +9,9 @@ const headers = {
 // Variables
 const BASE_URL = process.env.URL || '';
 
-// <--------Functions-------->
+
+// <--------Functions------->
+//Create Request
 // getCards
 // getCategories
 // getUsers
@@ -25,6 +27,19 @@ const BASE_URL = process.env.URL || '';
 // updateStatus
 
 
+//CreateRequest.js
+export const createRequest = function (title, description, location, category) {
+    axios.post(`${BASE_URL}/task/add`, {
+        title: title,
+        description: description,
+        location: location,
+        category: category
+    },
+        { headers: headers })
+        .then(res => {
+            console.log(res);
+        })
+}
 // Taskboard.js
 export const getCards = function (setCards, setLoading) {
     if (!setLoading) {
@@ -38,7 +53,6 @@ export const getCards = function (setCards, setLoading) {
             setLoading(false);
         })
         .catch(err => {
-            console.log(err);
             setLoading(false);
         })
 }
@@ -48,7 +62,6 @@ export const getCategories = function (setCategories) {
         headers: headers,
     })
         .then(res => {
-            console.log(res)
             setCategories(res.data);
         })
         .catch(err => {
@@ -82,7 +95,6 @@ export const getUserTasks = function (setCards, setLoading) {
     })
         .catch(err => {
             setLoading(false);
-            console.log(err.message);
         })
 }
 // Login.js
@@ -150,17 +162,19 @@ export const logout = function () {
         .catch(err => {
         })
 }
-// Comment.js
-export const publishComment = function (message) {
+
+// Comments.js
+export const publishComment = function (message, id, setComment) {
     axios.post(`${BASE_URL}/task/addComment`,
         {
-            message: message
+            message: message,
+            tId: id
         },
         {
             headers: headers
         })
         .then((res) => {
-            console.log(res);
+            setComment(res.data);
         })
         .catch(err => {
             console.log(err);

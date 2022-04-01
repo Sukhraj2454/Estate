@@ -4,7 +4,7 @@ import { updateAssignee, updateReporter } from '../../Utils/controller';
 
 // Components
 import ExpandedCard from './ExpandedCard';
-import Priority from '../Others/Priority';
+// import Priority from '../Others/Priority';
 // import DialogBox from './DialogBox';
 
 // Material UI Components
@@ -29,6 +29,8 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
     const firstReporterRender = useRef(true);
     // const [dt, setData] = useState(data);
     const [title, setTitle] = useState(data.title);
+
+    // eslint-disable-next-line
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);

@@ -33,7 +33,7 @@ export default function TaskBoardlg({ theme, workers, cards, useStyles, setCards
     const [refresh, setRefresh] = useState(1);
     useEffect(() => {
         getCards(setCards, setLoading);
-    }, [refresh]);
+    }, [refresh, setCards]);
 
     const handleRefresh = () => {
         setLoading(true);

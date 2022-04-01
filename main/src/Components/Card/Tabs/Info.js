@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from 'react'
 
 // Other Utils
-import { updateStatus, updatePriority } from '../../../Utils/controller';
+import { updateStatus } from '../../../Utils/controller';
+// import {updatePriority } from '../../../Utils/controller';
 
 // Components
 import ACInput from "../../Others/ACInput";
@@ -16,8 +17,8 @@ import Select from '@mui/material/Select';
 
 function Info({ theme, workers, data, set, cards, setCards }) {
     const firstStatusRender = useRef(true);
-    const firstPriorityRender = useRef(true);
-    const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
+    // const firstPriorityRender = useRef(true);
+    // const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
     const [status, setStatus] = useState(data ? data.status : 'To Do');
     // useEffect(() => {
 
@@ -38,19 +39,20 @@ function Info({ theme, workers, data, set, cards, setCards }) {
     };
 
     useEffect(() => {
-        setPriority(data.priority === 2 ? 'High' : 'Medium');
+        // setPriority(data.priority === 2 ? 'High' : 'Medium');
         setStatus(data.status);
         set[2](data.assignee);
         set[3](data.reporter);
+        // eslint-disable-next-line
     }, [cards]);
 
 
-    const handlePriorityChange = (event) => {
+    // const handlePriorityChange = (event) => {
 
-        setPriority(event.target.value);
-        set[1](event.target.value === 'Medium' ? 1 : 2);
+    //     setPriority(event.target.value);
+    //     set[1](event.target.value === 'Medium' ? 1 : 2);
 
-    };
+    // };
 
     useEffect(() => {
         if (firstStatusRender.current) {
@@ -102,6 +104,7 @@ function Info({ theme, workers, data, set, cards, setCards }) {
                     <MenuItem value={'High'}>High</MenuItem>
                 </Select>
             </FormControl> */}
+
             <FormControl fullWidth>
                 <InputLabel id="status-select-label">Status</InputLabel>
                 <Select

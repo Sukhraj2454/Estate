@@ -19,17 +19,21 @@ module.exports.addTask = (req, res, next) => {
 
 // Add Comment
 module.exports.addComment = (req, res, next) => {
+
+    const taskId = mongoose.Types.ObjectId(req.body.tId);
     var comment = {
-        taskId: mongoose.Types.ObjectId(req.body.tId),
         userId: req.user._id,
-        message: req.body.messafe
+        userName: req.user.name,
+        message: req.body.message,
+        date: new Date()
     }
-    Task.find({ _id: req.body.tId }).then(task => {
+    Task.findOne({ _id: taskId }).then(task => {
 
-        task.comments.push(comment);
-
+        if (!task.comments)
+            task.comments = [];
+        task.comments.unshift(comment);
         task.save().then(() => {
-            res.json({ 'message': 'Comment Added Successfully.' });
+            res.send(comment);
         }, () => {
             let er = new Error("No Data Found.")
             er.message = 'Not a Valid Request.'
@@ -143,7 +147,7 @@ module.exports.getAllTasks = (req, res, next) => {
     //     next(error)
     // }
     // else {
-    Task.find().then((obj) => {
+    Task.find({ category: req.user.category }).then((obj) => {
         if (obj.length === 0) {
             let error = new Error("No Tasks")
             error.message = "No Tasks Found";

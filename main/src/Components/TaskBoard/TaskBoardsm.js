@@ -1,5 +1,5 @@
 // React Utils
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 // Other Utils
 import { getCards } from '../../Utils/controller';
@@ -29,9 +29,10 @@ export default function TaskBoardsm({ theme, useStyles, workers, cards, setCards
     const [reviewCards, setRC] = useState([]);
     const [completedCards, setCC] = useState([]);
     const [refresh, setRefresh] = useState(1);
+
     useEffect(() => {
         getCards(setCards, setLoading);
-    }, [refresh]);
+    }, [refresh, setCards]);
     const handleRefresh = () => {
         setLoading(true);
         let x = refresh;

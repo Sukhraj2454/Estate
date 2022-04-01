@@ -5,7 +5,7 @@ import { updateAssignee, updateReporter } from '../../Utils/controller';
 
 // Components
 import ExpandedCard from './ExpandedCard';
-import Priority from '../Others/Priority';
+// import Priority from '../Others/Priority';
 import TaskCardLVSkel from './Skeleton/TaskLVSkel';
 
 // Material UI Components
@@ -26,6 +26,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState(data.title);
+    // eslint-disable-next-line
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);
@@ -71,9 +72,9 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     const workerHandle = () => {
         console.log("Worker Clicked");
     }
-    useEffect(() => {
-        setPriority(data.priority);
-    }, [data]);
+    // useEffect(() => {
+    //     setPriority(data.priority);
+    // }, [data]);
 
     return (
 
@@ -133,5 +134,6 @@ TaskCardLV.defaultProps = {
         description: '',
         status: 'To Do',
         priority: 1
-    }
+    },
+    setPriority: () => { }
 }
