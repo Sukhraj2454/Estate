@@ -212,6 +212,32 @@ module.exports.updateDescTitle = (req, res, next) => {
             })
     }
 }
+
+// Add  or update deadline
+module.exports.updateDate = (req, res, next) => {
+    const tId = req.body.tId ? mongoose.Types.ObjectId(req.body.tId) : null;
+    const date = new Date(req.body.date);
+    Task.findOne({ _id: tId }).then((task) => {
+        if (task) {
+            if (date.getTime() >= task.createdOn.getTime()) {
+                task.deadline = date;
+                task.save().then(() => {
+                    res.json({ "message": "Deadline Added" });
+                })
+            }
+            else {
+                const er = new Error('Deadline cannot be set before the creation date.');
+                throw (er)
+            }
+        }
+        else {
+            const er = new Error("Task Not found");
+            throw (er)
+        }
+    }).catch(err => {
+        next(err);
+    });
+}
 // Change Priority
 module.exports.updatePriority = (req, res, next) => {
     const id = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;

@@ -33,7 +33,7 @@ function NewComment({ id, comments, setComments }) {
         if (Object.keys(comment).length) {
             setComments(prevState => { return [<Comment key={prevState.length} data={comment} />, ...prevState] });
         }
-    }, [comment]);
+    }, [comment, setComments]);
     const handleTextChange = (event) => {
         setMessage(event.target.value);
     }

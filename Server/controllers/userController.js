@@ -131,7 +131,7 @@ module.exports.logout = (req, res, next) => {
 
 // Get All Workers
 module.exports.getUsers = (req, res, next) => {
-    User.find().then((users) => {
+    User.find({'desig':'Worker'}).then((users) => {
         if (!users) {
             const error = new Error("No Workers Data Found.")
             error.statusCode = 404

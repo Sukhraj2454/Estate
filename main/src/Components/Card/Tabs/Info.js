@@ -5,8 +5,9 @@ import { useState, useEffect, useRef } from 'react'
 import { updateStatus } from '../../../Utils/controller';
 // import {updatePriority } from '../../../Utils/controller';
 
-// Components
+// Other Components
 import ACInput from "../../Others/ACInput";
+import BasicDateTimePicker from '../../Others/BasicDateTimePicker';
 
 // MUI Components
 import { Container } from "@mui/material";
@@ -104,7 +105,12 @@ function Info({ theme, workers, data, set, cards, setCards }) {
                     <MenuItem value={'High'}>High</MenuItem>
                 </Select>
             </FormControl> */}
-
+            <BasicDateTimePicker name='Deadline'
+                date={data.deadline !== undefined ? new Date(data.deadline) : null}
+                sx={{ m: 1 }}
+                tId={data._id}
+                minDate={new Date(data.createdOn)}
+            />
             <FormControl fullWidth>
                 <InputLabel id="status-select-label">Status</InputLabel>
                 <Select
@@ -119,7 +125,7 @@ function Info({ theme, workers, data, set, cards, setCards }) {
                     <MenuItem value={'Completed'}>Completed</MenuItem>
                 </Select>
             </FormControl>
-        </Container>)
+        </Container >)
 }
 Info.defaultProps = {
     setCards: () => { },

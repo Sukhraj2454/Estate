@@ -11,7 +11,7 @@ const BASE_URL = process.env.URL || '';
 
 
 // <--------Functions------->
-//Create Request
+// Create Request
 // getCards
 // getCategories
 // getUsers
@@ -21,6 +21,7 @@ const BASE_URL = process.env.URL || '';
 // logout
 // publishComment
 // updateAssignee
+// updateDate
 // updateDescTitle
 // updatePriority
 // updateReporter
@@ -195,6 +196,23 @@ export const updateAssignee = function (assignee, id) {
     ).then((res) => {
     })
         .catch(err => {
+        })
+}
+// Info.js
+export const updateDate = function (date, tId) {
+    axios.patch(`${BASE_URL}/task/updatedate`,
+        {
+            tId: tId,
+            date: date
+        },
+        {
+            headers: headers
+        })
+        .then((res) => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err);
         })
 }
 // Desc.js
