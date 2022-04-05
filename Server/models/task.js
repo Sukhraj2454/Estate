@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
 
 const TaskSchema = new mongoose.Schema({
     title: {
         type: String,
         requried: true
+    },
+    taskId: {
+        type: String,
+        required: true
     },
     description: {
         type: String,

@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 
 // Other Components
 import TaskCardLV from "../Card/TaskCardLV";
+import CompletedCard from '../Card/CompletedCard';
 
 export default function MyTasks({ cards, workers, theme, sz, setCards }) {
     // console.log(cards);
@@ -14,9 +15,16 @@ export default function MyTasks({ cards, workers, theme, sz, setCards }) {
         let col = false;
         let dat = cards.map(card => {
             col = !col;
-            if (col)
-                return <TaskCardLV key={card._id}  data={card}  workers={workers} theme={theme} clr='#EEEEEE' sz={sz} />
-            else return <TaskCardLV key={card._id}  data={card}  workers={workers} theme={theme} sz={sz} />
+            if (card.status === 'Completed') {
+                if (col)
+                    return <CompletedCard key={card._id} data={card} theme={theme} clr='#EEEEEE' sz={sz} />
+                else return <CompletedCard key={card._id} data={card} theme={theme} sz={sz} />
+            }
+            else {
+                if (col)
+                    return <TaskCardLV key={card._id} data={card} workers={workers} theme={theme} clr='#EEEEEE' sz={sz} />
+                else return <TaskCardLV key={card._id} data={card} workers={workers} theme={theme} sz={sz} />
+            }
         });
         setData(dat);
     }, [cards, workers, sz, theme, setCards])

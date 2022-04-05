@@ -10,6 +10,7 @@ module.exports.addTask = (req, res, next) => {
         'name': user.name,
         'id': user._id
     }
+    task.taskId = task.category.substring(0, 4).toUpperCase() + "-" + (Date.now() % 100000);
     task.createdOn = new Date();
     var obj = new Task(task)
     obj.save().then(() => {
@@ -147,13 +148,13 @@ module.exports.getAllTasks = (req, res, next) => {
     //     next(error)
     // }
     // else {
-    Task.find({ category: req.user.category }).then((obj) => {
-        if (obj.length === 0) {
-            let error = new Error("No Tasks")
-            error.message = "No Tasks Found";
-            error.statusCode = 404
-            throw error;
-        }
+    Task.find({ $and: [{ category: req.user.category }, { status: { $nin: ['Reviewed'] } }] }).then((obj) => {
+        // if (obj.length === 0) {
+        //     let error = new Error("No Tasks")
+        //     error.message = "No Tasks Found";
+        //     error.statusCode = 404
+        //     throw error;
+        // }
         res.status(200).json(obj);
     })
         .catch(err => {
@@ -163,7 +164,11 @@ module.exports.getAllTasks = (req, res, next) => {
 }
 // Get Tasks created by a certain User
 module.exports.getUserTasks = (req, res, next) => {
-    Task.find({ '$or': [{ 'assignee.id': req.user._id }, { 'reporter.id': req.user._id }] }).then((tasks) => {
+    Task.find({
+        $and: [{ '$or': [{ 'assignee.id': req.user._id }, { 'reporter.id': req.user._id }] }, {
+            status: { $nin: ['Reviewed'] }
+        }]
+    }).then((tasks) => {
         res.send(tasks)
     }, (err) => {
         console.log(err)

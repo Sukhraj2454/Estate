@@ -9,7 +9,7 @@ import { getCards } from '../../Utils/controller';
 import TaskCard from '../Card/TaskCard';
 import ToDo from './StatusColumns/lg/ToDo';
 import InProgress from './StatusColumns/lg/InProgress';
-import Review from './StatusColumns/lg/Review';
+// import Review from './StatusColumns/lg/Review';
 import Completed from './StatusColumns/lg/Completed';
 
 // Material UI Components
@@ -27,7 +27,7 @@ export default function TaskBoardlg({ theme, workers, cards, useStyles, setCards
     const [loading, setLoading] = useState(false);
     const [toDoCards, setTDC] = useState([]);
     const [inProgressCards, setIPC] = useState([]);
-    const [reviewCards, setRC] = useState([]);
+    // const [reviewCards, setRC] = useState([]);
     const [completedCards, setCC] = useState([]);
     // const [cardsArr, setCards] = useState(cards);
     const [refresh, setRefresh] = useState(1);
@@ -53,20 +53,21 @@ export default function TaskBoardlg({ theme, workers, cards, useStyles, setCards
         //     setCards([])
         //     return;
         // }
-        let tdc = [], ipc = [], rc = [], cc = [];
+        let tdc = [], ipc = [], cc = [];
+        // let rc = [];
         cards.forEach(card => {
             if (card.status === 'To Do')
                 tdc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
             else if (card.status === 'In Progress')
                 ipc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
-            else if (card.status === 'Review')
-                rc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
+            // else if (card.status === 'Review')
+            //     rc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
             else cc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
 
         });
         setTDC(tdc)
         setIPC(ipc)
-        setRC(rc)
+        // setRC(rc)
         setCC(cc)
     }, [cards, workers, theme, setCards]);
 
@@ -92,7 +93,7 @@ export default function TaskBoardlg({ theme, workers, cards, useStyles, setCards
             <Grid container spacing={3} justifyContent={'center'} sx={{ mb: 2 }}>
                 <ToDo minHeight={mh} cards={toDoCards} classes={classes} />
                 <InProgress minHeight={mh} cards={inProgressCards} classes={classes} />
-                <Review minHeight={mh} cards={reviewCards} classes={classes} />
+                {/* <Review minHeight={mh} cards={reviewCards} classes={classes} /> */}
                 <Completed minHeight={mh} cards={completedCards} classes={classes} />
             </Grid>
 

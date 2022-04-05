@@ -1,5 +1,4 @@
-
-function stringToColor(string) {
+export default function stringToColor(string) {
     let hash = 0;
     let i;
 
@@ -11,19 +10,10 @@ function stringToColor(string) {
     let color = '#';
 
     for (i = 0; i < 3; i += 1) {
-        const value = (hash >> (i * 8)) & 0xff;
+        const value = (hash >> (i * 18)) & 0xff;
         color += `00${value.toString(16)}`.slice(-2);
     }
     /* eslint-enable no-bitwise */
 
     return color;
-}
-export default function stringAvatar(name) {
-    let ar = name.split(' ');
-    return {
-        sx: {
-            bgcolor: stringToColor(name),
-        },
-        children: `${ar[0][0] || ''}${ar[1] ? ar[1][0] : ''}`,
-    };
 }

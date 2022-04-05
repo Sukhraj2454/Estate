@@ -14,6 +14,7 @@ const BASE_URL = process.env.URL || '';
 // Create Request
 // getCards
 // getCategories
+// getUser
 // getUsers
 // getUserTasks
 // handleLogin
@@ -64,6 +65,20 @@ export const getCategories = function (setCategories) {
     })
         .then(res => {
             setCategories(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
+
+
+// Dashboard.js
+export const getUser = function (setUser) {
+    axios.get(`${BASE_URL}/user/getUser`, {
+        headers: headers
+    })
+        .then(res => {
+            setUser(res.data);
         })
         .catch(err => {
             console.log(err);
@@ -209,10 +224,8 @@ export const updateDate = function (date, tId) {
             headers: headers
         })
         .then((res) => {
-            console.log(res)
         })
         .catch(err => {
-            console.log(err);
         })
 }
 // Desc.js

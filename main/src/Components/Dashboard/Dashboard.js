@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 // Other Utils
 // import ACInput from "../Others/ACInput";
-import { getUserTasks } from '../../Utils/controller';
+import { getUserTasks, getUser } from '../../Utils/controller';
 import useWidth from "../../Utils/useWidth";
 import MyTasks from './MyTasks';
 
@@ -17,15 +17,19 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function Dashboard({ theme, workers }) {
     const [loading, setLoading] = useState(false);
-
+    const [user, setUser] = useState({ 'name': '' });
     const sz = useWidth();
     const len = (sz !== 'sm' && sz !== 'xs') ? 10 : 12;
     const [cards, setCards] = useState([]);
     const [refresh, setRefresh] = useState(1);
+
     useEffect(() => {
         getUserTasks(setCards, setLoading);
     }, [refresh]);
 
+    useEffect(() => {
+        getUser(setUser)
+    }, [setUser]);
     const handleRefresh = () => {
         setLoading(true);
         let x = refresh;
@@ -38,7 +42,7 @@ export default function Dashboard({ theme, workers }) {
                     {sz !== 'sm' && sz !== 'xs' ? (
                         <Grid item xs={2}>
                             {/* <Avatar sx={{ margin: 0 }} {...stringAvatar('Sukhraj Singh')} /> */}
-                            <Typography textAlign={'center'} component='h1' variant='h4'>Welcome,{<br />} Sukhraj Singh</Typography>
+                            <Typography textAlign={'center'} component='h1' variant='h4'>Welcome,{<br />}{user.name}</Typography>
                         </Grid>) : <></>}
                     <Grid item xs={len} sx={{ border: '2px solid gray', borderBottomRightRadius: 15, borderTopRightRadius: 15 }}>
                         <Typography textAlign={'center'} sx={{ mb: 5 }} component='h1' variant='h4'>

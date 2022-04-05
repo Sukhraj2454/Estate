@@ -15,6 +15,8 @@ export default function BasicDateTimePicker({ name, disabled, date, minDate, tId
   const [value, setValue] = useState(date);
   useEffect(() => {
     if (value !== null && value !== date) {
+      // console.log(value)
+      // console.log(date)
       updateDate(value, tId);
     }
   }, [value, date, tId]);

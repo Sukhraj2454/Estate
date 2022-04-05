@@ -2,6 +2,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { updateAssignee, updateReporter } from '../../Utils/controller';
 
+// Other Utils
+import { updateStatus } from '../../Utils/controller';
+import stringToColor from '../../Utils/stringToColor';
+
 // Components
 import ExpandedCard from './ExpandedCard';
 // import Priority from '../Others/Priority';
@@ -12,7 +16,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActions } from '@mui/material';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { Container } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 
@@ -22,9 +26,11 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 export default function TaskCard({ theme, workers, data, cards, setCards }) {
     const [open, setOpen] = useState(false);
+    const [status, setStatus] = useState(data ? data.status : 'To Do');
     const handleToggle = () => {
         setOpen(!open);
     };
+    const firstStatusRender = useRef(true);
     const firstAssigneeRender = useRef(true);
     const firstReporterRender = useRef(true);
     // const [dt, setData] = useState(data);
@@ -53,6 +59,13 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
     }, [assignee, data._id]);
 
     useEffect(() => {
+        if (firstStatusRender.current) {
+            firstStatusRender.current = false;
+            return;
+        }       // referece for not calling function if loading component for first time.
+        updateStatus(status, data._id);
+    }, [status, data._id]);
+    useEffect(() => {
         if (firstReporterRender.current) {
             firstReporterRender.current = false;
             return;
@@ -60,9 +73,20 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
         updateReporter(reporter, data._id);
     }, [reporter, data._id]);
 
+    const handleStatusChange = (event) => {
+
+        setStatus(event.target.value);
+        if (cards.length > 0) {
+            let ind = cards.findIndex(x => x._id === data._id);
+            let temp = cards[ind];
+            cards = cards.filter(x => x._id !== data._id);
+            temp.status = event.target.value;
+            cards.push(temp);
+            setCards(cards);
+        }
+    };
     const workerHandle = () => {
         console.log("Worker Clicked");
-        console.log(assignee);
     }
     return (
         <Container component={'main'}>
@@ -82,15 +106,11 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
                                     onClick={handleToggle}>
                                     <MoreHorizIcon />
                                 </Button>
-
                             </CardActions>
                         </Grid >
 
-                        {/* <Grid item lg={1} sm={1} xs={1} sx={{ pt: 1 }}>
-                            <Priority lvl={priority} />
-                        </Grid > */}
 
-                        <Grid item>
+                        <Grid item lg={4} sm={4} xs={4}>
                             <CardActions>
                                 <Button size="small"
                                     onClick={workerHandle}>
@@ -98,7 +118,42 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
                                 </Button>
                             </CardActions>
                         </Grid>
+
+
+                        <Grid item lg={3} sm={4} xs={4} sx={{ pt: 1 }}>
+                            <Typography sx={{ userSelect: 'none', fontWeight: 600, color: stringToColor(data.taskId.split('-')[0]) }} >{data.taskId}</Typography>
+                            {/* <Priority lvl={priority} />
+                            <FormControl>
+                                <InputLabel id="status-select-label">Status</InputLabel>
+                                <Select
+                                    labelId="status-select-label"
+                                    value={status}
+                                    label="Status"
+                                    onChange={handleStatusChange}
+                                >
+                                    <MenuItem value={'To Do'}>To Do</MenuItem>
+                                    <MenuItem value={'In Progress'}>In Progress</MenuItem>
+                            <MenuItem value={'Review'}>Review</MenuItem>
+                            <MenuItem value={'Completed'}>Completed</MenuItem>
+                                </Select>
+                            </FormControl> */}
+                        </Grid >
+
+
                     </Grid>
+                    <ToggleButtonGroup
+                        color="primary"
+                        value={status}
+                        exclusive
+                        onChange={handleStatusChange}
+                    >
+                        <ToggleButton
+                            sx={{ fontSize: 10, fontWeight: 600 }} value="To Do">To Do</ToggleButton>
+                        <ToggleButton
+                            sx={{ fontSize: 10, fontWeight: 600 }} value="In Progress">In Progress</ToggleButton>
+                        <ToggleButton
+                            sx={{ fontSize: 10, fontWeight: 600 }} value="Completed">Completed</ToggleButton>
+                    </ToggleButtonGroup>
                 </CardContent>
             </Card >
 
@@ -122,6 +177,7 @@ TaskCard.defaultProps = {
             name: '',
             id: ''
         },
+        taskId: 'a-b',
         status: 'To Do',
         priority: 'Medium'
     }

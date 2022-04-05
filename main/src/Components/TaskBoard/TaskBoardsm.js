@@ -8,7 +8,7 @@ import { getCards } from '../../Utils/controller';
 import TaskCard from '../Card/TaskCard';
 import ToDo from './StatusColumns/sm/ToDo';
 import InProgress from './StatusColumns/sm/InProgress';
-import Review from './StatusColumns/sm/Review';
+// import Review from './StatusColumns/sm/Review';
 import Completed from './StatusColumns/sm/Completed';
 
 // Material UI Components   
@@ -26,7 +26,7 @@ export default function TaskBoardsm({ theme, useStyles, workers, cards, setCards
 
     const [toDoCards, setTDC] = useState([<TaskCard workers={workers} key='1' theme={theme} />]);
     const [inProgressCards, setIPC] = useState([]);
-    const [reviewCards, setRC] = useState([]);
+    // const [reviewCards, setRC] = useState([]);
     const [completedCards, setCC] = useState([]);
     const [refresh, setRefresh] = useState(1);
 
@@ -51,20 +51,21 @@ export default function TaskBoardsm({ theme, useStyles, workers, cards, setCards
         //     setCards([])
         //     return;
         // }
-        let tdc = [], ipc = [], rc = [], cc = [];
+        let tdc = [], ipc = [], cc = [];
+        // let, rc = [];
         cards.forEach((card) => {
             if (card.status === 'To Do')
                 tdc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
             else if (card.status === 'In Progress')
                 ipc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
-            else if (card.status === 'Review')
-                rc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
+            // else if (card.status === 'Review')
+            //     rc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
             else cc.push(<TaskCard workers={workers} cards={cards} setCards={setCards} data={card} key={card._id} theme={theme} />)
 
         })
         setTDC(tdc)
         setIPC(ipc)
-        setRC(rc)
+        // setRC(rc)
         setCC(cc)
     }, [workers, theme, cards, setCards])
 
@@ -86,7 +87,7 @@ export default function TaskBoardsm({ theme, useStyles, workers, cards, setCards
             </Typography>
             <ToDo cards={toDoCards} />
             <InProgress cards={inProgressCards} />
-            <Review cards={reviewCards} />
+            {/* <Review cards={reviewCards} /> */}
             <Completed cards={completedCards} />
         </Container>
     )

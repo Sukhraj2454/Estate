@@ -16,6 +16,7 @@ import Backdrop from '@mui/material/Backdrop';
 
 // material Icons
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import stringToColor from '../../Utils/stringToColor';
 
 export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, cards }) {
 
@@ -30,7 +31,6 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);
-
     // useEffect(() => {
     //     let temp = data;
     //     temp.title = title;
@@ -40,7 +40,6 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     //     setData(temp);
     //     // eslint-disable-next-line
     // }, [title, priority, assignee, reporter, data]);
-
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
@@ -84,15 +83,16 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
             (<Container component={'main'} sx={{ bgcolor: clr }}>
                 <Grid container columns={12} >
 
-                    <Grid item lg={6} sm={6} xs={6} >
+                    <Grid item lg={5} sm={5} xs={5} >
                         <Typography gutterBottom variant="h6" component="h2" noWrap>
                             {title}
                         </Typography>
                     </Grid >
 
-                    {/*<Grid item lg={1} sm={1} xs={1} sx={{ pt: 1, pl: 3 }}>
-                        <Priority lvl={priority} />
-                    </Grid >*/}
+                    <Grid item lg={2} sm={2} xs={2} sx={{ pt: 1, pl: 3 }}>
+                        {/*    <Priority lvl={priority} />*/}
+                        <Typography sx={{ color: stringToColor(data.taskId.split('-')[0]), fontWeight:600 }}>{data.taskId}</Typography>
+                    </Grid >
 
                     <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
                         <Button size="small"
@@ -130,6 +130,7 @@ TaskCardLV.defaultProps = {
             name: '',
             id: 'pqr'
         },
+        taskId: "a-b",
         title: 'titles',
         description: '',
         status: 'To Do',

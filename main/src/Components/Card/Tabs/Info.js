@@ -45,7 +45,7 @@ function Info({ theme, workers, data, set, cards, setCards }) {
         set[2](data.assignee);
         set[3](data.reporter);
         // eslint-disable-next-line
-    }, [cards]);
+    }, [cards, data]);
 
 
     // const handlePriorityChange = (event) => {
@@ -70,7 +70,6 @@ function Info({ theme, workers, data, set, cards, setCards }) {
     //     }   // referece for not calling function if loading component for first time.
     //     updatePriority(priority, data._id);
     // }, [priority, data._id]);
-
     return (
         <Container component={'main'} maxWidth='sm'>
 
@@ -121,7 +120,7 @@ function Info({ theme, workers, data, set, cards, setCards }) {
                 >
                     <MenuItem value={'To Do'}>To Do</MenuItem>
                     <MenuItem value={'In Progress'}>In Progress</MenuItem>
-                    <MenuItem value={'Review'}>Review</MenuItem>
+                    {/* <MenuItem value={'Review'}>Review</MenuItem> */}
                     <MenuItem value={'Completed'}>Completed</MenuItem>
                 </Select>
             </FormControl>
