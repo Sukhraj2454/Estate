@@ -1,15 +1,19 @@
 // React Utils.
 import { useState, useEffect } from 'react';
 
+// Othe Utils
+import { submitReview } from '../../Utils/controller';
+
 // MUI Components
 import { Typography, TextField, Button } from '@mui/material';
 import { Grid, Rating } from '@mui/material';
 import { Container } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-export default function CompletedCard({ theme, clr, data }) {
+export default function CompletedCard({ theme, clr, data, refresh, setRefresh }) {
     const [value, setValue] = useState(0);
     const [open, setOpen] = useState(false);
+    const [text, setText] = useState('');
 
     useEffect(() => {
         if (value !== 0) {
@@ -20,6 +24,9 @@ export default function CompletedCard({ theme, clr, data }) {
     const handleDialogClose = () => {
         setOpen(false);
     };
+    const handleReviewSubmit = (event) => {
+        submitReview(value, data._id, text, setRefresh, refresh);
+    }
     return (<Container component={'main'} sx={{ bgcolor: clr }}>
         <Grid container columns={12} >
 
@@ -58,6 +65,8 @@ export default function CompletedCard({ theme, clr, data }) {
                     multiline
                     id="name"
                     rows="8"
+                    value={text}
+                    onChange={(e) => { setText(e.target.value) }}
                     label="Review[optional]"
                     type="text"
                     fullWidth
@@ -66,7 +75,7 @@ export default function CompletedCard({ theme, clr, data }) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleDialogClose}>Cancel</Button>
-                <Button onClick={handleDialogClose}>Submit</Button>
+                <Button onClick={handleReviewSubmit}>Submit</Button>
             </DialogActions>
         </Dialog>
     </Container >)

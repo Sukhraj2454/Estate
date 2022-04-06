@@ -7,7 +7,9 @@ import { updateDescTitle } from "../../../Utils/controller";
 import { TextField, Button } from "@mui/material";
 
 export default function Desc({ data, set, cards, setCards }) {
-    const firstDTRender = useRef(true);
+    const DescRef = useRef(data.description);
+    const TitleRef = useRef(data.title);
+    const LocRef = useRef(data.location);
     const [location, setLocation] = useState(data.location);
     const [description, setDescription] = useState(data.description);
     const [title, setTitle] = useState(data.title);
@@ -36,10 +38,12 @@ export default function Desc({ data, set, cards, setCards }) {
         setLocText(location);
     }
     useEffect(() => {
-        if (firstDTRender.current) {
-            firstDTRender.current = false;
+        if (DescRef.current === description && TitleRef.current === title && LocRef.current === location) {
             return;
         }
+        DescRef.current = description;
+        TitleRef.current = title;
+        LocRef.current = location;
         updateDescTitle(title, description, location, data._id);
     }, [title, description, location, data._id])
     return (<>

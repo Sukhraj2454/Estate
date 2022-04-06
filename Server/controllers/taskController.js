@@ -342,3 +342,33 @@ module.exports.updateStatus = (req, res, next) => {
     }
 }
 
+
+module.exports.submitRating = (req, res, next) => {
+    const tId = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
+    const stars = req.body.stars;
+    const text = req.body.text;
+    Task.findOne({ _id: tId }).then(task => {
+        if (task.status === 'Reviewed') {
+            const er = new Error("You have already reviwed the Service.")
+            throw (er);
+        }
+        else if (task.status !== 'Completed') {
+            const er = new Error("InComplete Task Cannot be Reviewed, Kindly Refresh Page.")
+            throw (er);
+        }
+        else {
+            task.rating.stars = stars;
+            task.rating.text = text;
+            task.status = 'Reviewed';
+            task.save().then(() => {
+                res.json({ message: 'Rating Submitted Sucessfully.' })
+            }).catch(err => {
+                const er = new Error(err);
+                next(er);
+            })
+        }
+    }).catch(err => {
+        const er = new Error(err);
+        next(er);
+    })
+}

@@ -3,8 +3,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 
-export default function Completed({ cards, minHeight, classes }) {
-    return (<Grid item sm={3} xs={8}>
+export default function Completed({ cards, minHeight, classes, xs, sm }) {
+    return (<Grid item sm={sm} xs={xs}>
         <Paper variant='outlined'
             sx={{
                 background: '#eee',

@@ -16,5 +16,6 @@ taskRouter.patch('/updatepriority', authenticate, taskController.updatePriority)
 taskRouter.patch('/updatereporter', authenticate, taskController.updateReporter);
 taskRouter.patch('/updatestatus', authenticate, taskController.updateStatus);
 taskRouter.get('/usertasks', authenticate, taskController.getUserTasks);
+taskRouter.post('/submitrating', authenticate, taskController.submitRating);
 
 module.exports = { taskRouter };

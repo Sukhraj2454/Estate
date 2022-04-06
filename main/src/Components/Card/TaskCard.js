@@ -25,14 +25,11 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 
 export default function TaskCard({ theme, workers, data, cards, setCards }) {
+    const StatusRef = useRef(data.status);
+    const assigneeRef = useRef(data.assignee);
+    const reporterRef = useRef(data.assignee);
     const [open, setOpen] = useState(false);
     const [status, setStatus] = useState(data ? data.status : 'To Do');
-    const handleToggle = () => {
-        setOpen(!open);
-    };
-    const firstStatusRender = useRef(true);
-    const firstAssigneeRender = useRef(true);
-    const firstReporterRender = useRef(true);
     // const [dt, setData] = useState(data);
     const [title, setTitle] = useState(data.title);
 
@@ -40,6 +37,9 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);
+    const handleToggle = () => {
+        setOpen(!open);
+    };
     // useEffect(() => {
     //     let temp = dt;
     //     temp.title = title;
@@ -51,25 +51,26 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
     // }, [title, priority, assignee, reporter]);
 
     useEffect(() => {
-        if (firstAssigneeRender.current) {
-            firstAssigneeRender.current = false;
+        if (JSON.stringify(assigneeRef.current) === JSON.stringify(assignee)) {
             return;
         }
+        assigneeRef.current = assignee;
         updateAssignee(assignee, data._id);
     }, [assignee, data._id]);
 
     useEffect(() => {
-        if (firstStatusRender.current) {
-            firstStatusRender.current = false;
+        if (StatusRef.current === status) {
             return;
-        }       // referece for not calling function if loading component for first time.
+        }
+        StatusRef.current = status;
         updateStatus(status, data._id);
     }, [status, data._id]);
     useEffect(() => {
-        if (firstReporterRender.current) {
-            firstReporterRender.current = false;
+
+        if (JSON.stringify(reporterRef.current) === JSON.stringify(reporter)) {
             return;
         }
+        reporterRef.current = reporter;
         updateReporter(reporter, data._id);
     }, [reporter, data._id]);
 

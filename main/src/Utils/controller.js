@@ -27,6 +27,7 @@ const BASE_URL = process.env.URL || '';
 // updatePriority
 // updateReporter
 // updateStatus
+// submitReview
 
 
 //CreateRequest.js
@@ -103,6 +104,8 @@ export const getUsers = function (setWorkers) {
 }
 
 export const getUserTasks = function (setCards, setLoading) {
+    if (!setLoading)
+        setLoading = () => { }
     axios.get(`${BASE_URL}/task/usertasks`, {
         headers: headers
     }).then(res => {
@@ -204,9 +207,7 @@ export const updateAssignee = function (assignee, id) {
             id: id
         },
         {
-            headers: {
-                'x-auth': sessionStorage.getItem('x-auth')
-            }
+            headers: headers
         }
     ).then((res) => {
     })
@@ -238,12 +239,10 @@ export const updateDescTitle = function (title, description, location, id) {
             id: id
         },
         {
-            headers: {
-                'x-auth': sessionStorage.getItem('x-auth')
-            }
-        }
-    ).then((res) => {
-    })
+            headers: headers
+        })
+        .then((res) => {
+        })
         .catch(err => {
         })
 }
@@ -256,9 +255,7 @@ export const updatePriority = function (priority, id) {
             id: id
         },
         {
-            headers: {
-                'x-auth': sessionStorage.getItem('x-auth')
-            }
+            headers: headers
         }
     ).then((res) => {
 
@@ -275,9 +272,7 @@ export const updateReporter = function (reporter, id) {
             id: id
         },
         {
-            headers: {
-                'x-auth': sessionStorage.getItem('x-auth')
-            }
+            headers: headers
         }
     ).then((res) => {
 
@@ -294,13 +289,29 @@ export const updateStatus = function (status, id) {
             id: id
         },
         {
-            headers: {
-                'x-auth': sessionStorage.getItem('x-auth')
-            }
+            headers: headers
         }
     ).then((res) => {
 
     })
         .catch(err => {
+        })
+}
+
+// CompletedCard.js
+export const submitReview = function (stars, id, text, setRefresh, refresh) {
+    axios.post(`${BASE_URL}/task/submitrating`,
+        {
+            stars: stars,
+            id: id,
+            text: text
+        },
+        { headers: headers }
+    ).then(res => {
+        let temp = refresh.current;
+        setRefresh(!temp);
+    })
+        .catch(err => {
+            // console.log(err);
         })
 }

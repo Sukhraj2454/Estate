@@ -68,7 +68,7 @@ export default function Dashboard({ theme, workers }) {
                             { title: 'Review' },
                             { title: 'Completed' }]}
                         /> */}
-                        <MyTasks cards={cards} setCards={setCards} workers={workers} theme={theme} sz={sz} />
+                        <MyTasks user={user} cards={cards} setCards={setCards} workers={workers} theme={theme} sz={sz} />
                     </Grid>
                 </Grid>
             </Box>

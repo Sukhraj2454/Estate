@@ -91,10 +91,10 @@ export default function TaskBoardlg({ theme, workers, cards, useStyles, setCards
 
 
             <Grid container spacing={3} justifyContent={'center'} sx={{ mb: 2 }}>
-                <ToDo minHeight={mh} cards={toDoCards} classes={classes} />
-                <InProgress minHeight={mh} cards={inProgressCards} classes={classes} />
-                {/* <Review minHeight={mh} cards={reviewCards} classes={classes} /> */}
-                <Completed minHeight={mh} cards={completedCards} classes={classes} />
+                <ToDo minHeight={mh} xs={3.5} sm={3.5} cards={toDoCards} classes={classes} />
+                <InProgress minHeight={mh} xs={3.5} sm={3.5} cards={inProgressCards} classes={classes} />
+                {/* <Review minHeight={mh} xs={3.5} sm={3.5}cards={reviewCards} classes={classes} /> */}
+                <Completed minHeight={mh} xs={3.5} sm={3.5} cards={completedCards} classes={classes} />
             </Grid>
 
         </Container>

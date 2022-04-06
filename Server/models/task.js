@@ -68,7 +68,18 @@ const TaskSchema = new mongoose.Schema({
         message: {
             type: String,
         },
-    }]
+    }],
+    rating: {
+        stars: {
+            type: String,
+            default: 0,
+        },
+        text: {
+            type: String,
+            default: ''
+        }
+
+    }
 });
 
 var Task = mongoose.model('Task', TaskSchema);

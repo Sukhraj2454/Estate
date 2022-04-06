@@ -21,19 +21,21 @@ const dt = {
     status: 'To Do',
 };
 
-export default function ExpandedCard({ close, theme, workers, data, set, cards, setCards }) {
+export default function ExpandedCard({ close, theme, workers, data, set, cards, setCards, refresh, setRefresh }) {
     const wd = useWidth();  // get viewport size
     return (
         <>
             {
                 (wd !== 'xs' && wd !== 'sm') ?
-                    <ExpCardlg close={close} cards={cards} setCards={setCards} data={data || dt} set={set} workers={workers} theme={theme} /> :
-                    <ExpCardsm close={close} cards={cards} setCards={setCards} data={data || dt} set={set} workers={workers} theme={theme} />
+                    <ExpCardlg close={close} cards={cards} refresh={refresh} setRefresh={setRefresh} setCards={setCards} data={data || dt} set={set} workers={workers} theme={theme} /> :
+                    <ExpCardsm close={close} cards={cards} refresh={refresh} setRefresh={setRefresh} setCards={setCards} data={data || dt} set={set} workers={workers} theme={theme} />
             }
         </>
     )
 };
 ExpandedCard.defaultProps = {
-    cards:[],
-    setCards:()=>{}
+    cards: [],
+    setCards: () => { },
+    refresh: { current: true },
+    setRefresh: () => { }
 }

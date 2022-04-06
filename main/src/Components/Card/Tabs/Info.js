@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-function Info({ theme, workers, data, set, cards, setCards }) {
+function Info({ theme, workers, data, set, cards, setCards, setRefresh, refresh }) {
     const firstStatusRender = useRef(true);
     // const firstPriorityRender = useRef(true);
     // const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
@@ -27,7 +27,8 @@ function Info({ theme, workers, data, set, cards, setCards }) {
     //     firstPriorityRender.current = true;
     // }, [])
     const handleStatusChange = (event) => {
-
+        let temp = refresh.current;
+        setRefresh(!temp);
         setStatus(event.target.value);
         if (cards.length > 0) {
             let ind = cards.findIndex(x => x._id === data._id);

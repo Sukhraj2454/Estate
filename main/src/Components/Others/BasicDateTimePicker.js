@@ -1,5 +1,5 @@
 // React Utils
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // Other Utils
 import { updateDate } from '../../Utils/controller';
@@ -12,11 +12,13 @@ import MobileDateTimePicker from '@mui/lab/MobileDateTimePicker';
 import { Container } from '@mui/material';
 
 export default function BasicDateTimePicker({ name, disabled, date, minDate, tId }) {
+  const valueRef = useRef(date);
   const [value, setValue] = useState(date);
   useEffect(() => {
-    if (value !== null && value !== date) {
+    if (value !== null && value !== valueRef.current) {
       // console.log(value)
       // console.log(date)
+      valueRef.current = value;
       updateDate(value, tId);
     }
   }, [value, date, tId]);
