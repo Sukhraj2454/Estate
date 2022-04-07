@@ -8,7 +8,7 @@ import { getUsers } from '../Utils/controller';
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
 import Dashboard from '../Components/Dashboard/Dashboard';
-// import WorkersTable from '../Components/Workers/WorkersTable';
+import Worker from '../Routes/Worker';
 import CreateRequest from '../Components/CreateRequest/CreateRequest';
 
 // MUI Components
@@ -95,8 +95,8 @@ export default function Home({ theme }) {
                     <Tab label="Home" value={0} />
                     <Tab label="Task Board" value={1} />
                     <Tab label="Request a Service" value={2} />
-                    
-                    {/* <Tab label="Workers" value={3} /> */}
+
+                    <Tab label="Workers" value={3} />
                 </Tabs>
 
             </SwipeableDrawer>
@@ -116,10 +116,10 @@ export default function Home({ theme }) {
                 <div hidden={tab !== 2}>
                     <CreateRequest theme={theme} />
                 </div>
-                
-                {/* <div hidden={tab !== 3}>
-                    <WorkersTable />
-                </div> */}
+
+                <div hidden={tab !== 3}>
+                    <Worker theme={theme} workers={workers} />
+                </div>
             </>
         </Container >
     )
