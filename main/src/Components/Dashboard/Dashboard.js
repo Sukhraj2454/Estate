@@ -30,6 +30,9 @@ export default function Dashboard({ theme, workers }) {
     useEffect(() => {
         getUser(setUser)
     }, [setUser]);
+    useEffect(() => {
+        sessionStorage.setItem('user', JSON.stringify(user));
+    })
     const handleRefresh = () => {
         setLoading(true);
         let x = refresh;

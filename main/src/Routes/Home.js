@@ -8,13 +8,13 @@ import { getUsers } from '../Utils/controller';
 // Other Components
 import Taskboard from '../Components/TaskBoard/TaskBoard';
 import Dashboard from '../Components/Dashboard/Dashboard';
-import Worker from '../Routes/Worker';
+// import Worker from '../Routes/Worker';
 import CreateRequest from '../Components/CreateRequest/CreateRequest';
 
 // MUI Components
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
-import { Container, Typography, Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Tabs from '@mui/material/Tabs';
@@ -49,7 +49,7 @@ export default function Home({ theme }) {
         logout();
     }
     return (
-        <Container maxWidth='xl' component='main'>
+        <>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -96,7 +96,7 @@ export default function Home({ theme }) {
                     <Tab label="Task Board" value={1} />
                     <Tab label="Request a Service" value={2} />
 
-                    <Tab label="Workers" value={3} />
+                    {/* <Tab label="Workers" value={3} /> */}
                 </Tabs>
 
             </SwipeableDrawer>
@@ -117,10 +117,10 @@ export default function Home({ theme }) {
                     <CreateRequest theme={theme} />
                 </div>
 
-                <div hidden={tab !== 3}>
+                {/* <div hidden={tab !== 3}>
                     <Worker theme={theme} workers={workers} />
-                </div>
+                </div> */}
             </>
-        </Container >
+        </ >
     )
 }

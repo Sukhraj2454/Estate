@@ -164,8 +164,9 @@ module.exports.getAllTasks = (req, res, next) => {
 }
 // Get Tasks created by a certain User
 module.exports.getUserTasks = (req, res, next) => {
+    const userId = req.params['id'] !== '2' ? mongoose.Types.ObjectId(req.params['id']) : req.user._id;
     Task.find({
-        $and: [{ '$or': [{ 'assignee.id': req.user._id }, { 'reporter.id': req.user._id }] }, {
+        $and: [{ '$or': [{ 'assignee.id': userId }, { 'reporter.id': userId }] }, {
             status: { $nin: ['Reviewed'] }
         }]
     }).then((tasks) => {

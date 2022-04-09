@@ -1,6 +1,7 @@
 // Task Card List View
 // Utils
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { updateAssignee, updateReporter } from '../../Utils/controller';
 
 // Components
@@ -98,7 +99,16 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
                     <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
                         <Button size="small"
                             onClick={workerHandle}>
-                            {assignee.name}
+                            <Link to={{
+                                pathname: '/worker',
+                                state: { worker: assignee }
+                            }}
+                                style={{ textDecoration: 'none' }}>
+                                <Button size="small"
+                                    onClick={workerHandle}>
+                                    {assignee.name}
+                                </Button>
+                            </Link>
                         </Button>
                     </Grid>
                     <Grid item lg={1} sm={1} xs={1} justifyContent={'right'} sx={{ m: 'auto' }}>

@@ -14,6 +14,7 @@ import { Container } from '@mui/material';
 export default function BasicDateTimePicker({ name, disabled, date, minDate, tId }) {
   const valueRef = useRef(date);
   const [value, setValue] = useState(date);
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')));
   useEffect(() => {
     if (value !== null && value !== valueRef.current) {
       // console.log(value)
@@ -21,7 +22,9 @@ export default function BasicDateTimePicker({ name, disabled, date, minDate, tId
       valueRef.current = value;
       updateDate(value, tId);
     }
-  }, [value, date, tId]);
+    setUser(JSON.parse(sessionStorage.getItem('user')))
+  }, [value, date, tId, setUser]);
+
   return (
     <Container sx={{ mt: 2, mb: 2 }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -32,7 +35,7 @@ export default function BasicDateTimePicker({ name, disabled, date, minDate, tId
           todayText="Current Time"
           value={value}
           minDate={minDate}
-          disabled={disabled}
+          disabled={user ? (user.desig !== 'Admin') : true}
           onChange={(newValue) => {
             setValue(newValue);
           }}
@@ -46,5 +49,6 @@ BasicDateTimePicker.defaultProps = {
   disabled: false,
   name: 'DateTimePicker',
   date: new Date(),
-  minDate: new Date()
+  minDate: new Date(),
+  user: { desig: 'Worker' },
 }

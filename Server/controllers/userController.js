@@ -1,6 +1,6 @@
 const { User } = require('../models/user');
-const { Task } = require('../models/task');
 
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 
@@ -94,7 +94,13 @@ module.exports.login = (req, res, next) => {
 }
 
 module.exports.getUser = (req, res, next) => {
-    res.send(req.user.toJson());
+    console.log(req.params)
+    if (req.params['id'] !== '1') {
+        const uId = mongoose.Types.ObjectId(req.params['id']);
+        User.findOne({ _id: uId }).then(user => res.send(user.toJson()));
+    }
+    else
+        res.send(req.user.toJson());
 }
 
 module.exports.getCategories = (req, res, next) => {

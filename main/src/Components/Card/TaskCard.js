@@ -1,8 +1,9 @@
 // Utils
 import { useState, useEffect, useRef } from 'react';
-import { updateAssignee, updateReporter } from '../../Utils/controller';
+import { Link } from 'react-router-dom';
 
 // Other Utils
+import { updateAssignee, updateReporter } from '../../Utils/controller';
 import { updateStatus } from '../../Utils/controller';
 import stringToColor from '../../Utils/stringToColor';
 
@@ -113,10 +114,16 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
 
                         <Grid item lg={4} sm={4} xs={4}>
                             <CardActions>
-                                <Button size="small"
-                                    onClick={workerHandle}>
-                                    {assignee.name}
-                                </Button>
+                                <Link to={{
+                                    pathname: '/worker',
+                                    state: { worker: assignee }
+                                }}
+                                    style={{ textDecoration: 'none' }}>
+                                    <Button size="small"
+                                        onClick={workerHandle}>
+                                        {assignee.name}
+                                    </Button>
+                                </Link>
                             </CardActions>
                         </Grid>
 

@@ -74,15 +74,19 @@ export const getCategories = function (setCategories) {
 
 
 // Dashboard.js
-export const getUser = function (setUser) {
-    axios.get(`${BASE_URL}/user/getUser`, {
+export const getUser = function (setUser, uId) {
+    const params = {}
+    if (uId) {
+        params['id'] = uId;
+    }
+    axios.get(`${BASE_URL}/user/getUser/${uId || '1'}`, {
         headers: headers
     })
         .then(res => {
             setUser(res.data);
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
         })
 }
 // Home.js
@@ -103,10 +107,10 @@ export const getUsers = function (setWorkers) {
         })
 }
 
-export const getUserTasks = function (setCards, setLoading) {
+export const getUserTasks = function (setCards, setLoading, uId) {
     if (!setLoading)
         setLoading = () => { }
-    axios.get(`${BASE_URL}/task/usertasks`, {
+    axios.get(`${BASE_URL}/task/usertasks/${uId || '2'}`, {
         headers: headers
     }).then(res => {
         setCards(res.data);

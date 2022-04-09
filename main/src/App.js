@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './Routes/Main';
 import Home from './Routes/Home';
+import Worker from './Routes/Worker';
 import { createTheme } from '@mui/material/styles';
 
 function App() {
@@ -17,6 +18,9 @@ function App() {
 
         <Route path="/home" exact>
           <Home theme={theme} />
+        </Route>
+        <Route path='/worker' exact>
+          <Worker />
         </Route>
       </Switch>
 
