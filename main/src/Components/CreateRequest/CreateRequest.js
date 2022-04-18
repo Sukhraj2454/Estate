@@ -12,24 +12,16 @@ import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
-
-
-
-// Other Components
-// import BasicDateTimePicker from './BasicDateTimePicker';
-
-// MUI Icons
-// import AddCircleIcon from '@mui/icons-material/AddCircle';
-// import SendIcon from '@material-ui/icons/Send';
+import { FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
 
 const Divbox = function ({ comp }) {
   return (
     <Box
       sx={{
-        width: 500,
-        minWidth: 300,
+        width: 550,
         maxWidth: '100%',
-        m: 2
+        mt: 2
       }}
     > {comp}
     </Box>
@@ -38,28 +30,54 @@ const Divbox = function ({ comp }) {
 
 export default function CreateRequest({ theme }) {
 
+  const [open, setOpen] = useState(false);
   const [issue, setIssue] = useState('');
-  const [menu, setMenu] = useState([]);
+  const [branch, setBranch] = useState('');
   const [category, setCat] = useState('');
+  const [subCategory, setSubCat] = useState('');
+  const [menuBranch, setMenuBr] = useState([]);
+  const [menuCat, setMenuCat] = useState([]);
+  const [menuSubCat, setMenuSubCat] = useState([]);
 
   const [categories, setCats] = useState([]);
-
+  const [type, setType] = useState('Academic');
   const [description, setDescription] = useState('');
 
   const [location, setLocation] = useState('');
 
-  function handleCatChange(event) {
-    setCat(event.target.value);
-  }
+  useEffect(() => {
+    getCategories(setCats);
+  }, []);
+  useEffect(() => {
+    let ind = 0;
+    let x = categories.map(cat => <MenuItem key={ind++} value={cat.name}>{cat.name}</MenuItem>);
+    setMenuBr(x);
+  }, [categories]);
+
+  useEffect(() => {
+    let x = categories.filter(cat => cat.name === branch);
+    if (x.length > 0) {
+      let ind = 0;
+      setCat(x[0].category[0].name);
+      let y = x[0].category.map(cat => <MenuItem key={ind++} value={cat.name}>{cat.name}</MenuItem>);
+      setMenuCat(y);
+    }
+  }, [branch, categories]);
+
+  useEffect(() => {
+    let x = categories.filter(cat => cat.name === branch);
+    if (x.length > 0) {
+      let ind = 0;
+      let y = x[0].category.filter(cat => cat.name === category);
+      if (y.length) {
+        let z = y[0].subCategory.map(cat => <MenuItem key={ind++} value={cat.name}>{cat.name}</MenuItem>);
+        setMenuSubCat(z);
+      }
+    }
+  }, [category, categories, setSubCat, setMenuSubCat, branch]);
   function handleSubmit(event) {
     createRequest(issue, description, location, category);
   }
-  useEffect(() => {
-    let ind = 0;
-    let cats = categories;
-    let menu = cats.map((cat) => <MenuItem key={ind++} value={cat}>{cat}</MenuItem>);
-    setMenu(menu);
-  }, [categories]);
 
   useEffect(() => {
     getCategories(setCats);
@@ -79,54 +97,161 @@ export default function CreateRequest({ theme }) {
           color={"primary"}>
           {/* <AddCircleRoundedIcon
             color='#1976D2' /> */}
-          Create a Request
+          Make a Request
         </Typography>
 
+        <FormControl sx={{ pl: 3 }} required>
+          <FormLabel id="row-radio-buttons-group-label">Type of Service</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+            value={type}
+            onChange={(e) => { setType(e.target.value); }}
+          >
+            <FormControlLabel value="Academic" control={<Radio />} label="Academic" />
+            <FormControlLabel value="Residential" control={<Radio />} label="Residential" />
+            <FormControlLabel value="Hostel" control={<Radio />} label="Hostel" />
+          </RadioGroup>
+        </FormControl>
+
+
         <Divbox
-          comp={<TextField
+          comp={<TextField fullWidth required
             onChange={(e) => setIssue(e.target.value)}
-            fullWidth label="Issue" id="issue" />
+            label="Issue" id="issue" />
           } />
 
-        {/* <Divbox comp={<BasicDateTimePicker name="Date" />} /> */}
 
-        <Divbox comp={<TextField multiline
+        <Divbox comp={<TextField multiline fullWidth required
           onChange={(e) => setDescription(e.target.value)}
           rows={8}
-          fullWidth label="Description" id="fullWidth" />} />
-        <Divbox
-          comp={<FormControl fullWidth sx={{ mt: 2 }}>
+          label="Description" id="description" />} />
+
+
+        <FormControl fullWidth sx={{ mt: 2 }} required>
+          <InputLabel id="branch-label" >Branch</InputLabel>
+          <Select
+            labelId="branch-label"
+            id="branch-select"
+            value={branch}
+            label="Branch"
+            onChange={(e) => { setBranch((e.target.value)) }}
+          >
+            {menuBranch}
+          </Select>
+        </FormControl>
+
+        {
+          (branch !== '') &&
+          <FormControl fullWidth sx={{ mt: 2 }} required >
             <InputLabel id="category-label">Category</InputLabel>
             <Select
               labelId="category-label"
               id="category-select"
               value={category}
               label="Category"
-              onChange={handleCatChange}
+              onChange={(e) => { setCat((e.target.value)) }}
             >
-              {menu}
+              {menuCat}
             </Select>
           </FormControl>
-          } />
+        }
+        {
+          (category !== '') &&
+          <FormControl fullWidth sx={{ mt: 2 }} required >
+            <InputLabel id="sub-category-label">Sub-Category</InputLabel>
+            <Select
+              labelId="sub-category-label"
+              id="sub-category-select"
+              value={subCategory}
+              label="Sub-Category"
+              onChange={(e) => { setSubCat((e.target.value)) }}
+            >
+              {menuSubCat}
+            </Select>
+          </FormControl>
+        }
         <Divbox comp={
-          <TextField
+          <TextField required
             onChange={(e) => setLocation(e.target.value)}
-            fullWidth label="Location" id="Location" /
-
-          >}
+            fullWidth label="Location" id="Location"
+          />}
         />
 
+        <Dialog open={open} onClose={() => { setOpen(false) }}>
+          <DialogTitle sx={{ textAlign: 'center' }}>Proceed with Request</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <Typography variant="h5" sx={{ color: 'black' }}> TERMS AND CONDITIONS</Typography>
 
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{
+                  color: 'black',
+                  textAlign: 'justify'
+                }}>
+                - I have not shared my password with anyone.
+              </Typography>
+
+              <Typography
+                variant="h6"
+                gutterBottom sx={{
+                  color: 'black',
+                  textAlign: 'justify'
+                }}>
+                - I am responsible for the content typed in desciption.
+              </Typography>
+
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{
+                  color: 'black',
+                  textAlign: 'justify'
+                }}>
+                - I understand that a necessary disiplinary action can be initiated against me
+                in the case of use of derogatory words or false statements against any
+                Student | Faculty | Staff | Higher Authority.
+              </Typography>
+
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{
+                  color: 'black',
+                  textAlign: 'justify'
+                }}>
+                - The information given to me regarding the complaint/request
+                is true to the best of my knowledge and if found false/wrong,
+                necessary disiplinary action can be initiated against me.
+              </Typography>
+              <Typography
+                variant="overline"
+                gutterBottom
+                sx={{
+                  color: 'red',
+                  textAlign: 'justify'
+                }}>
+                By Clicking on Submit, <br /> you are agreeing to the Terms and Conditions listed above.
+              </Typography>
+            </DialogContentText>
+
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => { setOpen(false) }}>Go Back</Button>
+            <Button onClick={handleSubmit}>Submit</Button>
+          </DialogActions>
+        </Dialog>
         <Button variant="contained"
-
-          sx={{ ml: '35%' }}
-          // startIcon={<SendIcon />}
-          onClick={handleSubmit}
+          sx={{ ml: '35%', mt: 2 }}
+          onClick={() => { setOpen(true); }}
         >
           Send Request
         </Button>
 
       </Container>
-    </ThemeProvider>)
+    </ThemeProvider >)
 }
 

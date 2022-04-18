@@ -33,8 +33,19 @@ const UserSchema = new mongoose.Schema({
         type: String,
         requried: true
     },
-    category: {
-        type: String
+    Branch: {
+        name: {
+            type: String
+        },
+        category: [{
+            name: {
+                type: String,
+            },
+            subCategory: [{
+                name: { type: String },
+
+            }]
+        }]
     },
     tokens: [{
         access: {

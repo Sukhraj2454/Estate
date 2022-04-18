@@ -20,10 +20,14 @@ import Alert from '../Alerts/Alerts';
 
 export default function Signup({ theme, change }) {
 
+    const [branch, setBranch] = useState('');
     const [category, setCat] = useState('');
-    const [menu, setMenu] = useState([]);
+    const [subCategory, setSubCat] = useState('');
+    const [menuBranch, setMenuBr] = useState([]);
+    const [menuCat, setMenuCat] = useState([]);
+    const [menuSubCat, setMenuSubCat] = useState([]);
     const [categories, setCats] = useState([]);
-    const [desig, setDesig] = useState('Faculty');
+    const [desig, setDesig] = useState('Worker');
 
     // Snackbar states
     const [open, setOpen] = useState(false);
@@ -35,22 +39,42 @@ export default function Signup({ theme, change }) {
     }, []);
 
     useEffect(() => {
-        let ind=0;
-        let cats = categories;
-        let menu = cats.map((cat) => <MenuItem key={ind++} value={cat}>{cat}</MenuItem>);
-        setMenu(menu);
+        let ind = 0;
+        let x = categories.map(cat => <MenuItem key={ind++} value={cat.name}>{cat.name}</MenuItem>);
+        setMenuBr(x);
     }, [categories]);
 
-    function handleCatChange(event) {
-        setCat(event.target.value);
-    }
-    function handleChange(event) {
-        setDesig(event.target.value);
-    }
+    useEffect(() => {
+        let x = categories.filter(cat => cat.name === branch);
+        if (x.length > 0) {
+            let ind = 0;
+            setCat(x[0].category[0].name);
+            let y = x[0].category.map(cat => <MenuItem key={ind++} value={cat.name}>{cat.name}</MenuItem>);
+            setMenuCat(y);
+        }
+    }, [branch, categories]);
+
+    useEffect(() => {
+        let x = categories.filter(cat => cat.name === branch);
+        if (x.length > 0) {
+            let ind = 0;
+            let y = x[0].category.filter(cat => cat.name === category);
+            setSubCat(y[0].subCategory[0].name);
+            let z = y[0].subCategory.map(cat => <MenuItem key={ind++} value={cat.name}>{cat.name}</MenuItem>);
+            setMenuSubCat(z);
+        }
+        // eslint-disable-next-line
+    }, [category, categories, setSubCat, setMenuSubCat]);
+    // function handleCatChange(event) {
+    //     setBranch(event.target.value);
+    // }
+    // function handleChange(event) {
+    //     setDesig(event.target.value);
+    // }
     function handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        handleSignup(data, desig, category, setMessage, setSeverity, setOpen);
+        handleSignup(data, desig, branch, setMessage, setSeverity, setOpen);
     }
 
     return (
@@ -117,36 +141,59 @@ export default function Signup({ theme, change }) {
                                 labelId="desig-label"
                                 id="desig-select"
                                 value={desig}
-                                label="Category"
-                                onChange={handleChange}
+                                label="Desig"
+                                onChange={(e) => { setDesig(e.target.value) }}
                             >
                                 <MenuItem value={'Faculty'}>Faculty</MenuItem>
+                                <MenuItem value={'Non Faculty'}>Non Faculty</MenuItem>
                                 <MenuItem value={'Worker'}>Worker</MenuItem>
-                                <MenuItem value={'Admin'}>Admin</MenuItem>
+                                <MenuItem value={'EE'}>Executive Engineer(EE)</MenuItem>
+                                <MenuItem value={'AE'}>Assistant Engineer(AE)</MenuItem>
+                                <MenuItem value={'JE'}>Junior Engineer(JE)</MenuItem>
                             </Select>
                         </FormControl>
-                        {desig === 'Admin' &&
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="category"
-                                label="Category"
-                                type="text"
-                                id="category"
-                            />}
                         {
-                            desig === 'Worker' &&
+                            (desig === 'Worker') &&
                             <FormControl fullWidth sx={{ mt: 2 }}>
-                                <InputLabel id="category-label">Category</InputLabel>
+                                <InputLabel id="branch-label" required>Branch</InputLabel>
+                                <Select
+                                    labelId="branch-label"
+                                    id="branch-select"
+                                    value={branch}
+                                    label="Branch"
+                                    onChange={(e) => { setBranch((e.target.value)) }}
+                                >
+                                    {menuBranch}
+                                </Select>
+                            </FormControl>
+                        }
+                        {
+                            (desig === 'Worker' && branch !== '') &&
+                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                <InputLabel id="category-label" required>Category</InputLabel>
                                 <Select
                                     labelId="category-label"
                                     id="category-select"
                                     value={category}
                                     label="Category"
-                                    onChange={handleCatChange}
+                                    onChange={(e) => { setCat((e.target.value)) }}
                                 >
-                                    {menu}
+                                    {menuCat}
+                                </Select>
+                            </FormControl>
+                        }
+                        {
+                            (desig === 'Worker' && category !== '') &&
+                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                <InputLabel id="sub-category-label" required>Sub-Category</InputLabel>
+                                <Select
+                                    labelId="sub-category-label"
+                                    id="sub-category-select"
+                                    value={subCategory}
+                                    label="Sub-Category"
+                                    onChange={(e) => { setSubCat((e.target.value)) }}
+                                >
+                                    {menuSubCat}
                                 </Select>
                             </FormControl>
                         }

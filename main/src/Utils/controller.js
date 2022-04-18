@@ -12,6 +12,7 @@ const BASE_URL = process.env.URL || '';
 
 // <--------Functions------->
 // Create Request
+// getBranch
 // getCards
 // getCategories
 // getUser
@@ -22,6 +23,7 @@ const BASE_URL = process.env.URL || '';
 // logout
 // publishComment
 // updateAssignee
+// updateBranchData
 // updateDate
 // updateDescTitle
 // updatePriority
@@ -40,8 +42,18 @@ export const createRequest = function (title, description, location, category) {
     },
         { headers: headers })
         .then(res => {
-            console.log(res);
+            window.location.reload();
         })
+}
+// Branch.js
+export const getBranch = function (setBranches, id) {
+    if (!id)
+        id = 3;
+    axios.get(`${BASE_URL}/user/getbranch/${id}`, {
+        headers: headers
+    }).then(res => {
+        setBranches(res.data);
+    })
 }
 // Taskboard.js
 export const getCards = function (setCards, setLoading) {
@@ -216,6 +228,18 @@ export const updateAssignee = function (assignee, id) {
     ).then((res) => {
     })
         .catch(err => {
+        })
+}
+
+// Branch.js
+export const updateBranchData = function (name, branch) {
+    branch.name = name;
+    axios.patch(`${BASE_URL}/user/updateBranch`, {
+        branch
+    },
+        { headers: headers })
+        .then((res) => {
+            console.log(res.data);
         })
 }
 // Info.js

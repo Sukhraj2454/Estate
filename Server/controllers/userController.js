@@ -94,7 +94,6 @@ module.exports.login = (req, res, next) => {
 }
 
 module.exports.getUser = (req, res, next) => {
-    console.log(req.params)
     if (req.params['id'] !== '1') {
         const uId = mongoose.Types.ObjectId(req.params['id']);
         User.findOne({ _id: uId }).then(user => res.send(user.toJson()));
@@ -105,16 +104,34 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.getCategories = (req, res, next) => {
 
-    User.find({ desig: 'Admin' }).then((users) => {
+    User.find({ desig: 'EE' }).then((users) => {
 
-        let cats = users.map(user => user.category);
+        let cats = users.map(user => user.Branch);
         res.send(cats);
     })
         .catch((err) => {
             next(err);
         })
 }
-
+module.exports.getBranch = (req, res, next) => {
+    if (req.params['id'] !== '3') {
+        const uId = mongoose.Types.ObjectId(req.params['id']);
+        User.findOne({ _id: uId }).then(user => res.send(user.Branch))
+            .catch(err => next(err));
+    }
+    else
+        res.json(req.user.Branch);
+}
+module.exports.updateBranchData = (req, res, next) => {
+    let user = req.user;
+    console.log(req.body);
+    user.Branch = req.body.branch;
+    console.log(req.body);
+    user.save().then(() => {
+        res.json({ 'message': 'Branch Data Update Successfully.' });
+    })
+        .catch(er => next(er));
+}
 module.exports.logout = (req, res, next) => {
     var token = req.token;
     this.findByToken(token).then((obj) => {

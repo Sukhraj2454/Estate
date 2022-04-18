@@ -12,6 +12,9 @@ import { Box, Grid, Typography } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 import LoadingButton from '@mui/lab/LoadingButton';
 
+// Other Components
+import Branch from './Branch';
+
 // MUI Icons
 import RefreshIcon from '@mui/icons-material/Refresh';
 
@@ -47,21 +50,11 @@ export default function Dashboard({ theme, workers }) {
                             {/* <Avatar sx={{ margin: 0 }} {...stringAvatar('Sukhraj Singh')} /> */}
                             <Typography textAlign={'center'} component='h1' variant='h4'>Welcome,{<br />}{user.name}</Typography>
                         </Grid>) : <></>}
-                    <Grid item xs={len} sx={{ border: '2px solid gray', borderBottomRightRadius: 15, borderTopRightRadius: 15 }}>
-                        <Typography textAlign={'center'} sx={{ mb: 5 }} component='h1' variant='h4'>
-                            My Tasks
-                            <LoadingButton
-                                size="medium"
-                                onClick={handleRefresh}
-                                loading={loading}
-                                loadingPosition="start"
-                                startIcon={<RefreshIcon />}
-                            >
-                                REFRESH
-                            </LoadingButton>
-                        </Typography>
-
-
+                    <Grid item xs={len} sx={{
+                        border: '2px solid gray',
+                        borderBottomRightRadius: 15,
+                        borderTopRightRadius: 15
+                    }}>
                         {/* <ACInput
                             label='Status'
                             defValue='To Do'
@@ -71,7 +64,26 @@ export default function Dashboard({ theme, workers }) {
                             { title: 'Review' },
                             { title: 'Completed' }]}
                         /> */}
-                        <MyTasks user={user} cards={cards} setCards={setCards} workers={workers} theme={theme} sz={sz} />
+                        {(user.desig === 'EE' || user.desig === 'AE' || user.desig === 'JE') ? <Branch /> :
+                            (<>
+                                <Typography textAlign={'center'} sx={{ mb: 5 }} component='h1' variant='h4'>
+                                    My Tasks
+                                    <LoadingButton
+                                        size="medium"
+                                        onClick={handleRefresh}
+                                        loading={loading}
+                                        loadingPosition="start"
+                                        startIcon={<RefreshIcon />}
+                                    >
+                                        REFRESH
+                                    </LoadingButton>
+                                </Typography>
+                                < MyTasks user={user}
+                                    cards={cards}
+                                    setCards={setCards}
+                                    workers={workers}
+                                    theme={theme} sz={sz} />
+                            </>)}
                     </Grid>
                 </Grid>
             </Box>

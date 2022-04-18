@@ -8,6 +8,8 @@ userRouter.post('/signup', userController.signUp);
 userRouter.post('/login', userController.login);
 userRouter.get('/getUser/:id', authenticate, userController.getUser);
 userRouter.get('/getCategories', userController.getCategories);
+userRouter.get('/getbranch/:id', authenticate, userController.getBranch);
 userRouter.get('/getUsers', authenticate, userController.getUsers);
 userRouter.delete('/logout', authenticate, userController.logout);
+userRouter.patch('/updateBranch', authenticate, userController.updateBranchData);
 module.exports = { userRouter };

@@ -28,6 +28,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState(data.title);
+
     // eslint-disable-next-line
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
@@ -69,10 +70,6 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     const handleToggle = () => {
         setOpen(!open);
     };
-
-    const workerHandle = () => {
-        console.log("Worker Clicked");
-    }
     // useEffect(() => {
     //     setPriority(data.priority);
     // }, [data]);
@@ -97,19 +94,15 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
                     </Grid >
 
                     <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
-                        <Button size="small"
-                            onClick={workerHandle}>
-                            <Link to={{
-                                pathname: '/worker',
-                                state: { worker: assignee }
-                            }}
-                                style={{ textDecoration: 'none' }}>
-                                <Button size="small"
-                                    onClick={workerHandle}>
-                                    {assignee.name}
-                                </Button>
-                            </Link>
-                        </Button>
+                        <Link to={{
+                            pathname: '/worker',
+                            state: { worker: assignee, workers: workers },
+                        }}
+                            style={{ textDecoration: 'none' }}>
+                            <Button size="small">
+                                {assignee.name}
+                            </Button>
+                        </Link>
                     </Grid>
                     <Grid item lg={1} sm={1} xs={1} justifyContent={'right'} sx={{ m: 'auto' }}>
                         <Button size="small"

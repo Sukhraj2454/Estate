@@ -8,10 +8,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 
-
+// MUI Icons
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
@@ -24,23 +24,23 @@ export default function FormDialog() {
   };
 
   const handleClose = () => {
-    
     setOpen(false);
   };
 
   return (
     <div>
 
-      <IconButton color="primary" aria-label="EditIcon" onClick={handleClickOpen} >
-        {/* <AddShoppingCartIcon /> */}
-        <EditIcon/>
+      <IconButton color="primary"
+        aria-label="EditIcon"
+        onClick={handleClickOpen} >
+        <EditIcon />
       </IconButton>
-   
-     
+
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle >Edit Profile</DialogTitle>
         <DialogContent>
-       
+
           <TextField onChange={setname}
             autoFocus
             margin="dense"
@@ -50,7 +50,7 @@ export default function FormDialog() {
             fullWidth
             variant="standard"
           />
-           <TextField onChange={setemailid}
+          <TextField onChange={setemailid}
             autoFocus
             margin="dense"
             id="email"
@@ -59,8 +59,8 @@ export default function FormDialog() {
             fullWidth
             variant="standard"
           />
-           <TextField
-           onChange={setcontact}
+          <TextField
+            onChange={setcontact}
             autoFocus
             margin="dense"
             id="contact"
@@ -69,11 +69,11 @@ export default function FormDialog() {
             fullWidth
             variant="standard"
           />
-          
+
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}variant="contained"  >Cancel</Button>
-          <Button onClick={handleClose}variant="contained" >Submit</Button>
+          <Button onClick={handleClose} variant="contained"  >Cancel</Button>
+          <Button onClick={handleClose} variant="contained" >Submit</Button>
         </DialogActions>
       </Dialog>
 
