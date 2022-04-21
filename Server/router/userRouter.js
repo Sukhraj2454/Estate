@@ -12,4 +12,5 @@ userRouter.get('/getbranch/:id', authenticate, userController.getBranch);
 userRouter.get('/getUsers', authenticate, userController.getUsers);
 userRouter.delete('/logout', authenticate, userController.logout);
 userRouter.patch('/updateBranch', authenticate, userController.updateBranchData);
+userRouter.patch('/updateUser', authenticate, userController.updateUser);
 module.exports = { userRouter };

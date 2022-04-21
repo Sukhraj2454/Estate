@@ -29,16 +29,20 @@ const BASE_URL = process.env.URL || '';
 // updatePriority
 // updateReporter
 // updateStatus
+// updateUser
 // submitReview
 
 
 //CreateRequest.js
-export const createRequest = function (title, description, location, category) {
+export const createRequest = function (title, description, location, branch, category, subCat, type) {
     axios.post(`${BASE_URL}/task/add`, {
+        type: type,
         title: title,
         description: description,
         location: location,
-        category: category
+        category: category,
+        branch: branch,
+        subCategory: subCat
     },
         { headers: headers })
         .then(res => {
@@ -158,7 +162,7 @@ export const handleLogin = function (data, setMessage, setSeverity, setOpen) {
         })
 }
 //Signup.js
-export const handleSignup = function (data, desig, category, setMessage, setSeverity, setOpen) {
+export const handleSignup = function (data, desig, branch, setMessage, setSeverity, setOpen) {
     axios.post(`${BASE_URL}/user/signup`, {
 
         name: data.get('name'),
@@ -166,7 +170,7 @@ export const handleSignup = function (data, desig, category, setMessage, setSeve
         password: data.get('password'),
         contact: data.get('phone'),
         desig: desig,
-        category: (data.get('category') || category || '')
+        Branch: branch
 
     }).then((res, err) => {
         setSeverity("success");
@@ -325,7 +329,20 @@ export const updateStatus = function (status, id) {
         .catch(err => {
         })
 }
-
+// EditProfileCard.js
+export const updateUser = function (data) {
+    console.log(data)
+    axios.patch(`${BASE_URL}/user/updateUser`,
+        {
+            Branch: data.branch,
+            name: data.name,
+            contact: data.contact
+        },
+        {
+            headers: headers
+        }).then((res) => {
+        }).catch(err => { })
+}
 // CompletedCard.js
 export const submitReview = function (stars, id, text, setRefresh, refresh) {
     axios.post(`${BASE_URL}/task/submitrating`,

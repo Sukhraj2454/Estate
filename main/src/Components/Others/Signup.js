@@ -74,7 +74,11 @@ export default function Signup({ theme, change }) {
     function handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        handleSignup(data, desig, branch, setMessage, setSeverity, setOpen);
+        const br = {
+            name: branch,
+            category: [{ name: category, subCategory: [{ name: subCategory }] }]
+        }
+        handleSignup(data, desig, br, setMessage, setSeverity, setOpen);
     }
 
     return (

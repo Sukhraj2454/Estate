@@ -1,6 +1,7 @@
 // React Utils.
 import { useState, useEffect } from 'react';
 import { logout } from '../Utils/controller';
+import { Link } from 'react-router-dom';
 
 // Other Utils
 import { getUsers } from '../Utils/controller';
@@ -22,6 +23,7 @@ import Tab from '@mui/material/Tab';
 
 // MUI Icons
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 
 // This data object is basis for app we will store most of data from backend here and then pass it down to Components
 export default function Home({ theme }) {
@@ -67,6 +69,21 @@ export default function Home({ theme }) {
                         Service Desk NITJ
                     </Typography>
 
+                    <Link to={{
+                        pathname: '/user',
+                        state: { worker: 'user', workers: workers },
+                    }} style={{ color: 'white' }}>
+
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                        >
+                            <PersonIcon />
+                        </IconButton>
+                    </Link>
                     <Button color="inherit" onClick={handleLogout}>Logout</Button>
 
                 </Toolbar>

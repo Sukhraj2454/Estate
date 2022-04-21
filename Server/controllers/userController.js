@@ -94,12 +94,26 @@ module.exports.login = (req, res, next) => {
 }
 
 module.exports.getUser = (req, res, next) => {
+    // User.findOne({ 'Branch.category.subCategory.name': 'Carpentary' }).then(r => console.log(r ? r.Branch : r));
     if (req.params['id'] !== '1') {
         const uId = mongoose.Types.ObjectId(req.params['id']);
         User.findOne({ _id: uId }).then(user => res.send(user.toJson()));
     }
     else
         res.send(req.user.toJson());
+}
+
+module.exports.updateUser = (req, res, next) => {
+    const body = req.body;
+    // console.log(body.Branch.category[0])
+    const user = req.user;
+    user.Branch = body.Branch || user.Branch;
+    user.name = body.name || user.name;
+    user.contact = body.contact || user.contact;
+    user.save()
+        .then((r) => { res.json({ message: 'Update Successful.' }); })
+        .catch(err => next(err))
+
 }
 
 module.exports.getCategories = (req, res, next) => {

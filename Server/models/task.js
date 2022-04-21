@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const TaskSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        requried: true
+    },
     title: {
         type: String,
         requried: true
@@ -14,7 +18,15 @@ const TaskSchema = new mongoose.Schema({
         maxlength: 350,
         default: ""
     },
+    branch: {
+        type: String,
+        required: true
+    },
     category: {
+        type: String,
+        required: true
+    },
+    subCategory: {
         type: String,
         required: true
     },

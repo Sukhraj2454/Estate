@@ -19,7 +19,7 @@ function App() {
         <Route path="/home" exact>
           <Home theme={theme} />
         </Route>
-        <Route path='/worker' exact>
+        <Route path='/user' exact>
           <Worker />
         </Route>
       </Switch>

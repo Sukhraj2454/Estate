@@ -1,5 +1,5 @@
 const { Task } = require('../models/task');
-
+const _ = require('lodash');
 const mongoose = require('mongoose');
 
 // Add New Task
@@ -15,7 +15,7 @@ module.exports.addTask = (req, res, next) => {
     var obj = new Task(task)
     obj.save().then(() => {
         res.status(200).json({ 'message': "Task Added Successfully." })
-    })
+    }).catch(err => next(err));
 }
 
 // Add Comment
@@ -140,7 +140,11 @@ module.exports.delete = (req, res, next) => {
 
 // Get All Tasks
 module.exports.getAllTasks = (req, res, next) => {
-
+    const user = req.user;
+    var cat = user.Branch.category;
+    var subCat = cat.map(c => c.subCategory.map(sc => sc.name));
+    cat = cat.map(c => c.name);
+    subCat = _.flatten(subCat);
     // if (req.user.desig !== 'Admin') {
     //     let error = new Error("Admin Required")
     //     error.message = "Not Enough Access Rights. This Incident shall be Reported.";
@@ -148,7 +152,12 @@ module.exports.getAllTasks = (req, res, next) => {
     //     next(error)
     // }
     // else {
-    Task.find({ $and: [{ category: req.user.category }, { status: { $nin: ['Reviewed'] } }] }).then((obj) => {
+    Task.find({
+        $and: [{ branch: user.Branch.name },
+        { category: { $in: cat } },
+        { subCategory: { $in: subCat } },
+        { status: { $nin: ['Reviewed'] } }]
+    }).then((obj) => {
         // if (obj.length === 0) {
         //     let error = new Error("No Tasks")
         //     error.message = "No Tasks Found";

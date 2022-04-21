@@ -7,7 +7,7 @@ import { updateStatus } from '../../../Utils/controller';
 
 // Other Components
 import ACInput from "../../Others/ACInput";
-import BasicDateTimePicker from '../../Others/BasicDateTimePicker';
+// import BasicDateTimePicker from '../../Others/BasicDateTimePicker';
 
 // MUI Components
 import { Container } from "@mui/material";
@@ -17,15 +17,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 function Info({ theme, workers, data, set, cards, setCards, setRefresh, refresh }) {
+    const [status, setStatus] = useState(data ? data.status : 'To Do');
     const firstStatusRender = useRef(true);
+
+    console.log(data)
+
     // const firstPriorityRender = useRef(true);
     // const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
-    const [status, setStatus] = useState(data ? data.status : 'To Do');
     // useEffect(() => {
 
     //     firstStatusRender.current = true;
     //     firstPriorityRender.current = true;
     // }, [])
+
     const handleStatusChange = (event) => {
         let temp = refresh.current;
         setRefresh(!temp);
@@ -71,6 +75,7 @@ function Info({ theme, workers, data, set, cards, setCards, setRefresh, refresh 
     //     }   // referece for not calling function if loading component for first time.
     //     updatePriority(priority, data._id);
     // }, [priority, data._id]);
+
     return (
         <Container component={'main'} maxWidth='sm'>
 
@@ -105,12 +110,12 @@ function Info({ theme, workers, data, set, cards, setCards, setRefresh, refresh 
                     <MenuItem value={'High'}>High</MenuItem>
                 </Select>
             </FormControl> */}
-            <BasicDateTimePicker name='Deadline'
+            {/* <BasicDateTimePicker name='Deadline'
                 date={data.deadline !== undefined ? new Date(data.deadline) : null}
                 sx={{ m: 1 }}
                 tId={data._id}
                 minDate={new Date(data.createdOn)}
-            />
+            /> */}
             <FormControl fullWidth>
                 <InputLabel id="status-select-label">Status</InputLabel>
                 <Select

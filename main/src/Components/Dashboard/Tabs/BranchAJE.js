@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 
 // Other Utils
-import { getBranch, getCategories } from '../../Utils/controller';
-import { updateBranchData } from '../../Utils/controller';
+import { getBranch, getCategories } from '../../../Utils/controller';
+import { updateBranchData } from '../../../Utils/controller';
 
 // MUI Components
 import { Container } from '@mui/material';
@@ -40,7 +40,7 @@ export default function BranchAJE({ user }) {
         }, 10);
 
     }, [branchData]);
-    
+
     useEffect(() => {
         let ind = 0;
         let x = categories.map(cat => <MenuItem key={ind++} value={cat.name}>{cat.name}</MenuItem>);
@@ -81,7 +81,7 @@ export default function BranchAJE({ user }) {
                     {menuBranch}
                 </Select>
             </FormControl>
-            {(branch !== []) &&
+            {(branch !== '') &&
                 <FormControl fullWidth sx={{ mt: 2 }}>
                     <InputLabel id="category-label" required>Category</InputLabel>
                     <Select

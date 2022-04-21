@@ -115,7 +115,7 @@ export default function TaskCard({ theme, workers, data, cards, setCards }) {
                         <Grid item lg={4} sm={4} xs={4}>
                             <CardActions>
                                 <Link to={{
-                                    pathname: '/worker',
+                                    pathname: '/user',
                                     state: { worker: assignee }
                                 }}
                                     style={{ textDecoration: 'none' }}>

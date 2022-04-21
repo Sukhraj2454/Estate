@@ -35,7 +35,7 @@ export default function BasicDateTimePicker({ name, disabled, date, minDate, tId
           todayText="Current Time"
           value={value}
           minDate={minDate}
-          disabled={user ? (user.desig !== 'Admin') : true}
+          disabled={user ? (user.desig !== 'EE') : true}
           onChange={(newValue) => {
             setValue(newValue);
           }}

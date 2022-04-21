@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 
 // Other Utils
-import { getBranch, getUser } from '../../Utils/controller';
-import { updateBranchData } from '../../Utils/controller';
+import { getBranch, getUser } from '../../../Utils/controller';
+import { updateBranchData } from '../../../Utils/controller';
 
 // Other components
 import BranchAJE from './BranchAJE';
@@ -166,7 +166,7 @@ export default function Branch() {
         setInd(x + 1);
     }
     return (<>{
-        user.desig === 'EE' ? (<Container component='div' sx={{ p: 2, height: 600, overflowY: 'scroll' }}>
+        user.desig === 'EE' ? (<Container component='div' sx={{ p: 2, height: 600}}>
             <TextField
                 fullWidth
                 type='text'

@@ -2,14 +2,14 @@
 import { useEffect, useState, useRef } from 'react';
 
 // Other Utils
-import { getUserTasks } from '../../Utils/controller';
+import { getUserTasks } from '../../../Utils/controller';
 
 // MUI Components
 import { Box } from '@mui/material';
 
 // Other Components
-import TaskCardLV from "../Card/TaskCardLV";
-import CompletedCard from '../Card/CompletedCard';
+import TaskCardLV from "../../Card/TaskCardLV";
+import CompletedCard from '../../Card/CompletedCard';
 
 export default function MyTasks({ cards, workers, theme, sz, setCards, user }) {
     // console.log(cards);
@@ -41,7 +41,7 @@ export default function MyTasks({ cards, workers, theme, sz, setCards, user }) {
         setData(dat);
     }, [cards, workers, sz, theme, setCards, setData, user, setRefresh])
     return (
-        <Box component='div' sx={{ height: 450, overflowY: 'scroll' }}>
+        <Box component='div' sx={{ height: 450 }}>
             {data}
         </Box>
     )

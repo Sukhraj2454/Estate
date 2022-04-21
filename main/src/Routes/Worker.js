@@ -6,7 +6,7 @@ import { useLocation, Link } from 'react-router-dom';
 // import ACInput from "../Others/ACInput";
 import { getUserTasks, getUser, logout, getBranch } from '../Utils/controller';
 import useWidth from "../Utils/useWidth";
-import MyTasks from '../Components/Dashboard/MyTasks';
+import MyTasks from '../Components/Dashboard/Tabs/MyTasks';
 import EditProfileCard from '../Components/Card/EditProfileCard';
 
 // MUI Compoenents
@@ -14,7 +14,8 @@ import { Box, Grid, Typography, Button, IconButton } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
-import Rating from '@mui/material/Rating';
+
+// import Rating from '@mui/material/Rating';
 import { createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 
@@ -25,42 +26,67 @@ import HomeIcon from '@mui/icons-material/Home';
 export default function Worker() {
 
     //rating 
-    const [value, setValue] = useState(4);
+    // const [value, setValue] = useState(4);
 
-    const [branchData, setBranchData] = useState(null);
+    const [branchData, setBranchData] = useState('');
+    const [branch, setBranch] = useState('');
+    const [category, setCat] = useState('');
+    const [subCategory, setSubCat] = useState('');
     const theme = createTheme();
     const location = useLocation();
     const worker = location.state?.worker;
     const workers = location.state?.workers;
     const [user, setUser] = useState({ 'name': '' });
-    const [lUser, setLUser] = useState(JSON.parse(sessionStorage.getItem('user')));
+    const lUser = JSON.parse(sessionStorage.getItem('user'));
     const sz = useWidth();
-    const len = (sz !== 'sm' && sz !== 'xs') ? 7 : 12;
+    const len = (sz !== 'sm' && sz !== 'xs') ? 6 : 12;
     const [cards, setCards] = useState([]);
+
     useEffect(() => {
         getUserTasks(setCards, null, worker.id);
     }, [worker.id]);
+
     useEffect(() => {
         if (user.desig !== 'Faculty' && user.desig !== 'Non Faculty')
             getBranch(setBranchData, worker.id);
 
-    }, []);
+    }, [user.desig, worker.id]);
+
+    useEffect(() => {
+        if (branchData !== '') {
+            setBranch(branchData.name);
+            if (branchData.category.length) {
+                setCat(branchData.category[0].name);
+                if (branchData.category[0].subCategory.length) {
+                    setSubCat(branchData.category[0].subCategory[0].name);
+                }
+            }
+        }
+        // eslint-disable-next-line
+    }, [branchData]);
+
     useEffect(() => {
         getUser(setUser, worker.id)
     }, [setUser, worker]);
+
     // const handleRefresh = () => {
     //     setLoading(true);
     //     let x = refresh;
     //     setRefresh(!x);
     // }
+
     const handleLogout = () => {
         logout();
     }
+
     return (
         <ThemeProvider theme={theme}>
             <AppBar position="static">
                 <Toolbar>
-                    <Link to={'/home'} style={{ textDecoration: 'none', color: 'white' }}>
+                    <Link to={'/home'} style={{
+                        textDecoration: 'none',
+                        color: 'white'
+                    }}>
                         <IconButton
                             size="large"
                             edge="start"
@@ -71,7 +97,9 @@ export default function Worker() {
                             <HomeIcon />
                         </IconButton>
                     </Link>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6"
+                        component="div"
+                        sx={{ flexGrow: 1 }}>
                         Service Desk NITJ
                     </Typography>
 
@@ -81,17 +109,28 @@ export default function Worker() {
 
             <Box component='div' sx={{ mt: 1 }} >
                 <Grid container height={100} sx={{ m: 0, p: 0 }}>
-                    <Grid item xs={len} lg={5}>
+                    <Grid item xs={len} sm={len} lg={len}>
 
                         <Box xs={len}
-                            sx={{ height: 'max-Content', m: 3, p: 2, pl: 15 }}
+                            sx={{ height: 'max-Content', m: 3, p: 2, pl: 6 }}
                         >
                             <Grid container direction={"row"} >
                                 <Grid item>
-                                    <Typography sx={{ textAlign: 'center' }} component='h1' variant='h4'>{worker.name}</Typography>
+                                    <Typography sx={{ textAlign: 'center' }}
+                                        component='h1'
+                                        variant='h4'>{worker.name}</Typography>
                                 </Grid>
                                 {worker.id === lUser._id ? (<Grid item>
-                                    <EditProfileCard />
+
+                                    <EditProfileCard
+                                        user={user}
+                                        branch={branch}
+                                        category={category}
+                                        subCategory={subCategory}
+                                        setBranch={setBranch}
+                                        setCat={setCat}
+                                        setSubCat={setSubCat} />
+
                                 </Grid>) : <></>}
                             </Grid>
                         </Box>
@@ -110,26 +149,25 @@ export default function Worker() {
                                             component='h3'
                                             variant='h5'
                                             sx={{ ml: 5, mb: 1, mt: 1 }}
-                                        >Branch: {branchData.name ? branchData.name : 'Not Selected'}</Typography>
+                                        >Branch: {branch}</Typography>
                                         <Typography textAlign={'left'}
                                             component='h3'
                                             variant='h5'
                                             sx={{ ml: 5, mb: 1, mt: 1 }}
-                                        >Category: {branchData.category.length ? branchData.category[0].name : 'Not Selected'}</Typography>
+                                        >Category: {category}</Typography>
                                         <Typography textAlign={'left'}
                                             component='h3'
                                             variant='h5'
                                             sx={{ ml: 5, mb: 1, mt: 1 }}
-                                        >Sub-Category: {branchData.category.length ?
-                                            branchData.category[0].subCategory ? branchData.category[0].subCategory[0].name : <></> : 'Not Selected'}</Typography>
+                                        >Sub-Category: {subCategory}</Typography>
                                     </>) : <></>}
 
-                                    <Typography textAlign={'left'}
+                                    {/* <Typography textAlign={'left'}
                                         component='h5'
                                         variant='h5'
                                         sx={{ ml: 5, mb: 1, mt: 1 }}
                                     >Ratings: <Rating name="read-only" value={value} readOnly />
-                                    </Typography>
+                                    </Typography> */}
 
                                 </div>
                             </Paper>
