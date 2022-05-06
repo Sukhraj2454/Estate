@@ -9,22 +9,24 @@ import Comments from "./Tabs/Comments";
 // MUI Components
 import { Container, Grid, Paper, Button, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
-import Tabs from '@mui/material/Tabs';
+import TabList from '@mui/lab/TabList';
+import TabContext from '@mui/lab/TabContext';
+import TabPanel from '@mui/lab/TabPanel';
 import Tab from '@mui/material/Tab';
 
 // MUI Icons
 import CloseIcon from '@mui/icons-material/Close';
 
-const TabPanel = ({ comp, value, index }) => {
-    return (
-        <div hidden={value !== index}>
-            {comp}
-        </div>
-    )
-}
+// const TabPanel = ({ comp, value, index }) => {
+//     return (
+//         <div hidden={value !== index}>
+//             {comp}
+//         </div>
+//     )
+// }
 
 export default function ExpCardlg({ close, theme, workers, data, set, cards, refresh, setRefresh, setCards }) {
-    const [tab, setTab] = useState(10);
+    const [tab, setTab] = useState('1');
 
     const handleTabChange = (event, newValue) => {
         event.preventDefault();
@@ -41,13 +43,13 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, ref
                     <Typography sx={{ p: 3, float: 'right' }} variant='h6'>
                         Created On: {d.toDateString()}
                     </Typography>
-                    <Tabs value={tab} onChange={handleTabChange} variant='standard'>
-                        <Tab label="Info" value={10} />
-                        <Tab label="Comments" value={11} />
-                    </Tabs>
+                    <TabContext value={tab}>
+                        <TabList value={tab} onChange={handleTabChange} variant='standard'>
+                            <Tab label="Info" value='1' />
+                            <Tab label="Comments" value='2' />
+                        </TabList>
 
-                    <TabPanel value={tab} index={10}
-                        comp={
+                        <TabPanel value="1" >
                             <Grid container columns={5}>
 
                                 <Grid item xs={3} lg={3}>
@@ -61,10 +63,12 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, ref
                                 </Grid>
 
                             </Grid>
+                        </TabPanel>
 
-                        }
-                    />
-                    <TabPanel value={tab} index={11} comp={<Comments data={data.comments} id={data._id} />} />
+                        <TabPanel value="2" >
+                            <Comments data={data.comments} id={data._id} />
+                        </TabPanel>
+                    </TabContext>
                 </Paper>
             </Container >
         </ThemeProvider>

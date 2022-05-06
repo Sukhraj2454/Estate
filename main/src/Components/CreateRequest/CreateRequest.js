@@ -13,7 +13,7 @@ import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import { FormLabel, Radio, RadioGroup, FormControlLabel } from '@mui/material';
-import { Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 const Divbox = function ({ comp }) {
   return (

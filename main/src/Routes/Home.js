@@ -1,7 +1,6 @@
 // React Utils.
 import { useState, useEffect } from 'react';
 import { logout } from '../Utils/controller';
-import { Link } from 'react-router-dom';
 
 // Other Utils
 import { getUsers } from '../Utils/controller';
@@ -10,26 +9,23 @@ import { getUsers } from '../Utils/controller';
 import Taskboard from '../Components/TaskBoard/TaskBoard';
 import Dashboard from '../Components/Dashboard/Dashboard';
 // import Worker from '../Routes/Worker';
+import Appbar from './Appbar';
 import CreateRequest from '../Components/CreateRequest/CreateRequest';
 
 // MUI Components
-import Toolbar from '@mui/material/Toolbar';
-import AppBar from '@mui/material/AppBar';
-import { Typography, Button } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { Typography } from '@mui/material';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Tabs from '@mui/material/Tabs';
+import TabList from '@mui/lab/TabList';
+import TabContext from '@mui/lab/TabContext';
+import TabPanel from '@mui/lab/TabPanel';
 import Tab from '@mui/material/Tab';
-
-// MUI Icons
-import MenuIcon from '@mui/icons-material/Menu';
-import PersonIcon from '@mui/icons-material/Person';
 
 // This data object is basis for app we will store most of data from backend here and then pass it down to Components
 export default function Home({ theme }) {
 
     const [open, setOpen] = useState(false);
-    const [tab, setTab] = useState(0);
+    const [tab, setTab] = useState('0');
     const [workers, setWorkers] = useState([{ 'title': 'No Worker Data Found.' }]);
 
     useEffect(() => {
@@ -52,43 +48,8 @@ export default function Home({ theme }) {
     }
     return (
         <>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                        onClick={handleDrawerOpen}
-                    >
-                        <MenuIcon />
-                    </IconButton>
 
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Service Desk NITJ
-                    </Typography>
-
-                    <Link to={{
-                        pathname: '/user',
-                        state: { worker: 'user', workers: workers },
-                    }} style={{ color: 'white' }}>
-
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                        >
-                            <PersonIcon />
-                        </IconButton>
-                    </Link>
-                    <Button color="inherit" onClick={handleLogout}>Logout</Button>
-
-                </Toolbar>
-            </AppBar>
-
+            <Appbar handleDrawerOpen={handleDrawerOpen} workers={workers} handleLogout={handleLogout} />
             <SwipeableDrawer
                 anchor='left'
                 open={open}
@@ -109,35 +70,36 @@ export default function Home({ theme }) {
                     onChange={handleTabChange}
                     sx={{ borderRight: 1, borderColor: 'divider', width: 250 }}
                 >
-                    <Tab label="Home" value={0} />
-                    <Tab label="Task Board" value={1} />
-                    <Tab label="Request a Service" value={2} />
-
+                    <Tab label="Home" value='0' />
+                    <Tab label="Task Board" value='1' />
+                    <Tab label="Request a Service" value='2' />
                     {/* <Tab label="Workers" value={3} /> */}
                 </Tabs>
 
             </SwipeableDrawer>
-            <>
-                <div hidden={tab !== 0}>
+            <TabContext value={tab}>
+                <TabPanel value='0'>
                     <Dashboard
                         theme={theme}
                         workers={workers}
                     />
-                </div>
-                <div hidden={tab !== 1}>
+                </TabPanel>
+
+                <TabPanel value='1'>
                     <Taskboard
                         theme={theme}
                         workers={workers}
                     />
-                </div>
-                <div hidden={tab !== 2}>
+                </TabPanel>
+                
+                <TabPanel value='2'>
                     <CreateRequest theme={theme} />
-                </div>
+                </TabPanel>
 
                 {/* <div hidden={tab !== 3}>
                     <Worker theme={theme} workers={workers} />
                 </div> */}
-            </>
+            </TabContext>
         </ >
     )
 }

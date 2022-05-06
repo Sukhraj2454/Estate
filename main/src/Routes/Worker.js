@@ -9,7 +9,7 @@ import useWidth from "../Utils/useWidth";
 import MyTasks from '../Components/Dashboard/Tabs/MyTasks';
 import EditProfileCard from '../Components/Card/EditProfileCard';
 
-// MUI Compoenents
+// MUI Compoenents  
 import { Box, Grid, Typography, Button, IconButton } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
@@ -64,7 +64,6 @@ export default function Worker() {
         }
         // eslint-disable-next-line
     }, [branchData]);
-
     useEffect(() => {
         getUser(setUser, worker.id)
     }, [setUser, worker]);
@@ -118,9 +117,9 @@ export default function Worker() {
                                 <Grid item>
                                     <Typography sx={{ textAlign: 'center' }}
                                         component='h1'
-                                        variant='h4'>{worker.name}</Typography>
+                                        variant='h4'>{worker.name || lUser.name}</Typography>
                                 </Grid>
-                                {worker.id === lUser._id ? (<Grid item>
+                                {worker.id === lUser._id || worker === 'user' ? (<Grid item>
 
                                     <EditProfileCard
                                         user={user}

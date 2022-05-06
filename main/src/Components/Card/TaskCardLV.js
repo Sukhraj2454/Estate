@@ -33,6 +33,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     const [priority, setPriority] = useState(data.priority);
     const [assignee, setAssignee] = useState(data.assignee);
     const [reporter, setReporter] = useState(data.reporter);
+
     // useEffect(() => {
     //     let temp = data;
     //     temp.title = title;
@@ -42,6 +43,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
     //     setData(temp);
     //     // eslint-disable-next-line
     // }, [title, priority, assignee, reporter, data]);
+
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);

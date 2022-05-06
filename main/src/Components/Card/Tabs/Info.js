@@ -20,8 +20,6 @@ function Info({ theme, workers, data, set, cards, setCards, setRefresh, refresh 
     const [status, setStatus] = useState(data ? data.status : 'To Do');
     const firstStatusRender = useRef(true);
 
-    console.log(data)
-
     // const firstPriorityRender = useRef(true);
     // const [priority, setPriority] = useState(data ? (data.priority === 2 ? 'High' : 'Medium') : '');
     // useEffect(() => {

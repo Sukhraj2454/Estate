@@ -1,40 +1,58 @@
-import { useState } from 'react';
-import TextField from '@mui/material/TextField';
+// React Utils
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+// Other Utils
+import { getUsers } from '../../Utils/controller';
+
+// MUI Components
+import { Container, TextField } from '@mui/material';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 const filter = createFilterOptions();
 
-export default function ACInput({ data, label, defValue, variant, setTitle }) {
-    const [value, setValue] = useState(defValue || '');
-    return (
+
+export default function UserSearch({ workers, setList }) {
+    useEffect(() => {
+        getUsers(setData);
+    }, []);
+    const [data, setData] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [value, setValue] = useState('');
+    useEffect(() => {
+
+        console.log(users)
+    }, [users]);
+
+    useEffect(() => {
+        let temp = users.map(op =>
+        (<Link key={op._id} to={{
+            pathname: '/user',
+            state: { worker: op, workers: workers }
+        }} />)
+        )
+        setList(temp);
+    }, [users]);
+    return (<>
         <Autocomplete
+
             value={value}
+
             onChange={
                 (event, newValue) => {
                     if (newValue === null) {
                         setValue(newValue)
-                        setTitle({
-                            name: '', id: ''
-                        })
                     }
                     else if (typeof newValue === 'string') {
                         setValue({
                             title: newValue,
                         });
-                        setTitle({
-                            name: newValue,
-                            id: ''
-                        });
                     } else {
                         setValue(newValue);
-                        setTitle({ name: newValue.title, id: newValue.id });
                     }
                 }
             }
-            filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-                return filtered;
-            }}
+            filterOptions={filter}
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
@@ -48,18 +66,13 @@ export default function ACInput({ data, label, defValue, variant, setTitle }) {
                 return option.title;
             }}
             freeSolo
-            renderOption={(props, option) => <li  {...props}
-                key={option.id || option.title || option}>
-                {option.title}</li>}
-            sx={{ width: 300, ml: 'auto', mr: 'auto', mt: 2, mb: 2 }}
+            sx={{ width: '20%', ml: 'auto', mr: 'auto', }}
+            renderOption={(props, option) => <li  {...props} key={option.id || option.title || option}>{option.title}</li>}
             renderInput={(params) => (
                 <TextField {...params}
-                    variant={variant || "standard"}
-                    label={label} />
+                    variant={"standard"}
+                    label='User' />
             )}
         />
-    );
-}
-ACInput.defaultProps = {
-    setTitle: () => { }
+    </>)
 }
