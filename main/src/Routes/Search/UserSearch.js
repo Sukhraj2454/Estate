@@ -6,73 +6,82 @@ import { Link } from 'react-router-dom';
 import { getUsers } from '../../Utils/controller';
 
 // MUI Components
-import { Container, TextField } from '@mui/material';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-
+import { Container, TextField, Typography } from '@mui/material';
+import { createFilterOptions } from '@mui/material/Autocomplete';
 const filter = createFilterOptions();
 
+const User = function ({ op, workers, clr }) {
+    const [css, setCss] = useState({ backgroundColor: 'black', textDecoration: 'none', color: 'black' });
+    return (
+        <Link
+            style={css}
+            onMouseEnter={() => {
+                setCss({ backgroundColor: 'black', textDecoration: 'none', color: '#1976D2' })
+            }}
+            onMouseLeave={() => {
 
-export default function UserSearch({ workers, setList }) {
+                setCss({ backgroundColor: 'black', textDecoration: 'none', color: 'black' })
+            }}
+            to={{
+                pathname: '/user',
+                state: { worker: op, workers: workers }
+            }} >
+            <Typography variant='h6' sx={{ bgcolor: clr }}>
+                {op.title}
+            </Typography>
+        </Link>
+    )
+}
+
+export default function UserSearch({ workers }) {
+
+    const [data, setData] = useState([]);
+    const [users, setUsers] = useState(workers);
+    const [list, setList] = useState([]);
+
     useEffect(() => {
         getUsers(setData);
     }, []);
-    const [data, setData] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [value, setValue] = useState('');
-    useEffect(() => {
 
-        console.log(users)
-    }, [users]);
+    const getOptionLabel = (option) => {
+        // Value selected with enter, right from the input
+        if (typeof option === 'string') {
+            return option;
+        }
+        // Regular option
+        return option.title;
+    }
 
     useEffect(() => {
-        let temp = users.map(op =>
-        (<Link key={op._id} to={{
-            pathname: '/user',
-            state: { worker: op, workers: workers }
-        }} />)
-        )
+        var col = false;
+        let temp = users.map(op => {
+
+            col = !col;
+            return (<User
+                clr={col ? "#EEEEEE" : "white"}
+                key={op.id}
+                op={op}
+                workers={workers} />)
+        })
         setList(temp);
-    }, [users]);
+    }, [workers, users, setList]);
+
     return (<>
-        <Autocomplete
-
-            value={value}
-
+        <TextField
+            fullWidth
+            label='Search User'
             onChange={
-                (event, newValue) => {
-                    if (newValue === null) {
-                        setValue(newValue)
-                    }
-                    else if (typeof newValue === 'string') {
-                        setValue({
-                            title: newValue,
-                        });
-                    } else {
-                        setValue(newValue);
-                    }
+                (e) => {
+                    const filtered = filter(data, { inputValue: e.target.value, getOptionLabel: getOptionLabel });
+                    setUsers(filtered);
                 }
-            }
-            filterOptions={filter}
-            selectOnFocus
-            clearOnBlur
-            handleHomeEndKeys
-            options={data}
-            getOptionLabel={(option) => {
-                // Value selected with enter, right from the input
-                if (typeof option === 'string') {
-                    return option;
-                }
-                // Regular option
-                return option.title;
-            }}
-            freeSolo
-            sx={{ width: '20%', ml: 'auto', mr: 'auto', }}
-            renderOption={(props, option) => <li  {...props} key={option.id || option.title || option}>{option.title}</li>}
-            renderInput={(params) => (
-                <TextField {...params}
-                    variant={"standard"}
-                    label='User' />
-            )}
-        />
+            } />
+
+        <Container
+            component='main' maxWidth='xl'
+            sx={{ border: '1px solid black', minHeight: 460, mt: 1 }}
+        >
+            {list}
+        </Container>
     </>)
 }

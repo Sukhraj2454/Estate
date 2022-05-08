@@ -117,7 +117,7 @@ export default function Worker() {
                                 <Grid item>
                                     <Typography sx={{ textAlign: 'center' }}
                                         component='h1'
-                                        variant='h4'>{worker.name || lUser.name}</Typography>
+                                        variant='h4'>{worker.name || worker.title || lUser.name}</Typography>
                                 </Grid>
                                 {worker.id === lUser._id || worker === 'user' ? (<Grid item>
 

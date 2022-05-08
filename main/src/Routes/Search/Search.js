@@ -13,7 +13,7 @@ import UserSearch from "./UserSearch";
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography'
-import { IconButton, Button, Container } from "@mui/material";
+import { IconButton, Button } from "@mui/material";
 import TabList from '@mui/lab/TabList';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
@@ -27,7 +27,6 @@ export default function Search() {
     const workers = location.state?.workers;
 
     const [tab, setTab] = useState('User');
-    const [list, setList] = useState([]);
 
     const handleTabChange = (event, newValue) => {
         event.preventDefault();
@@ -67,16 +66,13 @@ export default function Search() {
             </TabList>
 
             <TabPanel value="User" >
-                <UserSearch workers={workers} setList={setList} />
+                <UserSearch workers={workers} />
             </TabPanel>
 
             <TabPanel value="Task" >
                 <CardSearch />
             </TabPanel>
         </TabContext>
-        <Container>
-            {list}
-        </Container>
 
     </>);
 }
