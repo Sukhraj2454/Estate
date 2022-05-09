@@ -70,7 +70,7 @@ export default function Search() {
             </TabPanel>
 
             <TabPanel value="Task" >
-                <CardSearch />
+                <CardSearch workers={workers} />
             </TabPanel>
         </TabContext>
 

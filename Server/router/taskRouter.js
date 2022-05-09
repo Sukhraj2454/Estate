@@ -10,6 +10,7 @@ taskRouter.get('/all', authenticate, taskController.getAllTasks);
 taskRouter.patch('/assignworker', authenticate, taskController.assignWorker);
 taskRouter.patch('/deadline', authenticate, taskController.deadline);
 taskRouter.delete('/delete/:tId', authenticate, taskController.delete);
+taskRouter.get('/findtask/:tId', authenticate, taskController.findTask);
 taskRouter.patch('/updatedate', authenticate, taskController.updateDate);
 taskRouter.patch('/updatedesctitle', authenticate, taskController.updateDescTitle);
 taskRouter.patch('/updatepriority', authenticate, taskController.updatePriority);

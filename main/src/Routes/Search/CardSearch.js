@@ -1,61 +1,60 @@
 // React Utils
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // Other Utils
-import { getUsers } from '../../Utils/controller';
+import { findTask } from '../../Utils/controller';
+import useWidth from '../../Utils/useWidth';
 
 // MUI Components
-import TextField from '@mui/material/TextField';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
-const filter = createFilterOptions();
+import { createTheme } from '@mui/material/styles';
+import { Container, TextField, Button, Typography } from '@mui/material';
+import { useEffect } from 'react';
 
-export default function UserSearch({ variant }) {
+// Other Components
+import TaskCardLV from '../../Components/Card/TaskCardLV';
+
+export default function UserSearch({ workers }) {
+    const [value, setVal] = useState('');
+    const [res, setRes] = useState({});
+    const [list, setList] = useState('');
+
+    const sz = useWidth();
+    const theme = createTheme();
     useEffect(() => {
-        getUsers(setData);
-    }, []);
-
-    const [data, setData] = useState([]);
-    const [value, setValue] = useState('');
-    return <Autocomplete
-        value={value}
-        onChange={
-            (event, newValue) => {
-                if (newValue === null) {
-                    setValue(newValue)
-                }
-                else if (typeof newValue === 'string') {
-                    setValue({
-                        title: newValue,
-                    });
-                } else {
-                    setValue(newValue);
-                }
-            }
+        if (res.message) {
+            setList(<Typography variant='h6'>
+                {res.message}
+            </Typography>);
         }
-        filterOptions={(options, params) => {
-            const filtered = filter(options, params);
-            return filtered;
-        }}
-        selectOnFocus
-        clearOnBlur
-        handleHomeEndKeys
-        options={data}
-        getOptionLabel={(option) => {
-            // Value selected with enter, right from the input
-            if (typeof option === 'string') {
-                return option;
-            }
-            // Regular option
-            return option.title;
-        }}
-        freeSolo
-        sx={{ width: '20%', ml: 'auto', mr: 'auto', }}
-        // renderOption={(props, option) => <li  {...props} key={option.id || option.title || option}>{option.title}</li>}
-        renderInput={(params) => (
-            <TextField {...params}
-                variant={variant || "standard"}
-                label='Task' />
-        )}
-    />
+        else if (res.taskId) {
+            setList(<TaskCardLV
+                data={res}
+                workers={workers}
+                sz={sz}
+                theme={theme}
+            />
+            )
+        }
+    }, [res, sz, theme, workers])
+    return (<>
+        <TextField
+            value={value}
+            onChange={(e) => { setVal(e.target.value) }}
+            fullWidth
+            label='Search Task'
+            placeholder='Enter Task Id'
+        />
+        <Button variant='contained' sx={{ m: 1 }}
+            onClick={() => { findTask(setRes, value) }}
+        >
+            Search
+        </Button>
+        <Container
+            component='main' maxWidth='xl'
+            sx={{ border: '1px solid black', minHeight: 400, mt: 1 }}
+        >
+            {list}
+        </Container>
+    </>)
 }

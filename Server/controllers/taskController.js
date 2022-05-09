@@ -138,6 +138,16 @@ module.exports.delete = (req, res, next) => {
         })
 }
 
+// Get Task by Task Id
+module.exports.findTask = (req, res, next) => {
+    const tId = req.params['tId'];
+    Task.findOne({ taskId: tId }).then((task) => {
+        if (task)
+            res.send(task);
+        else res.json({ 'message': 'No Task Found.' });
+    })
+}
+
 // Get All Tasks
 module.exports.getAllTasks = (req, res, next) => {
     const user = req.user;
@@ -171,26 +181,7 @@ module.exports.getAllTasks = (req, res, next) => {
         })
     // }
 }
-// Get Tasks created by a certain User
-module.exports.getUserTasks = (req, res, next) => {
-    const userId = req.params['id'] !== '2' ? mongoose.Types.ObjectId(req.params['id']) : req.user._id;
-    Task.find({
-        $and: [{ '$or': [{ 'assignee.id': userId }, { 'reporter.id': userId }] }, {
-            status: { $nin: ['Reviewed'] }
-        }]
-    }).then((tasks) => {
-        res.send(tasks)
-    }, (err) => {
-        console.log(err)
-        let error = new Error("User Not Found")
-        error.message = "Requested User Not Found"
-        error.statusCode = 404
-        error.data = err;
-        throw error;
-    }).catch(err => {
-        next(err);
-    })
-}
+
 // Change Description, Title, Location 
 module.exports.updateDescTitle = (req, res, next) => {
     const id = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
@@ -351,7 +342,26 @@ module.exports.updateStatus = (req, res, next) => {
             })
     }
 }
-
+// Get Tasks created by a certain User
+module.exports.getUserTasks = (req, res, next) => {
+    const userId = req.params['id'] !== '2' ? mongoose.Types.ObjectId(req.params['id']) : req.user._id;
+    Task.find({
+        $and: [{ '$or': [{ 'assignee.id': userId }, { 'reporter.id': userId }] }, {
+            status: { $nin: ['Reviewed'] }
+        }]
+    }).then((tasks) => {
+        res.send(tasks)
+    }, (err) => {
+        console.log(err)
+        let error = new Error("User Not Found")
+        error.message = "Requested User Not Found"
+        error.statusCode = 404
+        error.data = err;
+        throw error;
+    }).catch(err => {
+        next(err);
+    })
+}
 
 module.exports.submitRating = (req, res, next) => {
     const tId = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;

@@ -132,6 +132,8 @@ function Info({ theme, workers, data, set, cards, setCards, setRefresh, refresh 
 }
 Info.defaultProps = {
     setCards: () => { },
-    cards: []
+    cards: [],
+    setRefresh: () => { },
+    refresh: false
 }
 export default Info;

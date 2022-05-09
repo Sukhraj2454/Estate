@@ -15,6 +15,7 @@ const BASE_URL = process.env.URL || '';
 // getBranch
 // getCards
 // getCategories
+// getTask
 // getUser
 // getUsers
 // getUserTasks
@@ -88,6 +89,16 @@ export const getCategories = function (setCategories) {
         })
 }
 
+// CardSearch.js
+export const findTask = function (setData, tId) {
+    axios.get(`${BASE_URL}/task/findtask/${tId || 0}`, {
+        headers: headers
+    })
+        .then((res) => {
+            setData(res.data)
+        })
+        .catch(err => console.log(err))
+}
 
 // Dashboard.js
 export const getUser = function (setUser, uId) {

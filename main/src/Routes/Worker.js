@@ -32,15 +32,18 @@ export default function Worker() {
     const [branch, setBranch] = useState('');
     const [category, setCat] = useState('');
     const [subCategory, setSubCat] = useState('');
+    const [user, setUser] = useState({ 'name': '' });
+    const [cards, setCards] = useState([]);
+
     const theme = createTheme();
     const location = useLocation();
     const worker = location.state?.worker;
     const workers = location.state?.workers;
-    const [user, setUser] = useState({ 'name': '' });
+    
+    
     const lUser = JSON.parse(sessionStorage.getItem('user'));
     const sz = useWidth();
     const len = (sz !== 'sm' && sz !== 'xs') ? 6 : 12;
-    const [cards, setCards] = useState([]);
 
     useEffect(() => {
         getUserTasks(setCards, null, worker.id);
