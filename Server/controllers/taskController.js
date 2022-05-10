@@ -279,7 +279,7 @@ module.exports.updateDescTitle = (req, res, next) => {
 module.exports.updateJob = (req, res, next) => {
     const body = req.body;
     const tId = body.tId ? mongoose.Types.ObjectId(body.tId) : null;
-    console.log(body)
+
     if (req.user.desig === 'Faculty' || req.user.desig === 'Non Faculty') {
         const er = new Error("Access Denied.");
         next(er);
@@ -295,12 +295,20 @@ module.exports.updateJob = (req, res, next) => {
                 next(er)
             }
             else {
-                task.jobCard[body.ind].assignee = body.assignee;
-                task.jobCard[body.ind].job = body.jobTitle;
-                task.jobCard[body.ind].materialUsed = body.materialsUsed;
-                task.save().then(t => {
-                    res.json({ 'message': 'Job Updated.' });
-                }).catch(er => next(er))
+                const status = task.jobCard[body.ind].status;
+                if (status === 'Completed' || status === 'Verified') {
+                    const er = new Error('Job Already Completed.')
+                    er.statusCode = 403;
+                    next(er);
+                }
+                else {
+                    task.jobCard[body.ind].assignee = body.assignee;
+                    task.jobCard[body.ind].job = body.jobTitle;
+                    task.jobCard[body.ind].materialUsed = body.materialsUsed;
+                    task.save().then(t => {
+                        res.json({ 'message': 'Job Updated.' });
+                    }).catch(er => next(er))
+                }
             }
         }).catch(er => next(er))
     }
@@ -389,14 +397,14 @@ module.exports.updateReporter = (req, res, next) => {
                 if (ret.modifiedCount === 0) {
                     let err = Error("No Modification Done")
                     err.statusCode = 200
-                    throw (err)
+                    next(err)
                 }
                 else
                     res.json({ 'message': 'Reporter Updated' });
             }, (err) => {
                 let er = new Error("Could Not Update Reporter.");
                 er.data = err;
-                throw (er)
+                next(er)
             })
             .catch(err => {
                 next(err)
@@ -435,6 +443,30 @@ module.exports.updateStatus = (req, res, next) => {
             })
     }
 }
+
+// verify Job Completion
+module.exports.verifyJobCompletion = (req, res, next) => {
+    const user = req.user;
+    const body = req.body;
+    const tId = body.tId ? mongoose.Types.ObjectId(body.tId) : body.tId;
+    Task.findOne({ _id: tId }).then(task => {
+        if (task.jobCard[body.ind].status !== 'Completed') {
+            const er = new Error('Job not Completed by Assignee.');
+            next(er);
+        }
+        else if (user.id === task.reporter.id) {
+            task.jobCard[body.ind].status = 'Verified';
+            task.save().then(t => res.json({ 'message': 'Job Verified By User.' }));
+        }
+        else {
+            const er = new Error('Access Denied.');
+            er.statusCode = 403;
+            next(er);
+        }
+    })
+        .catch(er => next(er));
+}
+
 // Get Tasks created by a certain User
 module.exports.getUserTasks = (req, res, next) => {
     const userId = req.params['id'] !== '2' ? mongoose.Types.ObjectId(req.params['id']) : req.user._id;

@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // Other Utils
-import { addJob, updateJob, changeJobStatus } from '../../../Utils/controller';
+import { addJob, updateJob, changeJobStatus, verifyJob } from '../../../Utils/controller';
 
 // MUI Components
 import { Container, TextField, Button, Typography, OutlinedInput, InputAdornment, IconButton } from "@mui/material";
@@ -34,7 +34,7 @@ function Chips({ material, setMaterial }) {
                 key={val}
                 onDelete={() => { handleDelete(val) }} />)
         setComp(temp);
-
+        // eslint-disable-next-line
     }, [material, setComp]);
 
 
@@ -85,13 +85,14 @@ function CreateJob({ workers, theme, tId }) {
     )
 }
 
-function Job({ data, ind, theme, workers, tId }) {
+function Job({ data, ind, theme, workers, tId, user, reporter }) {
     const [jobTitle, setJT] = useState(data.job || '');
     const [status, setStatus] = useState(data.status || 'In Progress')
     const [assignee, setAssignee] = useState(data.assignee || {});
     const [mat, setMat] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [material, setMaterial] = useState(data.materialUsed || []);
+
     return (
         <Accordion>
 
@@ -103,7 +104,7 @@ function Job({ data, ind, theme, workers, tId }) {
                 <Stack direction={{ xs: 'column', sm: 'row' }}>
                     <Typography noWrap width={200}>{jobTitle}</Typography>
                     <Typography >Status:</Typography>
-                    <Typography color={status === 'Completed' ? 'primary' : 'secondary'}>  {status}</Typography>
+                    <Typography color={(status === 'Completed' || status === 'Verified') ? 'primary' : 'secondary'}>  {status}</Typography>
 
                 </Stack>
             </AccordionSummary>
@@ -159,7 +160,7 @@ function Job({ data, ind, theme, workers, tId }) {
 
                 <Button variant='contained'
                     sx={{ mt: 2 }}
-                    disabled={status === 'Completed'}
+                    disabled={status === 'Completed' || status === 'Verified'}
                     onClick={() => {
                         updateJob(tId, ind, assignee, jobTitle, material)
                     }}
@@ -170,7 +171,7 @@ function Job({ data, ind, theme, workers, tId }) {
                 <Button
                     variant='contained' sx={{ ml: 2, mt: 2 }}
                     color={status !== 'Completed' ? 'success' : 'primary'}
-                    disabled={disabled}
+                    disabled={disabled || reporter.id === user._id}
                     onClick={
                         () => {
                             setDisabled(true)
@@ -184,15 +185,25 @@ function Job({ data, ind, theme, workers, tId }) {
                     {status !== 'Completed' ? 'Complete Job' : 'In Progress'}
                 </Button>
 
+                <Button
+                    disabled={status !== 'Completed' || status === 'Verified' || reporter.id !== user._id}
+                    variant='contained' sx={{ ml: 2, mt: 2 }}
+                    onClick={() => { verifyJob(tId, ind, setStatus); }}
+                    color='success'>
+                    Verify Completion
+                </Button>
             </AccordionDetails>
         </Accordion >
     )
 }
 export default function JobCard({ data, workers, theme }) {
-    console.log(data)
+
     // eslint-disable-next-line
     const [jobs, setJobs] = useState(data.jobCard || "No Jobs Found. You Can Create New Job.");
-
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    useEffect(() => {
+        setJobs(data.jobCard || "No Jobs Found. You Can Create New Job.");
+    }, [data]);
     return (
         <Container sx={{ height: 450, overflowY: 'scroll' }}>
 
@@ -209,6 +220,8 @@ export default function JobCard({ data, workers, theme }) {
                     tId={data._id}
                     data={job}
                     ind={index}
+                    reporter={data.reporter}
+                    user={user}
                     theme={theme}
                     workers={workers} />
             ) : { jobs }}

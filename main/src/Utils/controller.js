@@ -34,6 +34,7 @@ const BASE_URL = process.env.URL || '';
 // updateReporter
 // updateStatus
 // updateUser
+// verifyJob
 // submitReview
 
 // JobCard.js
@@ -387,7 +388,6 @@ export const updateStatus = function (status, id) {
 }
 // EditProfileCard.js
 export const updateUser = function (data) {
-    console.log(data)
     axios.patch(`${BASE_URL}/user/updateUser`,
         {
             Branch: data.branch,
@@ -398,6 +398,16 @@ export const updateUser = function (data) {
             headers: headers
         }).then((res) => {
         }).catch(err => { })
+}
+// jobCard.js
+export const verifyJob = function (tId, ind, setStatus) {
+    axios.patch(`${BASE_URL}/task/verifyJob`,
+        {
+            tId: tId,
+            ind: ind
+        }, { headers: headers })
+        .then(res => { setStatus('Verified') })
+        .catch(er => console.log(er))
 }
 // CompletedCard.js
 export const submitReview = function (stars, id, text, setRefresh, refresh) {

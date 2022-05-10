@@ -21,7 +21,10 @@ import MyTasks from './Tabs/MyTasks';
 
 // MUI Icons
 import RefreshIcon from '@mui/icons-material/Refresh';
-function MyTasksTab({ user, theme, workers }) {
+
+export default function Dashboard({ theme, workers }) {
+    const [user, setUser] = useState({ 'name': '' });
+    const [tab, setTab] = useState('30');
 
     const [cards, setCards] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -37,31 +40,6 @@ function MyTasksTab({ user, theme, workers }) {
         let x = refresh;
         setRefresh(!x);
     }
-
-
-    return (user.desig === 'EE' || user.desig === 'AE' || user.desig === 'JE') ? <Branch /> :
-        (<>
-            <LoadingButton
-                size="medium"
-                onClick={handleRefresh}
-                loading={loading}
-                loadingPosition="start"
-                startIcon={<RefreshIcon />}
-            >
-                REFRESH
-            </LoadingButton>
-            < MyTasks user={user}
-                cards={cards}
-                setCards={setCards}
-                workers={workers}
-                theme={theme} sz={sz} />
-        </>)
-
-}
-export default function Dashboard({ theme, workers }) {
-    const [user, setUser] = useState({ 'name': '' });
-    const [tab, setTab] = useState('30');
-
     useEffect(() => {
         getUser(setUser)
     }, [setUser]);
@@ -84,13 +62,34 @@ export default function Dashboard({ theme, workers }) {
 
                 <TabContext value={tab}>
                     <TabList value={tab} onChange={handleTabChange} variant='standard'>
-                        <Tab label="Main" value='30' />
-                        <Tab label="Summary" value='31' />
+                        <Tab label="My Tasks" value='30' />
+                        {(user.desig === 'EE' || user.desig === 'AE' || user.desig === 'JE') ?
+                            [<Tab label="Branch" key='31' value='31' />, <Tab key='32' label="Summary" value='32' />] : []}
+
+
                     </TabList>
 
                     <TabPanel value="30" >
-                        <MyTasksTab theme={theme} user={user} workers={workers} />
+                        <LoadingButton
+                            size="medium"
+                            onClick={handleRefresh}
+                            loading={loading}
+                            loadingPosition="start"
+                            startIcon={<RefreshIcon />}
+                        >
+                            REFRESH
+                        </LoadingButton>
+                        < MyTasks user={user}
+                            cards={cards}
+                            setCards={setCards}
+                            workers={workers}
+                            theme={theme} sz={sz} />
                     </TabPanel>
+
+                    <TabPanel value="31" >
+                        <Branch />
+                    </TabPanel>
+
                 </TabContext>
             </Container>
         </ThemeProvider >
