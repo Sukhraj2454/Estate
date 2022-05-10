@@ -11,7 +11,9 @@ const BASE_URL = process.env.URL || '';
 
 
 // <--------Functions------->
-// Create Request
+// addjob
+// createRequest
+// changeJobStatus
 // getBranch
 // getCards
 // getCategories
@@ -27,12 +29,24 @@ const BASE_URL = process.env.URL || '';
 // updateBranchData
 // updateDate
 // updateDescTitle
+// updateJob
 // updatePriority
 // updateReporter
 // updateStatus
 // updateUser
 // submitReview
 
+// JobCard.js
+export const addJob = function (tId, assignee, title) {
+
+    axios.post(`${BASE_URL}/task/addJob`, {
+        tId: tId,
+        assignee: assignee,
+        title: title
+    }, { headers: headers })
+        .then(res => console.log(res))
+        .catch(er => console.log(er))
+}
 
 //CreateRequest.js
 export const createRequest = function (title, description, location, branch, category, subCat, type) {
@@ -49,6 +63,22 @@ export const createRequest = function (title, description, location, branch, cat
         .then(res => {
             window.location.reload();
         })
+}
+// JobCard.js
+export const changeJobStatus = function (tId, status, ind, setDisabled, setStatus) {
+    axios.patch(`${BASE_URL}/task/changeJobStatus`, {
+        tId: tId,
+        status: status,
+        ind: ind
+    },
+        { headers: headers })
+        .then(res => {
+            setDisabled(false)
+            if (status === 'Completed')
+                setStatus('Completed')
+            else setStatus('In Progress')
+        })
+        .catch(er => { setDisabled(false) })
 }
 // Branch.js
 export const getBranch = function (setBranches, id) {
@@ -288,6 +318,21 @@ export const updateDescTitle = function (title, description, location, id) {
         })
         .catch(err => {
         })
+}
+// jobCard.js
+export const updateJob = function (tId, ind, assignee, jobTitle, materialsUsed) {
+    axios.patch(`${BASE_URL}/task/updateJob`,
+        {
+            tId: tId,
+            ind: ind,
+            assignee: assignee,
+            jobTitle: jobTitle,
+            materialsUsed: materialsUsed
+        },
+        { headers: headers }
+    ).then(res => console.log(res))
+        .catch(er => console.log(er))
+
 }
 // Info.js
 export const updatePriority = function (priority, id) {

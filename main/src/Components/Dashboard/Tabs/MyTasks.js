@@ -41,7 +41,7 @@ export default function MyTasks({ cards, workers, theme, sz, setCards, user }) {
         setData(dat);
     }, [cards, workers, sz, theme, setCards, setData, user, setRefresh])
     return (
-        <Box component='div' sx={{ height: 450 }}>
+        <Box component='div' sx={{ height: 450, overflowY: 'scroll' }}>
             {data}
         </Box>
     )

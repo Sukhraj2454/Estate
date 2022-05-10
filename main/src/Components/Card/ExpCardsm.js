@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Comments from "./Tabs/Comments";
 import Desc from './Tabs/Desc';
 import Info from './Tabs/Info';
+import JobCard from './Tabs/JobCard';
 
 // MUI Components
 import { Container, Paper, Button } from "@mui/material"
@@ -40,6 +41,7 @@ export default function ExpCardsm({ close, theme, refresh, setRefresh, workers, 
                             <Tab label="Description" value='0' />
                             <Tab label="Info" value='1' />
                             <Tab label="Comments" value='2' />
+                            <Tab label="Job Card" value='3' />
                         </TabList>
 
 
@@ -53,6 +55,10 @@ export default function ExpCardsm({ close, theme, refresh, setRefresh, workers, 
 
                         <TabPanel value='2'>
                             <Comments data={data.comments} id={data._id} />
+                        </TabPanel>
+
+                        <TabPanel value='3'>
+                            <JobCard data={data} workers={workers} theme={theme} />
                         </TabPanel>
                     </TabContext>
                 </Paper>

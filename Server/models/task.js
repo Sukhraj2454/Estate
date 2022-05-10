@@ -81,6 +81,31 @@ const TaskSchema = new mongoose.Schema({
             type: String,
         },
     }],
+    jobCard: [{
+        job: {
+            type: String,
+            required: true
+        },
+        materialUsed: [{
+            type: String,
+            required: true
+        }],
+        assignee: {
+            name: {
+                type: String,
+                requried: true
+            },
+            id: {
+                type: String,
+                required: true
+            }
+        },
+        status: {
+            type: String,
+            default: "In Progress"
+        }
+
+    }],
     rating: {
         stars: {
             type: String,

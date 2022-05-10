@@ -1,6 +1,7 @@
 const { Task } = require('../models/task');
 const _ = require('lodash');
 const mongoose = require('mongoose');
+const { json } = require('express/lib/response');
 
 // Add New Task
 module.exports.addTask = (req, res, next) => {
@@ -46,12 +47,40 @@ module.exports.addComment = (req, res, next) => {
     });
 }
 
+// Add job to Job Card
+module.exports.addJob = (req, res, next) => {
+
+    const taskId = mongoose.Types.ObjectId(req.body.tId);
+    const body = req.body;
+    console.log(body)
+    const job = {
+        job: body.title,
+        assignee: body.assignee,
+        status: 'In Progress'
+    }
+    Task.findOne({ _id: taskId }).then(task => {
+        if (!task) {
+            const er = new Error("Task Not Found")
+            next(er)
+        }
+        else {
+            task.jobCard.push(job);
+            task.save().then(tsk => res.json({ 'message': 'Job Added to JobCard.' }))
+        }
+    })
+}
 
 // Assign or Update Worker to Task
 module.exports.assignWorker = (req, res, next) => {
+
     const assignee = req.body.assignee;
     const taskId = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
-    if (!assignee || !taskId) {
+    if (req.user.desig === 'Worker' || req.user.desig === 'Faculty' || req.user.desig === 'Non Faculty') {
+        const er = new Error("Access Denied! Only Admins can Assign Workers")
+        er.statusCode = 403;
+        next(er);
+    }
+    else if (!assignee || !taskId) {
         let er = new Error("No Data Found.")
         er.message = 'Not a Valid Request.'
         er.statusCode = 404
@@ -72,7 +101,7 @@ module.exports.assignWorker = (req, res, next) => {
                     res.status(200)
                         .json({ "message": "Assignee Added." })
             }, (err) => {
-                let er = new Error("Could Not Add Assignee");
+                let er = new Error("Could Not Add Assignee.");
                 er.data = err;
                 throw (er)
             })
@@ -82,6 +111,33 @@ module.exports.assignWorker = (req, res, next) => {
     }
 }
 
+// Complete Job from worker
+module.exports.changeJobStatus = (req, res, next) => {
+    const body = req.body;
+    if (req.user === 'Faculty' || req.user === 'Non Faculty') {
+        const er = new Error('Access Denied.');
+        next(er)
+    }
+    else {
+        const taskId = body.tId ? mongoose.Types.ObjectId(body.tId) : '';
+
+        Task.findOne({ _id: taskId }).then(task => {
+            if (task.jobCard[body.ind].status === 'Verified' || body.status === 'Verified') {
+                const er = new Error(`Access Denied, Cannot Change Status to ${body.status}`);
+                next(er);
+            }
+            else if (req.user.desig === 'Worker' && task.jobCard[body.ind].assignee.id !== req.user.id) {
+
+                const er = new Error('Access Denied, Not the Assigned User of Task.');
+                next(er);
+            }
+            else {
+                task.jobCard[body.ind].status = body.status;
+                task.save().then((t) => res.json({ 'message': 'Job Status Updated.' }))
+            }
+        }).catch(er => next(er))
+    }
+}
 // Add Deadline
 module.exports.deadline = (req, res, next) => {
     if (req.user.desig != 'Admin') {
@@ -219,6 +275,38 @@ module.exports.updateDescTitle = (req, res, next) => {
     }
 }
 
+// Update Job in a task
+module.exports.updateJob = (req, res, next) => {
+    const body = req.body;
+    const tId = body.tId ? mongoose.Types.ObjectId(body.tId) : null;
+    console.log(body)
+    if (req.user.desig === 'Faculty' || req.user.desig === 'Non Faculty') {
+        const er = new Error("Access Denied.");
+        next(er);
+    }
+    else if (req.user.desig === 'Worker' && body.assignee.id !== req.user._id) {
+        const er = new Error("Only Assigned Worker can make changes.");
+        next(er);
+    }
+    else {
+        Task.findOne({ _id: tId }).then(task => {
+            if (!task) {
+                const er = new Error('No Task Found')
+                next(er)
+            }
+            else {
+                task.jobCard[body.ind].assignee = body.assignee;
+                task.jobCard[body.ind].job = body.jobTitle;
+                task.jobCard[body.ind].materialUsed = body.materialsUsed;
+                task.save().then(t => {
+                    res.json({ 'message': 'Job Updated.' });
+                }).catch(er => next(er))
+            }
+        }).catch(er => next(er))
+    }
+
+
+}
 // Add  or update deadline
 module.exports.updateDate = (req, res, next) => {
     const tId = req.body.tId ? mongoose.Types.ObjectId(req.body.tId) : null;
@@ -281,7 +369,12 @@ module.exports.updatePriority = (req, res, next) => {
 // Assign or Update Reporter
 module.exports.updateReporter = (req, res, next) => {
     const id = req.body.id ? mongoose.Types.ObjectId(req.body.id) : null;
-    const reporter = req.body.reporter
+    const reporter = req.body.reporter;
+    if (req.user.desig === 'Worker' || req.user.desig === 'Faculty' || req.user.desig === 'Non Faculty') {
+        const er = new Error("Access Denied! Only Admins can Modify Reporters")
+        er.statusCode = 403;
+        next(er);
+    }
     if (!id || !reporter) {
         let er = new Error("No ID Found.")
         er.message = 'Not a Valid Request.'

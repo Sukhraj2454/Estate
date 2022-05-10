@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Info from './Tabs/Info';
 import Desc from './Tabs/Desc';
 import Comments from "./Tabs/Comments";
+import JobCard from './Tabs/JobCard';
 
 // MUI Components
 import { Container, Grid, Paper, Button, Typography } from "@mui/material";
@@ -47,6 +48,7 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, ref
                         <TabList value={tab} onChange={handleTabChange} variant='standard'>
                             <Tab label="Info" value='1' />
                             <Tab label="Comments" value='2' />
+                            <Tab label="Job Card" value='3' />
                         </TabList>
 
                         <TabPanel value="1" >
@@ -59,7 +61,13 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, ref
                                 <Grid item sx={{
                                     width: "35%"
                                 }}>
-                                    <Info cards={cards} setCards={setCards} refresh={refresh} setRefresh={setRefresh} set={set} workers={workers} data={data} />
+                                    <Info cards={cards}
+                                        setCards={setCards}
+                                        refresh={refresh}
+                                        setRefresh={setRefresh}
+                                        set={set}
+                                        workers={workers}
+                                        data={data} />
                                 </Grid>
 
                             </Grid>
@@ -67,6 +75,10 @@ export default function ExpCardlg({ close, theme, workers, data, set, cards, ref
 
                         <TabPanel value="2" >
                             <Comments data={data.comments} id={data._id} />
+                        </TabPanel>
+
+                        <TabPanel value="3" >
+                            <JobCard data={data} workers={workers} theme={theme} />
                         </TabPanel>
                     </TabContext>
                 </Paper>

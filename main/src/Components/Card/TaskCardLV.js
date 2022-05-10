@@ -95,7 +95,7 @@ export default function TaskCardLV({ theme, clr, sz, workers, data, setCards, ca
                         <Typography sx={{ color: stringToColor(data.taskId.split('-')[0]), fontWeight: 600 }}>{data.taskId}</Typography>
                     </Grid >
 
-                    <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 10 }}>
+                    <Grid item lg={4} sm={4} xs={4} sx={{ m: 'auto', pl: 3 }}>
                         <Link to={{
                             pathname: '/user',
                             state: { worker: assignee, workers: workers },

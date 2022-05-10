@@ -14,13 +14,14 @@ import { useEffect } from 'react';
 // Other Components
 import TaskCardLV from '../../Components/Card/TaskCardLV';
 
-export default function UserSearch({ workers }) {
+export default function CardSearch({ workers }) {
     const [value, setVal] = useState('');
     const [res, setRes] = useState({});
     const [list, setList] = useState('');
 
     const sz = useWidth();
     const theme = createTheme();
+
     useEffect(() => {
         if (res.message) {
             setList(<Typography variant='h6'>
@@ -36,7 +37,9 @@ export default function UserSearch({ workers }) {
             />
             )
         }
-    }, [res, sz, theme, workers])
+        // eslint-disable-next-line
+    }, [res]);
+
     return (<>
         <TextField
             value={value}
