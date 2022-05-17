@@ -11,6 +11,7 @@ userRouter.get('/getCategories', userController.getCategories);
 userRouter.get('/getbranch/:id', authenticate, userController.getBranch);
 userRouter.get('/getUsers', authenticate, userController.getUsers);
 userRouter.delete('/logout', authenticate, userController.logout);
+userRouter.get('/summary', authenticate, userController.getSummary);
 userRouter.patch('/updateBranch', authenticate, userController.updateBranchData);
 userRouter.patch('/updateUser', authenticate, userController.updateUser);
 module.exports = { userRouter };

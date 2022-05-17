@@ -6,12 +6,15 @@ var authenticate = (req, res, next) => {
         if (!user) {
             return Promise.reject();
         }
+        else if (!['Faculty', 'Non Faculty', 'Worker', 'EE', 'JE', 'AE'].includes(user.desig)) {
+            return Promise.reject();
+        }
         req.user = user;
         req.token = token;
         next();
     }).catch((e) => {
         const error = new Error("Access Denied.")
-        error.statusCOde = 401
+        error.statusCode = 401
         error.mesage = "Access Denied"
         next(error)
     });

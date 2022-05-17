@@ -166,6 +166,22 @@ module.exports.logout = (req, res, next) => {
 
 }
 
+// Get User Summary
+module.exports.getSummary = (req, res, next) => {
+    const user = req.user;
+    if (user.desig !== 'EE' && user.desig !== 'AE' && user.desig !== 'JE') {
+        const er = new Error('Admin Access Needed.');
+        er.statusCode = 401;
+        next(er);
+    }
+    else {
+        User.count({ 'Branch.name': user.Branch.name }).then(count => {
+            res.json({ 'count': count });
+
+        }).catch(er => next(er));
+    }
+}
+
 // Get All Workers
 module.exports.getUsers = (req, res, next) => {
     User.find().then((users) => {

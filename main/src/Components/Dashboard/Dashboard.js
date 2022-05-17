@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 
 // Other Utils
-// import ACInput from "../Others/ACInput";
 import { getUserTasks, getUser } from '../../Utils/controller';
 import useWidth from "../../Utils/useWidth";
 
@@ -64,7 +63,9 @@ export default function Dashboard({ theme, workers }) {
                     <TabList value={tab} onChange={handleTabChange} variant='standard'>
                         <Tab label="My Tasks" value='30' />
                         {(user.desig === 'EE' || user.desig === 'AE' || user.desig === 'JE') ?
-                            [<Tab label="Branch" key='31' value='31' />, <Tab key='32' label="Summary" value='32' />] : []}
+                            [<Tab label="Branch" key='31' value='31' />
+                                // , <Tab key='32' label="Summary" value='32' />
+                            ] : []}
 
 
                     </TabList>

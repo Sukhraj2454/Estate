@@ -204,6 +204,22 @@ module.exports.findTask = (req, res, next) => {
     })
 }
 
+module.exports.getSummary = (req, res, next) => {
+    const user = req.user;
+    if (user.desig !== 'EE' && user.desig !== 'AE' && user.desig !== 'JE') {
+        const er = new Error('Admin Access Needed.');
+        er.statusCode = 401;
+        next(er);
+    }
+    else {
+        Task.count({ branch: user.Branch.name }).then(ct => {
+
+            res.json({ count: ct });
+
+        }).catch(er => next(er))
+    }
+}
+
 // Get All Tasks
 module.exports.getAllTasks = (req, res, next) => {
     const user = req.user;

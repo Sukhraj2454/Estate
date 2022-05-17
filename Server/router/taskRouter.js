@@ -13,6 +13,7 @@ taskRouter.patch('/changeJobStatus', authenticate, taskController.changeJobStatu
 taskRouter.patch('/deadline', authenticate, taskController.deadline);
 taskRouter.delete('/delete/:tId', authenticate, taskController.delete);
 taskRouter.get('/findtask/:tId', authenticate, taskController.findTask);
+taskRouter.get('/summary', authenticate, taskController.getSummary);
 taskRouter.patch('/updatedate', authenticate, taskController.updateDate);
 taskRouter.patch('/updatedesctitle', authenticate, taskController.updateDescTitle);
 taskRouter.patch('/updateJob', authenticate, taskController.updateJob);

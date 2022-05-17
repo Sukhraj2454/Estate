@@ -10,8 +10,9 @@ const port = process.env.PORT;
 // User Modules
 const { userRouter } = require('./router/userRouter');
 const { taskRouter } = require('./router/taskRouter')
+
 // Controller modules
-const userController = require('./controllers/userController');
+const { authenticate } = require('./middleware/authenticate');
 
 app.use(express.json());
 app.use('/user', userRouter);
@@ -21,6 +22,7 @@ app.use('/task', taskRouter);
 app.get('/', (req, res) => {
     res.send("Main Page.");
 });
+
 
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500;

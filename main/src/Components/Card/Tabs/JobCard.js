@@ -43,12 +43,12 @@ function Chips({ material, setMaterial }) {
         {comp}
     </Stack>)
 }
-function CreateJob({ workers, theme, tId }) {
+function CreateJob({ workers, theme, tId, user, jobs, setJobs, reporter }) {
     const [jobTitle, setJT] = useState('');
     const [assignee, setAssignee] = useState({});
     function handleSubmit() {
-        console.log(jobTitle, assignee, tId)
         addJob(tId, assignee, jobTitle);
+
     }
     return (<>
         <Accordion>
@@ -86,6 +86,7 @@ function CreateJob({ workers, theme, tId }) {
 }
 
 function Job({ data, ind, theme, workers, tId, user, reporter }) {
+    console.log(data)
     const [jobTitle, setJT] = useState(data.job || '');
     const [status, setStatus] = useState(data.status || 'In Progress')
     const [assignee, setAssignee] = useState(data.assignee || {});
@@ -116,7 +117,7 @@ function Job({ data, ind, theme, workers, tId, user, reporter }) {
                     fullWidth
                     value={jobTitle}
                     onChange={(e) => { setJT(e.target.value) }}
-                    disabled={status === 'Completed'} />
+                    disabled={status === 'Completed' || status === 'Verified'} />
 
 
                 <ACInput theme={theme} variant='outlined'
@@ -124,7 +125,7 @@ function Job({ data, ind, theme, workers, tId, user, reporter }) {
                     setTitle={setAssignee}
                     fullWidth
                     data={workers}
-                    disabled={status === 'Completed'}
+                    disabled={status === 'Completed' || status === 'Verified'}
                     label={"Assignee"} />
 
                 <OutlinedInput
@@ -148,7 +149,7 @@ function Job({ data, ind, theme, workers, tId, user, reporter }) {
                                     }
                                     else setMat('')
                                 }}
-                                disabled={mat === '' || status === 'Completed'}
+                                disabled={mat === '' || status === 'Completed' || status === 'Verified'}
                                 edge="start"
                             >
                                 <AddCircleIcon color={mat === '' ? '' : 'success'} />
@@ -171,7 +172,7 @@ function Job({ data, ind, theme, workers, tId, user, reporter }) {
                 <Button
                     variant='contained' sx={{ ml: 2, mt: 2 }}
                     color={status !== 'Completed' ? 'success' : 'primary'}
-                    disabled={disabled || reporter.id === user._id}
+                    disabled={disabled || reporter.id === user._id || status === 'Verified'}
                     onClick={
                         () => {
                             setDisabled(true)
@@ -207,7 +208,13 @@ export default function JobCard({ data, workers, theme }) {
     return (
         <Container sx={{ height: 450, overflowY: 'scroll' }}>
 
-            <CreateJob workers={workers} theme={theme} tId={data._id} />
+            <CreateJob workers={workers}
+                theme={theme}
+                tId={data._id}
+                user={user}
+                jobs={jobs}
+                reporter={data.reporter}
+                setJobs={setJobs} />
 
             <Typography variant="h5" sx={{
                 m: 1,
