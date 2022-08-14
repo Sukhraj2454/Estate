@@ -38,21 +38,23 @@ export default function Worker() {
     const location = useLocation();
     const worker = location.state?.worker;
     const workers = location.state?.workers;
-    
-    
+
+
     const lUser = JSON.parse(sessionStorage.getItem('user'));
     const sz = useWidth();
     const len = (sz !== 'sm' && sz !== 'xs') ? 6 : 12;
 
     useEffect(() => {
-        getUserTasks(setCards, null, worker.id);
-    }, [worker.id]);
+        if (worker)
+            getUserTasks(setCards, null, worker.id);
+    }, [worker]);
 
     useEffect(() => {
-        if (user.desig !== 'Faculty' && user.desig !== 'Non Faculty')
+
+        if (worker && user.desig !== 'Faculty' && user.desig !== 'Non Faculty')
             getBranch(setBranchData, worker.id);
 
-    }, [user.desig, worker.id]);
+    }, [user.desig, worker]);
 
     useEffect(() => {
         if (branchData !== '') {
@@ -119,7 +121,7 @@ export default function Worker() {
                                 <Grid item>
                                     <Typography sx={{ textAlign: 'center' }}
                                         component='h1'
-                                        variant='h4'>{worker.name || worker.title || lUser.name}</Typography>
+                                        variant='h4'>{(worker ? worker.name : undefined) || (worker ? worker.title : undefined) || (lUser ? lUser.name : undefined)}</Typography>
                                 </Grid>
                                 {worker.id === lUser._id || worker === 'user' ? (<Grid item>
 

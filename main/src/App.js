@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes as Switch } from 'react-router-dom';
 import Main from './Routes/Main';
 import Home from './Routes/Home';
 import Worker from './Routes/Worker';
@@ -13,19 +13,13 @@ function App() {
 
       <Switch>
 
-        <Route path="/" exact>
-          <Main theme={theme} />
-        </Route>
+        <Route path="/" exact element={<Main theme={theme} />} />
 
-        <Route path="/home" exact>
-          <Home theme={theme} />
-        </Route>
-        <Route path='/user' exact>
-          <Worker />
-        </Route>
-        <Route path='/search' exact>
-          <Search />
-        </Route>
+        <Route path="/home" exact element={<Home theme={theme} />} />
+
+        <Route path='/user' exact element={<Worker />} />
+
+        <Route path='/search' exact element={<Search />} />
       </Switch>
 
     </Router>

@@ -54,7 +54,9 @@ export default function UserSearch({ workers }) {
 
     useEffect(() => {
         var col = false;
-        let temp = users.map(op => {
+        if(users)
+        {
+            let temp = users.map(op => {
 
             col = !col;
             return (<User
@@ -64,6 +66,8 @@ export default function UserSearch({ workers }) {
                 workers={workers} />)
         })
         setList(temp);
+    }
+        else setList([])
     }, [workers, users, setList]);
 
     return (<>
